@@ -9,3 +9,16 @@ opis podziału pracy na rozdziały;
 
 
 ------------------------------------------------------
+
+Pierwszy rozdział (lub rozdziały) powinien wprowadzać czytelnika w dziedziny techniki i nauki, 
+których dotyczy praca. Dodatkowo, rozdział ten powinien przedstawiać aktualny stan wiedzy 
+w zakresie tematyki pracy. 
+
+Wyjaśnić w czym leży problem – sztuczne sieci neuronowe to wielkie złożone struktury ciężkie 
+do interpretacji, wyjaśnić te 3 kolory skrzynek – idk czemu czasami jest ich więcej, 
+ale polać jak należy, opisać czym jest xai – bohater co przychodzi z pomocą, interpretowalność 
+i wyjaśnialność, opisać jakie są cele xai – poprawienie interpretowalności, znalezienie 
+nieodpowiednich korelacji, rasizm, poprawa błędów ludzkich, których nauczyła się maszyna.
+
+
+------------------------------------------------------
