@@ -1,6 +1,6 @@
-#[Link do książki](https://www.overleaf.com/read/wzfnhmvsszpt#f2efcd)
+# [Link do książki](https://www.overleaf.com/read/wzfnhmvsszpt#f2efcd)
 
-#Zbiory
+# Zbiory
 1. Diabetes Prediction
    - https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset
    - https://www.kaggle.com/code/abdallahsaadelgendy/diabetes-prediction-eda-preprocessing-models/notebook?select=diabetes_binary_health_indicators_BRFSS2015.csv
