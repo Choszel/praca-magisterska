@@ -1,0 +1,5 @@
+Magisterka - co zostało do zrobienia?:
+	- 1 podsumowanie zbioru
+	- opisać 3 nowe zbiory i ich analizę
+	- napisać opis implementacji
+	- sparafrazować rozdziały
