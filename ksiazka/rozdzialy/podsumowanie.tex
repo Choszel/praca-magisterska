@@ -1,0 +1,53 @@
+\section{Podsumowanie}
+
+\subsection{Diabetes Prediction}
+
+\subsection{UCI Heart Disease Data}
+Wszystkie modele uczone i testowane na tych samych zbiorach pod względem dokladności uzyskały wyniki na przeciętnym poziomie. Były one do siebie zbliżone i oscylowały w granicach 60\%-64\%. Najlepiej pod tym względem poradził sobie XGBoost, jednak miał o około 1 jednostkę mniejsze ROC AUC od lasu losowego, u którego miara ta wyniosła 0.85. We wszystkich przypadkach najtrafniej diagnozowano klasę '0', przy czym najwięcej poprawnie należących do niej próbek, bo aż 70 z 82 wskazała sieć neuronowa, osiągając przy tym precyzję i czułość na poziomie 85\%. Podobnie decydowano o przynależności próbek do poszczególnych wariantów, z równą tendendcją spadkową, pogłębiającą się wzrast z numerem przewidywanej kategorii. Wyniki większości średnich macro były niezadowalające. Ich wartości ewidentnie wynikały z niezbilansowania danych, co możemy dostrzec analizując ilości rekordów dla poszczególnych klas znajdujące się w kolumnie 'Liczba'. Zauważamy wtedy, że liczebność zbioru testowego klasy '0' wyniosła 82 przypadki, a wariantu '4' jedynie 6. Z powodu tej ogromnej dysproporcji oraz niskiej zbiorowości prawie nigdy nie zaliczano próbek do najwyższej grupy ryzyka. Dla dwoch pierwszych modeli się udało ją poprawnie sklasyfikować, sieć neuronowa postawiła na błędną diagnozę o numerze '3'.  
+Każdy z badanych modeli posiadał chociaż jeden atrybut, w którym był lepszy od innych. Jednak metryki, takie jak dokładność i średnia macro, będące podatne na niezbilansowane dane, tracą na wiarygodności. Dlatego w przypadku tego zbioru lepiej jest kierować się innymi miarami. Uznałam, że ze względu na sposób wyliczania najodpowiedniejsze będzie ROC AUC, pokazujące umiejętność rozróżniania pomiędzy poszczególnymi klasami. Ta idea plasuje las losowy na pierwszym miejscu. 
+
+\begin{table}[H]
+\centering
+\caption{3 najistotniejsze oraz najmniej istotne cechy wskazane przez metody dla każdego z modeli w zbiorze dotyczącym choroby serca}
+\label{tab:3_top_and_least_heart}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Model & Metoda & 3 najistotniejsze cechy & 3 najmniej istotne cechy \\ \hline
+\multirow{3}{*}{Random Forest}& LIME& exang, oldpeak, age& trestbps, chol, sex\\ \cline{2-4} 
+ & SHAP& cp, thalch, dataset& sex, fbs, slope\\ \cline{2-4} 
+ & PFI& dataset, cp, age& sex, fbs, slope\\ \hline
+\multirow{3}{*}{XGBoost}& LIME
+& exang, cp, age& trestbps, thalch, sex\\ \cline{2-4} 
+ & SHAP
+& cp, thalch, age& sex, fbs, slope\\ \cline{2-4} 
+ & PFI& age, oldpeak, chol& sex, fbs, slope\\ \hline
+\multirow{3}{*}{Sieć neuronowa}& LIME
+& oldpeak, exang, thalch& chol, trestbps, sex\\ \cline{2-4} 
+ & SHAP
+& age, cp, thalch& trestbps, slope, fbs\\ \cline{2-4} 
+ & PFI& oldpeak, dataset, exang& sex, slope, trestbps \\ \hline
+\end{tabular}
+\end{table}
+
+ Jak możemy wyczytać z Tabeli \ref{tab:3_top_and_least_heart}  dla modelu Random Forest każda z metod wskazała inne 3 najistotniejsze cechy. LIME podała najbardziej odmienne zmienne, z których jedynie wiek ('age') i płeć ('sex') pojawiły się w innych wierszach należących do lasu losowego.  SHAP i PFI byly jednogłośne w kwestii najmniej znaczących przesłanek, czyli płci ('sex'), informacji, czy poziom cukru we krwi na czczo jest wysoki ('fbs') oraz spadku odcinka ST podczas szczytowego wysiłku fizycznego ('slope'). 
+ 
+ W przypadku XGBoost we wszystkich wytłumaczeniach wśród 3 najistotniejszycg cech znalazł się wiek ('age'), a najmniej istotnych płeć ('sex'). Dwukrotnie pojawia się typ bólu klatki piersiowej ('cp') w 3 kolumnie dla LIME i SHAP. Co zastanawiające pierwsza z tych metod uznała osiągnięte maksymalne tętno ('thalch') za mało wartościowe, kiedy to druga w przeciwieństwie do niej umieściła tę zmienną bardzo wysoko w rankingu istotności. PFI wraz z wartościami Shapley'a był zgodny co do najmniej interesujących cech, wskazując już wcześniej wspomnianą płeć ('sex'), czy poziom cukru we krwi na czczo jest wysoki ('fbs') oraz spadek odcinka ST podczas szczytowego wysiłku fizycznego ('slope').
+
+W sieci neuronowej wyjaśnienia były do siebie dosyć zbliżone. Z pośród 3 najmniej istotnych cech za każdym razem pojawiło się spoczynkowe ciśnienie krwi ('trestbps'), z przeplatającą się płcią ('sex') i spadkiem odcinka ST podczas szczytowego wysiłku fizycznego ('slope'). Natomiast wśród 3 najistotniejszych cech nie pojawiła się jedna dominująca, ale dwukrotnie znalazło się obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak'), dławica piersiowa wywołana wysiłkiem fizycznym ('exang') oraz osiągnięte maksymalne tętno (thalch).
+
+W 8 na 9 przypadków za jedną z najmniej istotnych cech wskazano płeć ('sex'), nie pojawiła się ona wyłącznie w wytłumaczeniu SHAP dla sieci neuronowej, gdzie uznano ją za dosyć wartościową informację. Przy lesie losowym oraz XGBoost SHAP z PFI podawały identyczne wartości w 4 kolumnie. LIME bez względu na model zawsze za jedną z naistotniejszych cech podawał 'exang', a najmniej ważnych 'trestbps' i 'sex', SHAP 'cp' z 'thalch' a także 'fbs' oraz 'slope', natomiast PFI nie miał faworyta w pierwszej kategorii, w drugiej 'sex' i 'slope'.
+
+\subsection{Brain MRI Images for Brain Tumor Detection}
+
+\subsection{Cats and Dogs Classification Dataset}
+
+
+\subsection{Ogólne spostrzeżenia}
+LIME
+Ciężko zaufać wynikom ze względu na to, że mogą się one zmienić po ponownym uruchomieniu programu. Jego wartości są relatywne, pozwalają tylko na interpretację porównawczą wzgledem siebie.
+
+SHAP
+Ciężki w zrozumieniu. Jego wykresy są bardzo ładne i podają fajną interpretację pokazując to jak każda z cech wpływała na prawdopodobieństwa bądź log odds.
+
+PFI
+Prosty, daje mało wyników.

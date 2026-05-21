@@ -1,0 +1,41 @@
+\section{Wprowadzenie do problemu}
+
+Sztuczna inteligencja to model, który został nauczony na zbiorze treningowym wykonywać określone zadania, np. klasyfikacji. Istnieje wiele różnych modeli, przy czym zakres ich funkcjonalności zależy od naszej imaginacji a ograniczeniem jest zdobycie rzetelnego, jak największego zbioru danych. Powstało wiele miar oceniających ich skuteczność, do najpopularniejszych należą: 
+\begin{itemize}
+    \item dokładność określa jak dużo przypadków zostało poprawnie zaklasyfikowanych ze wszystkich ocenianych,
+    \item precyzja mówi ile z przewidzianych pozytywnie przypadków rzeczywiście zostało prawidłowo przdzielonych do tej grupy,
+    \item czy czułość będąca odsetkiem prawidłowo zaklasyfikowanych próbek jako pozytywne na wszystkie prawidłowo zaklasyfikowane próbki \cite{ai_metrics}. 
+\end{itemize}
+
+Do zadań klasyfikacji moglibyśmy użyć prostego, łatwo interpretowalnego modelu, takiego jak drzewo decyzyjne albo regresja liniowa. Przy mało skomplikowanych danych owe rozwiązanie byłoby wystarczające, jednak w rzeczywistości często mamy do czynienia ze złożonymi problemami wymagającymi trudniejszych w użyciu, zrozumieniu czy stworzeniu rozwiązań. Random forest, XGBoost oraz sieci neuronowe są w stanie przeprowadzić precyzyjniejsze analizy i osiągać większą dokładność. Wiąże się to niestety z utratą ich przejrzystości i czytelności. Dzieje się tak, ponieważ starając się jak najlepiej przybliżyć korelacje zaistniałe pomiędzy cechami danych wejściowych budują one olbrzymie struktury, które przez swoje gigantyczne rozmiary stają się nieczytelne dla człowieka prowadząc do braku jakiejkolwiek możliwości ich interpretacji bądź analizy \cite{ALI2023101805}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Deep-Neural-Network-architecture.jpg}
+    \caption{Przykładowa struktura sieci neuronowej \cite{dnn_conference_image}}
+    \label{fig:example_of_dnn}
+\end{figure}
+
+Badacze w celu określenia przejrzystości modeli wprowadzili pojęcia różnokolorowych skrzynek. Należą do nich:
+\begin{itemize}
+    \item biała skrzynka (bądź też nazywana przezroczystą) – zaliczają się do niej prostsze modele uczenia maszynowego, które możemy zazwyczaj bez jakiejkolwiek pomocy bezproblemowo analizować spoglądając na ich strukturę, wyniki oraz parametry. Nie potrafią odwzorowywać skomplikowanych zależności, z tego powodu ich dokładność jest niska bądź średnia. Nie są one dostosowane do trudniejszych dziedzin, takich jak medycyna czy finanse.
+    \item szara skrzynka – systemy będące pośrednim rozwiązaniem pomiędzy innymi pudełkami. Istnieje możliwość ich częsciowej interpretacji przy założeniu, że zostały starannie zaprojektowane. Do tej kategorii mogą się zaliczać, np. sieci bayesowskie. Mają lepszą jakość klasyfikacji niż poprzedni przypadek. Dzieje się tak ponieważ są bardziej rozbudowane, co zarazem przekłada się na większe problemy z ich zrozumiem.
+    \item czarna skrzynka – należą do niej głównie sztuczne sieci neuronowe, które ze względu na swoją znaczną złożoność są kompletnie nieczytelne, tę sytuację obrazuje Rys. \ref{fig:example_of_dnn}. Mają wysoką dokładność, jednak nie jesteśmy w stanie, patrząc na ich strukturę, ocenić skąd ona wynika.
+\end{itemize}	
+
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=1\linewidth]{colorful_boxes.jpg}
+     \caption{Rysunek obrazujący podział modeli ze względu na ich przejrzystość \cite{ALI2023101805}}
+     \label{fig:colorful_boxes}
+ \end{figure}
+
+Dochodzą do tego dwa często stosowane w kontekście XAI pojęcia - interpretowalność i wyjaśnialność. Pierwsze z nich dotyczy stopnia sposobności zrozumienia całokształtu działania. Drugie oznacza w jakim stopniu człowiek jest w stanie zrozumieć dlaczego model podjął akurat taką decyzję posiadając określone dane wejściowe. Jest to lokalna analiza względem konkretnego przypadku, zkłada m.in. pokazanie toku "myślowego" algorytmu \cite{IBM_interpretability_explainability, molnar2025}.
+ 
+Techniki XAI powstały, aby kosztem dokładności zwiększyć przejrzystość modeli, bądź odwrotnie – zwiększyć jakość klasyfikacji w zamian za możliwość ich częściowego zrozumienia. Zamieniają, więc one czarne oraz białe skrzynki w szare skrzynki, poświęcając większą wartość na tę, której systemowi brakuje. Celem takich zabiegów może być: 
+\begin{itemize}
+    \item zwiększenie poprawności modelu, poprzez możliwość przeanalizowania jego działania, przy czym znalezienia miejsc, w których model doszedł do błędnych związków, nietypowych rozwiązań wcześniej nam nieznanych, dyskryminował przypadki (klasy, grupy) rzadkie lub jego wnioskowanie pochodziło z błędu ludzkiego np. takiego, co powstał przy obróbce danych wejściowych, a następnie ich naprawa lub wyeksponowanie. 
+    \item Znalezienie inspiracji do przyszłych prac. Owe niekonwencjonalne sytuacje mogą nam dostarczyć wiedzę i pomysły, które moglibyśmy wykorzystać przy innych projektach.
+    \item Wytłumaczenie modelu i jego przewidywań.
+    \item Aby odkryć dlaczego dochodzi do danego wyniku \cite{molnar2025}.
+\end{itemize}

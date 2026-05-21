@@ -1,0 +1,113 @@
+% Source - https://stackoverflow.com/a/59719932
+% Posted by xiaoou wang, modified by community. See post 'Timeline' for change history
+% Retrieved 2026-05-21, License - CC BY-SA 4.0
+
+% !TEX program = xelatex
+
+\documentclass[12pt]{article}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+
+\usepackage{graphicx} % Required for inserting images
+\graphicspath{ {rysunki/} }
+\usepackage{fontspec}
+\usepackage{pdfpages}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{import}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tocloft}
+\usepackage{multirow}
+
+\onehalfspacing
+ \geometry{
+ a4paper,
+ lmargin=35mm,
+ rmargin=20mm,
+ tmargin=25mm,
+ bmargin=25mm,
+ }
+\setmainfont{Times New Roman}
+\setlength\parindent{1cm}
+
+\titleformat{\section}{\normalfont\Large\fontsize{16}{16}\bfseries}{\thesection.}{0.76cm}{}
+\titlespacing*{\section}
+{0pt}{24pt}{24pt}
+
+\titleformat{\subsection}{\normalfont\Large\fontsize{14}{14}\bfseries}{\thesubsection.}{1.02cm}{}
+\titlespacing*{\subsection}
+{0pt}{12pt}{12pt}
+
+\numberwithin{figure}{section}
+\DeclareCaptionLabelSeparator{custom}{. }
+\captionsetup[figure]{
+    name=Rys.,
+    labelsep=custom,
+    font={footnotesize},
+    justification=centering
+}
+
+\numberwithin{table}{section}
+\DeclareCaptionLabelSeparator{custom}{. }
+\captionsetup[table]{
+    labelsep=custom,
+    font={footnotesize},
+    justification=centering
+}
+
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{10pt}
+
+\renewcommand{\cftsecpresnum}{}
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+
+\begin{document}
+
+\includepdf[pages=-]{strona-tytulowa.pdf}
+
+\includepdf[pages=-]{Karta Dyplomowa 2026-03-05.pdf}
+\thispagestyle{empty}
+pdf ze streszczeniem pracy po ang
+
+\newpage
+\thispagestyle{empty}
+OŚWIADCZENIE NA TEMAT SAMODZIELNOŚCI WYKONANIA PRACY
+
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+\import{rozdzialy/}{wstep.tex}
+
+\newpage
+\import{rozdzialy/}{wprowadzenie_do_problemu.tex}
+
+\newpage
+\import{rozdzialy/}{problem_klasyfikacji.tex}
+
+\newpage
+\import{rozdzialy/}{metody_xai.tex}
+
+\newpage
+\import{rozdzialy/}{opis_implementacji.tex}
+
+\newpage
+\import{rozdzialy/}{eksperymenty.tex}
+
+\newpage
+\import{rozdzialy/}{podsumowanie.tex}
+
+\newpage
+\addcontentsline{toc}{section}{Literatura}
+\bibliographystyle{unsrt}
+\bibliography{bibliografia}
+
+\end{document}

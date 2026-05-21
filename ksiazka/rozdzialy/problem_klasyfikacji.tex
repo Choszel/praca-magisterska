@@ -1,0 +1,81 @@
+\section{Problem klasyfikacji}
+
+W tym rozdziale pragnę przybliżyć 3 wybrane modele klasyfikacyjne. Należą do nich: las losowy, XGBoost oraz sieci neuronowe. To właśnie one zostaną poddane nauce wyselekcjonowanych zbiorów danych, a następnie zinterpretowane za pomocą metod wyjaśnialnej sztucznej inteligencji omówionych w rozdziale 4. Analiza metod XAI.
+
+\subsection{Random Forest}
+
+https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+https://en.wikipedia.org/wiki/Random_forest
+https://www.geeksforgeeks.org/machine-learning/random-forest-algorithm-in-machine-learning/
+https://www.researchgate.net/publication/382419308_Random_Forest_Algorithm_Overview
+https://christophm.github.io/interpretable-ml-book/tree.html
+https://pl.wikipedia.org/wiki/Las_losowy
+https://www.cognity.pl/blog-czym-sa-lasy-losowe-i-jak-dzialaja
+https://cez.wi.pb.edu.pl/pluginfile.php/30759/mod_resource/content/1/ED10_rodziny%20drzew.pdf
+https://cez.wi.pb.edu.pl/pluginfile.php/30538/mod_resource/content/2/ED9_drzewa.pdf
+https://www-ibm-com.translate.goog/think/topics/bagging?_x_tr_sl=en&_x_tr_tl=pl&_x_tr_hl=pl&_x_tr_pto=rq
+
+Random Forest, czyli las losowy, to metoda polegająca na zbieraniu wyników z wielu niezależnych modeli, aby na ich podstawie udzielić odpowiedzi końcowej. Wykorzystuje w tym celu drzewa decyzyjne, których przykładową strukturę przedstawiono na Rys. \ref{fig:decision_tree} Składają się one z:
+\begin{itemize}
+    \item korzenia (ang. root node) – początkowy węzeł reprezentujący cały zbiór danych wejściowych,
+    \item węzłów (ang. decision node) – punktów, w których zachodzi podział danych ze względu na wybraną cechę,
+    \item gałęzi – linii prowadzących od danego węzła do kolejnego,
+    \item liści (ang. leaf node) – miano węzłów końcowych, tworzonych jeśli kryterium stopu zostało spełnione. Na podstawie podzbioru przykładów, które do nich trafiły ustalają wyniki klasyfikacji, bądź regresji. 
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{rysunki/Decision-tree-illustration-Source.jpg}
+    \caption{Struktura drzewa decyzyjnego \cite{decision_tree_image}}
+    \label{fig:decision_tree}
+\end{figure}
+
+Budowę takiego lasu można określić jako rozszerzenie agregacji bootstrapowej – baggingu. Proces ten wykonuje się w celu redukcji wariancji i przeuczenia, co ma zwiększać dokładność i stabilność. Polega on na wygenerowaniu określonej liczby zestawów treningowych poprzez metodę bootstrap, czyli losowanie ze zwracaniem, niezależnym treningu podmodeli na tych nowych zbiorach, a następnie oszacowaniu wyników na podstawie „głosowania większościowego” (problem klasyfikacji) lub średniej (w przypadku regresji). Rozszerzeniem będzie tutaj losowy dobór cech, który dokonuje się przy każdym podziale w drzewie. Powoduje to stworzenie modelu składającego się z nieskorelowanych drzew decyzyjnych.
+
+Las losowy jest metodą charakteryzującą się wysoką dokładnością wyników, która potrafi poradzić sobie z obszernymi zbiorami danych a także występującymi w nich wartościami brakującymi. Niestety, aktualnie nie jest w stanie przetworzyć zmiennych kategorycznych a duża ilość podmodeli sprawia, że jest ona trudna w interpretacji oraz może być czasochłonna i wymagać więcej zasobów sprzętowych, takich jak pamięć komputerowa. 
+
+
+\subsection{XGBoost}
+
+https://miroslawmamczur.pl/czym-jest-wzmocnienie-gradientowe-gradient-boosting-i-dlaczego-jest-taki-dobry/
+https://www.cognity.pl/xgboost-vs-sticky-learn-porownanie-algorytmow-ml
+https://www.flowhunt.io/pl/slownik/xgboost/#
+https://www.analyticsvidhya.com/blog/2018/09/an-end-to-end-guide-to-understand-the-math-behind-xgboost/
+https://miroslawmamczur.pl/jak-dziala-las-losowy-random-forest/
+https://pl.wikipedia.org/wiki/Gradient_(matematyka)
+https://polskiekino.com.pl/xgboost-vs-lightgbm-vs-catboost-wielki-test-na-jednym-datasetcie
+https://digitaldefynd.com/IQ/pros-cons-of-xg-boost/
+
+XGBoost (ang. \textit{Extreme Gradient Boosting}) tłumaczona na polski jako ekstremalne wzmocnienie gradientowe to metoda, która podobnie jak las losowy wykorzystuje wiele mniejszych modeli, w tym drzew decyzyjnych, aby określić wyniki. Jednak, w przeciwieństwie do poprzednio omawianego sposobu, działa na zasadzie boostingu, a nie baggingu. Proces ten polega na budowie sekwencyjnej. Każde drzewo (oprócz pierwszego) budowane jest na podstawie poprzednika dążąc do zmniejszenia ilości błędnych założeń. Początkowe podmodele są słabo przystosowane do problemu z mocą predykcyjną zbliżoną, ale lekko lepszą, niż losowe przydzielanie wartości, posiadają wysoki wskaźnik błędu. Mimo to są one niezwykle istotne ze względu na zawieranie kluczowych informacji dotyczących dzielenia zbiorów. Wraz z postępem algorytmu uczenia, czyli poprawą tych instancji oraz ich efektywnym połączeniem, wspomniane wcześniej miary zaczynają się polepszać. Kierunek, w którym ma poruszać się boosting, czyli tworzyć nowe drzewa, jest wyznaczany przez gradient. W tym przypadku oznacza ono pojęcie matematyczne odnoszące się do „pola wektorowego wskazującego kierunki najszybszych wzrostów wartości danego pola skalarnego w poszczególnych punktach, przy czym moduł („długość”) każdego wektora jest równy szybkości wzrostu pola skalarnego w kierunku największego wzrostu.” (Wikipedia, 2026). 
+
+Kolejną różnicą względem lasów losowych jest wielkość wspomnianych drzew. W przypadku tych pierwszych powstałe podmodele mogą osiągać duże rozmiary z wieloma odgałęzieniami. XGBoost charakteryzuje się niewielkimi instancjami, które są bardziej interpretowalne. Dodatkowo zawiera parametry wejściowe, które możemy dostosowywać, takie jak: liczba drzew, ilość iteracji, tempo uczenia, głębokość drzewa; a także mechanizmy regularyzacji w postaci L1 (ang. \textit{lasso regression}) oraz L2 (ang. \textit{ridge regression}) z możliwością zmiany ich współczynników. Należy zachować ostrożność w ich doborze, ponieważ to od nich zależeć będzie dokładność modelu, na którą składać się będzie niedouczenie sieci, bądź jej nadmierne dopasowanie do danych treningowych. Może nam w tym pomóc walidacja krzyżowa, która jest zazwyczaj dostępna wraz z implementacją XGBoost’a.
+
+Do zalet owej metody możemy zaliczyć możliwość użycia regularyzacji, wysoką dokładność, radzenie sobie z obszernymi zbiorami danych oraz pojawiającymi się w nich brakach, czy uczenie równoległe wykorzystujące wiele rdzeni CPU. Posiada ona jednak parę kluczowych problemów, takich jak odpowiedni dobór parametrów, duże zużycie pamięci sprzętowej, trudności z przetwarzaniem danych kategorycznych, duży czas uczenia, czy to, że przez swoje możliwości dostrajania jest mało przyjazna dla osób początkujących w dziedzinie sztucznej inteligencji. 
+
+\newpage
+\subsection{Sieci neuronowe}
+
+Sieć neuronowa to model nawiązujący budową do ludzkiego mózgu. Składa się, podobnie jak ów narząd, z jednostek wzorowanych na neuronach, które są pomiędzy sobą połączone, co z kolei jest nawiązaniem do synaps. Elementy te układają się w kolumny tworząc warstwy. Pierwsza z nich, nazywana warstwą wejściową, ma liczbę neuronów odpowiadającą liczbie wejść (cech). Ostatnia warstwa - warstwa wyjściowa - zwraca wynik przewidywania. Składa się z tylu neuronów ile klas predykcyjnych została nauczona, zazwyczaj tyle do ilu mogą należeć wprowadzone dane. Warstwy pomiędzy tymi już omówionymi noszą miano ukrytych. Ich ilość oraz wielkość (liczba neuronów w poszczególnych kolumnach) zależy od twórcy \cite{rojas96neural}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{rysunki/neuron_diagram.png}
+    \caption{Model pojedynczego neuronu \cite{haykin2009neural}}
+    \label{fig:neuron_diagram}
+\end{figure}
+
+Budowę pojedynczego neuronu przedstawia Rys. \ref{fig:neuron_diagram}, gdzie (idąc od lewej) wartości $x_1,\ x_2,\ \dots,\ x_m$ oznaczają kolejno $m$ wejść, $w_{k1},\ w_{k2},\ \dots,\ w_{km}$ wagi dla każdego z $m$ wejść neuronu $k$, okrąg będący węzłem sumującym wejścia przemnożone przez odpowiadające im wagi, $b_k$, czyli bias neuronu $k$, który jest zewnętrzną wartością oddzielnie zwiększającą bądź zmniejszającą sumę (również posiada wagę). Następnie obliczona przez węzeł wartość oznaczona jako $v_k$ później przechodzi przez funkcję aktywacji $\phi(\ \cdot\ )$, która ocenia czy dany neuron na podstawie aktualnych danych powinien zostać pobudzony czy nie. W przedstawionym przeze mnie modelu każda z komórek może mieć połączenie jedynie z komórką z warstwy następnej, wyjatkiem jest ostatnia warstwa, w której budulce mają tylko jedno wyjście wychodzące na zewnątrz, nie mające połączenia z kolenymi elementami \cite{haykin2009neural}.
+
+Nauka sieci neuronowej jest procesem mającym na celu wyznaczenie wag, które, jak wcześniej wspomniałam, są miarą istotności przekazywanych informacji. Jej najpopularniejszą metodą jest "uczenie w przód"\ (ang. \textit{feedforward}). Odbywa się ona poprzez ustalenie wartości początkowych dla wag. Należy mieć na uwadzę to, że nie powinny one być takie same, albowiem oznaczałoby to sytuację, w której wszystkie cechy przekazywałyby jednakowo istotną informację. Następnie na wejście modelu trafia pierwsza próbka z przekazanych danych treningowych będących wybranym (najczęściej losowo) podzbiorem naszego całego zbioru. Sieć równolegle wykonuje obliczenia na podanych informacjach. Wyjście neuronu staje się wejściem neuronu w następnej kolumnie o ile istnieje pomiędzy nimi połączenie. Wagi są poprawiane na podstawie wyliczanego błędu będącego chybieniem między przewidywaniem a wartością poprawną. Ruch odbywa się tutaj od lewej strony struktury (warstwy wejściowej) do prawej (warstwy wyjsciowej). Model przechodzi tak przez wszystkie próbki. Zmiana wartosci wag może odbywać się po przeanalizowaniu 1 przypadku lub zbioru przypadków nazywanego mini-batchem i nazywana jest iteracją.  
+
+Stworzenie wydajnego modelu sieci neuronowej jest trudnym zadaniem. Do możliwych hiperparametrów, czyli parametrów ustalanych przed rozpoczęciem uczenia, należą:
+\begin{itemize}
+    \item liczba warstw ukrytych oraz ilość znajdujących się w nich neuronów 
+    \item dobór techniki uczenia, np. w przypadku uczenia przez wzmacnianie istnieje wiele rodzajów metod, takich jak Proximal Policy Optimization czy Deep Q-Network oraz ich modyfikacje;
+    \item funkcje aktywacji, np. liniowa, ReLU, tanh; 
+    \item algorytmy optymalizacji, polegające na minimalizacji funkcji straty,
+    \item różne sposoby wyliczania funkcji straty (błędu w predykcji), np. ROC AUC i dokładność do zadań klasyfikacji oraz MAE, MSE, $R^2$ do regresji;
+    \item ilość iteracji oraz wielkość zbioru, po którym następuje aktualizacja wag,
+    \item krok uczenia.
+\end{itemize}
+
+Ich znalezienie odbywa się praktycznie na zasadzie "metody prób i błędów". W ich doborze może nam pomóc mechnizm walidacji krzyżowej. Dodatkowo oceniając wyniki struktury z daną konfiguracją powinniśmy ustalić czy nie doszło do przeuczenia bądź niedouczenia. To pierwsze pojęcie oznacza sytuację, w której sieć wykryła zbyt drobne korelację pomiędzy cechami, co było skutkiem zbytniego wglądu w dane treningowe. Taki przypadek zauważamy po niskim błędzie na danych treningowych, ale wysokim na danych walidacyjnych. Z pomocą przychodzą nam tutaj metody regularyzacji, takie jak L1, L2 czy Drop-out. Druga możliwość odnosi się do utrzymujących się wysokich błędów w przypadku obu podzbiorów. Polega na tym, że model nie zdążył wykryć zależności pomiędzy cechami, co przekłada się dodatkowo na jego niską dokładność. Dochodzi do tego, kiedy ustawiliśmy za małą ilość iteracji, za duży krok uczenia, bądź niewystarczająca ilość warstw ukrytych lub ich neuronów. 

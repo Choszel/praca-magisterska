@@ -1,0 +1,98 @@
+\section{Metody XAI}
+
+Interpretowalność możemy podzielić ze względu na sposób jej przeprowadzenia. Modele proste strukturalnie i w zrozumieniu, nie wymagające przy tym od nas żadnych zewnętrznych pomocy są określane mianem interpretowalnych przez design. Post-hoc odnosi się do trudniejszyh systemów, na których dopiero po przeprowadzeniu uczenia stosujemy metody XAI. Dzieli się to na dwa podejścia niezależne i zależne od modelu. Z tych pierwszych dodatkowo rozróżniamy lokalne, tłumaczące wskazane przypadki, oraz globalne analizujące dane wejściowe \cite{molnar2025}.
+
+\subsection{LIME}
+
+LIME, jak mówi też rozszerzenie jego skrótu (ang. \textit{Local interpretable model-agnostic explanations}), jest lokalnie interpretowanymi wyjaśnieniami niezależnymi do modelu, czyli należy do grupy post-hoc. Został on zaprojektowany przez Ribeiro, Singha i Guestrina – specjalistów w dziedzinie AI. Polega na zaburzeniu danych wejściowych, w celu stworzenia w taki sposób nowego zbioru, który jest następnie poddawany ocenie poprzez nasz model sztucznej inteligencji będący czarną skrzynką. Po przeanalizowaniu oraz przypisaniu otrzymanych wyników na tym nowopowstałym zbiorze z uzupełnionymi wartościami przewidywanymi uczony jest interpretowalny model (jeden z prostszych systemów, np. drzewo decyzyjne), który jest następnie oceniany na podstawie podobieństwa próbkowanych instancji do tych, z których dane próby powstały. Powstał wzór obrazujący owe porównanie:
+
+\begin{equation} \label{lime_eqn}
+explanation(x)\ =\ arg\ min_{g\ \in\ G}\ L(f,\ g,\ \pi_x)\ +\ \Omega(g)
+\end{equation}
+
+gdzie: wyjaśnienie dla badanej próbki oznaczonej jako $x$, to model $g$, minimalizujący funkcję starty, tutaj $L$, która mierzy jak blisko jest owa predykcja do predykcji modelu oryginalnego $f$  biorąc pod uwagę sąsiedztwo próbki $x$, którego używamy do wyjaśnienia - $\pi_x$. Dodatkowo obecna jest zmienna $\Omega(g)$ mówiąca o złożoności modelu, określanej jako ilość zmiennych. Dziedzina $G$ opisuje przestrzeń wszystkich możliwych modeli interpretowalnych danego typu. 
+	
+Wyjaśnienie predykcji odbywa się za pomocą interpretacji modelu lokalnego (powstałego wskutek metody LIME). Rozwiązanie to daje dobre dopasowania lokalne, jednak nie gwarantuje poprawnych wyników globalnie (tzw. \textit{local fidelity}). Problematyczne może być tutaj wybranie odpowiedniego modelu surogacyjnego oraz wielkości sąsiedztwa branego pod uwagę podczas analizy próbki – zbyt duże powoduje wpływ mało istotnych elementów leżących daleko od badanej próby na wynik przewidywań, a za małe to, że skupiamy się na tym co leży najbliżej skutkując w możliwości pominięcia innych istotnych czynników.
+
+Za pomocą LIME można analizować obrazy, dane tekstowe czy tabelaryczne. W przypadku zdjęć zaburzenie danych odbywa się poprzez włączenie lub wyłączenie zbiorów pikseli dobieranych w grupy na podstawie sąsiedztwa oraz koloru. W celu przerobienia danych przechowywanych w tabelach metoda zmienia każdą z cech (wartości z kolumn) oddzielnie kierując się rozkładem normalnym ze średnią i odchyleniem standardowym dla danej cechy.
+
+Jedną z największych wad omawianej metody, oprócz problemu z doborem wielkości branego pod uwagę sąsiedztwa próby, jest brak stabilności w wynikach predykcji. Jeśli ponownie przeprowadzimy podział danych, to może się zdarzyć, że LIME poda inne wyjaśnienia pomimo dużej zbierzności próbek do tych pochodzących z poprzedniej selekcji. Kolejnym problemem jest możliwość powstania danych, które nie istnieją bądź są skrajnie rzadkie. Takie przypadki powstają podczas tworzenia nowych zaburzonych informacji z tych już istniejących. Niemniej jednak metoda jest prosta w implementacji i zrozumieniu oraz generuje przejrzyste wyniki. Poprzez umiejętnośc analizowania różnych typów zmiennych może być wszechstronnie używana. Dodatkowo zbiory przedstawione modelowi oryginalnemu a LIME nie muszą być jednakowe. Często, ze względu na olbrzymi format danych, używa się specjalnych metod mających na celu zmniejszenie ich wymiarów, bądź stosuje normalizację. Taka transformacja sprawia, że przybierają one nie dającą się pojąć dla ludzi formę. Dzięki zastosowaniu w owej metodzie pierwotnych zbiorów zachowujemy ich czytelniejszą strukturę \cite{molnar2025, oreilly_lime}.  
+
+
+\subsection{SHAP}
+
+SHAP (ang. SHapley Additive exPlanations) jest kolejną niezależną lokalną metodą post-hoc, za pomocą której możemy analizować dane tekstowe, tabelaryczne i obrazy. Bazuje ona na wartościach Shapley’a z teorii gier. Polega to na tym, że każdą z cech (lub grupy cech, np. grupę pikseli) określamy mianem gracza grającego w grę (naukę modelu), gdzie nagrodą jest przewidywanie modelu, którą musimy rozdzielić pomiędzy graczy w zależności od ich wkładu w jej zdobycie (wpływ na wynik). Odpowiedzią powinny być wartości mówiące jakie zaangażowanie miała każda ze zmiennych użyta do konkretnej predykcji w porównywaniu ze średnią prognozą, czyli wyjaśnienie czemu przypadek odbiega od wartości przeciętnej. Może to przypominać regresję liniową, jednak nie potrafi ona wychwytywać zależności pomiędzy graczami (cechami), zwanych korelacjami, co czyni ją niezadowalającym rozwiązaniem. 
+
+
+Do obliczenia wartości Shapley'a cechy brane są pod uwagę jej istniejące związki z innymi instancjami. W praktyce zkładając, że rozważamy wszystkie możliwe do stworzenia korelacje 3 elementowego zbioru, w którym wszystkie cechy są ze sobą powiązane, oznaczałoby to łącznie 7 różnych możliwości - 3 wartości bazowe, 3 koalicje dwu-argumentowe i 1 koalicję trzy-argumentową. Następnie stworzenie 6 równań równych wartości największej koalicji i zebraniu z nich obliczeń wpływu każdej z poszczególnych cech biorąc pod uwagę wykorzystane w owym równaniu koalicje a na koniec podzielenie tych zebranych wpływów przez ilość równań. Obliczona w ten sposób liczba to wartość Shapley'a cechy. Jak można zauważyć ilość przeprowadzanych działań rośnie wykładniczo wraz z wielkością zbioru cech. W celu rozwiązania tego problemu możemy skupić się tylko na wybranych związkach, co skutkowuje uzyskaniem przybliżenia dokładnej wartości. Jeśli jakaś zmienna jest niezależna od badanej, jej wartości są dobierane losowo (albo zamieniane na inne dostępne o ile badane dane są tabelaryczne). 
+
+SHAP  wyróżnia się tym, że dodaje wpływy cech. Wyjaśnienie określone jest zależnością:
+
+\begin{equation} \label{shap_eqn}
+g(z')\ =\ \phi_0\ +\ \sum_{j=1}^{M} \phi_j\ z'_j
+\end{equation}
+
+
+https://miroslawmamczur.pl/wartosc-shapleya-interpretacja-modeli-blackbox/#:~:text=Biblioteka%20SHAP%20SHAP%20(SHapley%20Additive%20exPlanations)%20jest,się%20w%20dokumentacji%20biblioteki)%20do%20wyjaśniania%20modeli.
+https://pl.wikipedia.org/wiki/Wartość_Shapleya
+https://www.sciencedirect.com/science/article/pii/S1566253523001148
+https://christophm.github.io/interpretable-ml-book/shap.html
+
+gdzie, $g$ jest modelem objaśniającym, $z' = (z'_1,\dots, z'_M)^T \in\{0,1\}^M$ jest nazywane uproszczonymi cechami, $M$ to maksymalna wielkość koalicji, a $\phi_j \in \mathbb{R}$ oznacza atrybucję cech dla $j$. Przy interpretacji wartości Shapley’a należy zachować ostrożność. Może nam się wydawać słusznym postrzegać je jako różnicę w przewidywaniu po usunięciu cechy z modelu. Jest to jednak błędne podejście, ponieważ nie pełnią one takiej roli – mówią tylko o wpływie cechy na prognozę w różnych koalicjach, a nie co się stanie przy jej nieobecności.  
+
+Omawiana metoda łączy w sobie LIME oraz wartości Shapley’a. Zyskuje na tym podstawy pochodzące z teorii gier – równomierny rozkład wkładu w wynik końcowy pomiędzy cechami oraz kontrastowe wyjaśnienia. Niestety cierpi ona na długi czas wykonywania obliczeń spowodowany ilością różnych możliwych koalicji. Początkowo stosowanym sposobem obliczania wartości Shapley’a był KernelSHAP, który robił obliczenia dla wszystkich znanych koalicji. W celu uporania się z problemem złożoności obliczeniowej powstały dwie alternatywy. TreeSHAP jest skoncentrowany na modelach drzewiastych, czyli np. lasach losowych, podczas gdy druga możliwość polega na mądrym doborze koalicji poprzez permutację cech. Niestety SHAP posiada też inną bardzo istotną wadę – mogą za jej pomocą powstawać mylące interpretacje ukrywające uprzedzenia, co zmniejsza zaufanie do wyników owej metody. Może to być spowodowane istnieniem wielu wizualizacji, które są mało klarowne i trudne do zrozumienia. Pomimo wspomnianych nieudogodnień i skomplikowania wciąż uważam, że SHAP jest metodą wartą uwagi. 
+
+\subsection{Grad-Cam}
+
+https://adataodyssey.com/grad-cam/
+https://xai-tutorials.readthedocs.io/en/latest/_model_specific_xai/Grad-CAM.html
+https://medium.com/@bmuskan007/grad-cam-a-beginners-guide-adf68e80f4bb
+https://courses.minnalearn.com/en/courses/trustworthy-ai/preview/explainability/types-of-explainable-ai/
+
+Grad-CAM (ang. \textit{Gradient-weighted Class Activation Mapping}) to specyficzna dla modelu metoda post-hoc służąca do analizy obrazów w konwolucyjnych sieciach neuronowych. Jej działanie polega na zaznaczeniu za pomocą mapy cieplnej (zwanej również mapą aktywacji klasy – ang. \textit{Class Activation Map (CAM)}) elementów badanego obiektu, które mają największy wpływ na jego klasyfikację. Potrafi to zrobić dzięki gradientom klas, za pomocą których waży mapy cech w warstwach konwolucyjnych. 
+Na początku podajemy dla naszej sieci obraz wejściowy i przeprowadzamy za jej pomocą klasyfikację. W taki sposób uzyskamy w całości uzupełnione mapy cech oraz logity, czyli wartości mówiące z jakim prawdopodobieństwem sklasyfikowano na obrazie cechę ze zbioru możliwych klas nauczonych przez model. Następnie wybieramy logit. Niekoniecznie ten, który jest najprawdopodobniejszym rozwiązaniem. Teraz skupiamy się na, którejś z warstw splotowej naszej sieci, w której znajdują się interesujące nas mapy cech. Zazwyczaj powinno się używać ostatniej z nich, ponieważ zawiera ona najistotniejsze części obrazu. Ważymy wszystkie mapy, tak aby każdy element miał taką samą wagę, a następnie je sumujemy. Powstaje w ten sposób jedna macierz, która jest nazywana „ważoną mapą cech”. Poniższe równanie przedstawia jej uogólniony wzór:
+
+\begin{equation} \label{gradcam_eqn}
+\sum_{k} a^c_k\ A^k
+\end{equation}
+
+gdzie: $a_k^c$ to waga, którą nadajemy mapie cech $k$, natomiast $A^k$ oznacza mapę cech, która w każdym z przypadków jest macierzą elementów. Wszystkie modele oparte na mapach aktywacji klasy stosują tę procedurę, wykorzystując różne podejścia do obliczania wag. W przypadku modelu Grad-CAM są one oparte na gradientach logitu dla klasy $c$. 
+
+Stosując propagację wsteczną jesteśmy w stanie znaleźć gradient będący pochodną logitu względem elementu mapy cech. Mówi on jak zmiany w elemencie wpływają na wartość logitu, na przykład im większy on będzie tym znaczniejszy jest jego wkład. Niektóre z elementów ważonej mapy cech mogą posiadać ujemne wartości wskazujące na to, że dana instancja wpływała negatywnie na przewidzianą klasę. Z racji, że interesują nas wartości przeciwne, powinniśmy użyć funkcji aktywacji o nazwie ReLU, która zamienia wartości ujemne na zera. W przedstawiony sposób uzyskujemy mapę cieplną o wielkości map cech w wybranej przez nas warstwie konwolucyjnej. W celu analizy należy zwiększyć jej rozmiar do tego odpowiadającego obrazowi wejściowemu. Możemy tego dokonać wykorzystując technikę upsampling’u z wykorzystaniem technik interpolacji. Proces ten polega na uzupełnieniu rozszerzanego obrazu poprzez wstawianie pixeli, pomiędzy te już istniejące, które mają jak najbardziej odpowiadać brakom.
+
+
+\subsection{Permutation Feature Importance}
+
+https://christophm.github.io/interpretable-ml-book/feature-importance.html
+https://pmc.ncbi.nlm.nih.gov/articles/PMC8323609/
+https://scikit-learn.org/stable/modules/permutation_importance.html
+https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html
+https://medium.com/data-science/deep-dive-into-pfi-for-model-interpretability-f12f0c64226c
+https://scikit-learn.org/stable/modules/generated/sklearn.inspection.permutation_importance.html
+https://learn.microsoft.com/en-us/dotnet/machine-learning/how-to-guides/explain-machine-learning-model-permutation-feature-importance-ml-net
+
+\textit{Permutation Feature Importance} (skrót PFI), które możemy tłumaczyć jako ważność cech permutacji to bardzo prosta technika wyjaśniania modelu należąca do nizależnych globalnych metod post-hoc. Jej działanie polega na przepermutowaniu wartości cechy a następnie zmierzeniu błędu predykcji. Jeżeli po owej zmianie miara poprawności odpowiedzi naszego modelu zmaleje, to znaczy, że badana cecha jest istotna. Dzieje się tak, ponieważ na niej opiera się przewidywanie, a jej zmiana negatywnie wpłynie na jakość spodziewanego wyniku. Zaproponowany przez Fisher’a, Rudin’a i Dominici’ego w 2019r. schemat znakomicie obrazuje kroki tej techniki. Danymi wejściowymi są w nim dopasowany model predykcyjny oznaczony literą $m$, tabelaryczny zbiór cech (np. macierz) $X$, miara referencyjna (zazwyczaj błędu) $L$, wartość docelowa (czyli ta która jest poprawnym wynikiem przewidywania) $y$. Przebieg owego algorytmu:
+\begin{enumerate}
+    \item Oceń miarę referencyjną modelu oryginalnego, tu miarę błędu 
+    
+    \begin{equation} \label{pfi_eqn}
+    e_{origin}\ =\ \frac{1}{n_{test}}\ \sum_{i=1}^{n_{test}} L(y^{(i)},\ m(x^{(i)}))
+    \end{equation}
+    
+    gdzie $n_{test}$, to wielkość zbioru testowego, na którym wyliczana jest szukana wartość.
+    \item Dla każdej cechy należącej do zbioru $X$, tutaj określanej jako $j$ oraz powtórzenia $k$:
+    
+    \begin{enumerate}
+        \item 	Stwórz nowy zbiór $X_{k,\ j}$ poprzez permutację wartości $j$ (np. losowe przetasowanie kolumny).
+        \item 	Oceń miarę referencyjną zbioru $X_{k,\ j}$ na modelu $m$, analogicznie jak przy mierze oryginalnej (na tym samym zbiorze danych ale ze zmodyfikowaną cechą $j$ - $x_{k,\ j}$ zamiast $x^{\left(i\right)}$)
+        \item 	Oblicz istotność cechy ${FI}_j$ jako różnicę bądź iloraz miary referencyjnej zbioru zmienionego a oryginalnego. Poniższy wzór przedstawia różnicę:
+
+        \begin{equation} \label{pfi_eqn}
+        {FI}_j=\ e_{k,\ j}-\ e_{origin}
+        \end{equation}
+    \end{enumerate}
+
+    \item Posortuj wartości $FI$ (skrót od ang. \textit{Feature Importance}) malejąco.
+\end{enumerate}
+
+Metoda jest bardzo prosta jednak posiada swoje ograniczenia. Jednym z nich jest ograniczenie użytkowania wyłącznie do danych tabelarycznych. Kolejnym - wymóg posiadania poprawnego wyniku przewidywań, to znaczy, że musimy użyć uczenia nadzorowanego, czyli takiego, który wykorzystuje zbiór treningowy zawierający reprezentację wniosku, inaczej nie będziemy w stanie obliczyć miary referencyjnej. Warto również zauważyć, iż ważność cechy jest tylko rankingiem, mówiącym jak bardzo zwiększy się miara straty, ale nie to, czy zwiększenie jej poprawi prognozę. Dodatkowo powinno się zwracać uwagę na korelacje pomiędzy różnymi danymi, ponieważ jeśli są one silnie związane ze sobą, to przy permutacji którejś z nich mogą powstać fizycznie niemożliwe sytuacje.
