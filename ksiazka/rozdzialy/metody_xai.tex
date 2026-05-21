@@ -33,10 +33,10 @@ g(z')\ =\ \phi_0\ +\ \sum_{j=1}^{M} \phi_j\ z'_j
 \end{equation}
 
 
-https://miroslawmamczur.pl/wartosc-shapleya-interpretacja-modeli-blackbox/#:~:text=Biblioteka%20SHAP%20SHAP%20(SHapley%20Additive%20exPlanations)%20jest,się%20w%20dokumentacji%20biblioteki)%20do%20wyjaśniania%20modeli.
-https://pl.wikipedia.org/wiki/Wartość_Shapleya
-https://www.sciencedirect.com/science/article/pii/S1566253523001148
-https://christophm.github.io/interpretable-ml-book/shap.html
+%https://miroslawmamczur.pl/wartosc-shapleya-interpretacja-modeli-blackbox/#:~:text=Biblioteka%20SHAP%20SHAP%20(SHapley%20Additive%20exPlanations)%20jest,się%20w%20dokumentacji%20biblioteki)%20do%20wyjaśniania%20modeli.
+%https://pl.wikipedia.org/wiki/Wartość_Shapleya
+%https://www.sciencedirect.com/science/article/pii/S1566253523001148
+%https://christophm.github.io/interpretable-ml-book/shap.html
 
 gdzie, $g$ jest modelem objaśniającym, $z' = (z'_1,\dots, z'_M)^T \in\{0,1\}^M$ jest nazywane uproszczonymi cechami, $M$ to maksymalna wielkość koalicji, a $\phi_j \in \mathbb{R}$ oznacza atrybucję cech dla $j$. Przy interpretacji wartości Shapley’a należy zachować ostrożność. Może nam się wydawać słusznym postrzegać je jako różnicę w przewidywaniu po usunięciu cechy z modelu. Jest to jednak błędne podejście, ponieważ nie pełnią one takiej roli – mówią tylko o wpływie cechy na prognozę w różnych koalicjach, a nie co się stanie przy jej nieobecności.  
 
@@ -44,10 +44,10 @@ Omawiana metoda łączy w sobie LIME oraz wartości Shapley’a. Zyskuje na tym 
 
 \subsection{Grad-Cam}
 
-https://adataodyssey.com/grad-cam/
-https://xai-tutorials.readthedocs.io/en/latest/_model_specific_xai/Grad-CAM.html
-https://medium.com/@bmuskan007/grad-cam-a-beginners-guide-adf68e80f4bb
-https://courses.minnalearn.com/en/courses/trustworthy-ai/preview/explainability/types-of-explainable-ai/
+%https://adataodyssey.com/grad-cam/
+%https://xai-tutorials.readthedocs.io/en/latest/_model_specific_xai/Grad-CAM.html
+%https://medium.com/@bmuskan007/grad-cam-a-beginners-guide-adf68e80f4bb
+%https://courses.minnalearn.com/en/courses/trustworthy-ai/preview/explainability/types-of-explainable-ai/
 
 Grad-CAM (ang. \textit{Gradient-weighted Class Activation Mapping}) to specyficzna dla modelu metoda post-hoc służąca do analizy obrazów w konwolucyjnych sieciach neuronowych. Jej działanie polega na zaznaczeniu za pomocą mapy cieplnej (zwanej również mapą aktywacji klasy – ang. \textit{Class Activation Map (CAM)}) elementów badanego obiektu, które mają największy wpływ na jego klasyfikację. Potrafi to zrobić dzięki gradientom klas, za pomocą których waży mapy cech w warstwach konwolucyjnych. 
 Na początku podajemy dla naszej sieci obraz wejściowy i przeprowadzamy za jej pomocą klasyfikację. W taki sposób uzyskamy w całości uzupełnione mapy cech oraz logity, czyli wartości mówiące z jakim prawdopodobieństwem sklasyfikowano na obrazie cechę ze zbioru możliwych klas nauczonych przez model. Następnie wybieramy logit. Niekoniecznie ten, który jest najprawdopodobniejszym rozwiązaniem. Teraz skupiamy się na, którejś z warstw splotowej naszej sieci, w której znajdują się interesujące nas mapy cech. Zazwyczaj powinno się używać ostatniej z nich, ponieważ zawiera ona najistotniejsze części obrazu. Ważymy wszystkie mapy, tak aby każdy element miał taką samą wagę, a następnie je sumujemy. Powstaje w ten sposób jedna macierz, która jest nazywana „ważoną mapą cech”. Poniższe równanie przedstawia jej uogólniony wzór:
@@ -63,13 +63,13 @@ Stosując propagację wsteczną jesteśmy w stanie znaleźć gradient będący p
 
 \subsection{Permutation Feature Importance}
 
-https://christophm.github.io/interpretable-ml-book/feature-importance.html
-https://pmc.ncbi.nlm.nih.gov/articles/PMC8323609/
-https://scikit-learn.org/stable/modules/permutation_importance.html
-https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html
-https://medium.com/data-science/deep-dive-into-pfi-for-model-interpretability-f12f0c64226c
-https://scikit-learn.org/stable/modules/generated/sklearn.inspection.permutation_importance.html
-https://learn.microsoft.com/en-us/dotnet/machine-learning/how-to-guides/explain-machine-learning-model-permutation-feature-importance-ml-net
+%https://christophm.github.io/interpretable-ml-book/feature-importance.html
+%https://pmc.ncbi.nlm.nih.gov/articles/PMC8323609/
+%https://scikit-learn.org/stable/modules/permutation_importance.html
+%https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html
+%https://medium.com/data-science/deep-dive-into-pfi-for-model-interpretability-f12f0c64226c
+%https://scikit-learn.org/stable/modules/generated/sklearn.inspection.permutation_importance.html
+%https://learn.microsoft.com/en-us/dotnet/machine-learning/how-to-guides/explain-machine-learning-model-permutation-feature-importance-ml-net
 
 \textit{Permutation Feature Importance} (skrót PFI), które możemy tłumaczyć jako ważność cech permutacji to bardzo prosta technika wyjaśniania modelu należąca do nizależnych globalnych metod post-hoc. Jej działanie polega na przepermutowaniu wartości cechy a następnie zmierzeniu błędu predykcji. Jeżeli po owej zmianie miara poprawności odpowiedzi naszego modelu zmaleje, to znaczy, że badana cecha jest istotna. Dzieje się tak, ponieważ na niej opiera się przewidywanie, a jej zmiana negatywnie wpłynie na jakość spodziewanego wyniku. Zaproponowany przez Fisher’a, Rudin’a i Dominici’ego w 2019r. schemat znakomicie obrazuje kroki tej techniki. Danymi wejściowymi są w nim dopasowany model predykcyjny oznaczony literą $m$, tabelaryczny zbiór cech (np. macierz) $X$, miara referencyjna (zazwyczaj błędu) $L$, wartość docelowa (czyli ta która jest poprawnym wynikiem przewidywania) $y$. Przebieg owego algorytmu:
 \begin{enumerate}
@@ -87,7 +87,7 @@ https://learn.microsoft.com/en-us/dotnet/machine-learning/how-to-guides/explain-
         \item 	Oceń miarę referencyjną zbioru $X_{k,\ j}$ na modelu $m$, analogicznie jak przy mierze oryginalnej (na tym samym zbiorze danych ale ze zmodyfikowaną cechą $j$ - $x_{k,\ j}$ zamiast $x^{\left(i\right)}$)
         \item 	Oblicz istotność cechy ${FI}_j$ jako różnicę bądź iloraz miary referencyjnej zbioru zmienionego a oryginalnego. Poniższy wzór przedstawia różnicę:
 
-        \begin{equation} \label{pfi_eqn}
+        \begin{equation} \label{pfi_eqn2}
         {FI}_j=\ e_{k,\ j}-\ e_{origin}
         \end{equation}
     \end{enumerate}

@@ -1,3 +1,5 @@
 /zbiory
 /inne
 PetImages/
+ksiazka/main.*
+!ksiazka/main.tex

@@ -4,16 +4,16 @@ W tym rozdziale pragnę przybliżyć 3 wybrane modele klasyfikacyjne. Należą d
 
 \subsection{Random Forest}
 
-https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
-https://en.wikipedia.org/wiki/Random_forest
-https://www.geeksforgeeks.org/machine-learning/random-forest-algorithm-in-machine-learning/
-https://www.researchgate.net/publication/382419308_Random_Forest_Algorithm_Overview
-https://christophm.github.io/interpretable-ml-book/tree.html
-https://pl.wikipedia.org/wiki/Las_losowy
-https://www.cognity.pl/blog-czym-sa-lasy-losowe-i-jak-dzialaja
-https://cez.wi.pb.edu.pl/pluginfile.php/30759/mod_resource/content/1/ED10_rodziny%20drzew.pdf
-https://cez.wi.pb.edu.pl/pluginfile.php/30538/mod_resource/content/2/ED9_drzewa.pdf
-https://www-ibm-com.translate.goog/think/topics/bagging?_x_tr_sl=en&_x_tr_tl=pl&_x_tr_hl=pl&_x_tr_pto=rq
+%https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
+%https://en.wikipedia.org/wiki/Random_forest
+%https://www.geeksforgeeks.org/machine-learning/random-forest-algorithm-in-machine-learning/
+%https://www.researchgate.net/publication/382419308_Random_Forest_Algorithm_Overview
+%https://christophm.github.io/interpretable-ml-book/tree.html
+%https://pl.wikipedia.org/wiki/Las_losowy
+%https://www.cognity.pl/blog-czym-sa-lasy-losowe-i-jak-dzialaja
+%https://cez.wi.pb.edu.pl/pluginfile.php/30759/mod_resource/content/1/ED10_rodziny%20drzew.pdf
+%https://cez.wi.pb.edu.pl/pluginfile.php/30538/mod_resource/content/2/ED9_drzewa.pdf
+%https://www-ibm-com.translate.goog/think/topics/bagging?_x_tr_sl=en&_x_tr_tl=pl&_x_tr_hl=pl&_x_tr_pto=rq
 
 Random Forest, czyli las losowy, to metoda polegająca na zbieraniu wyników z wielu niezależnych modeli, aby na ich podstawie udzielić odpowiedzi końcowej. Wykorzystuje w tym celu drzewa decyzyjne, których przykładową strukturę przedstawiono na Rys. \ref{fig:decision_tree} Składają się one z:
 \begin{itemize}
@@ -36,14 +36,14 @@ Las losowy jest metodą charakteryzującą się wysoką dokładnością wyników
 
 \subsection{XGBoost}
 
-https://miroslawmamczur.pl/czym-jest-wzmocnienie-gradientowe-gradient-boosting-i-dlaczego-jest-taki-dobry/
-https://www.cognity.pl/xgboost-vs-sticky-learn-porownanie-algorytmow-ml
-https://www.flowhunt.io/pl/slownik/xgboost/#
-https://www.analyticsvidhya.com/blog/2018/09/an-end-to-end-guide-to-understand-the-math-behind-xgboost/
-https://miroslawmamczur.pl/jak-dziala-las-losowy-random-forest/
-https://pl.wikipedia.org/wiki/Gradient_(matematyka)
-https://polskiekino.com.pl/xgboost-vs-lightgbm-vs-catboost-wielki-test-na-jednym-datasetcie
-https://digitaldefynd.com/IQ/pros-cons-of-xg-boost/
+%https://miroslawmamczur.pl/czym-jest-wzmocnienie-gradientowe-gradient-boosting-i-dlaczego-jest-taki-dobry/
+%https://www.cognity.pl/xgboost-vs-sticky-learn-porownanie-algorytmow-ml
+%https://www.flowhunt.io/pl/slownik/xgboost/#
+%https://www.analyticsvidhya.com/blog/2018/09/an-end-to-end-guide-to-understand-the-math-behind-xgboost/
+%https://miroslawmamczur.pl/jak-dziala-las-losowy-random-forest/
+%https://pl.wikipedia.org/wiki/Gradient_(matematyka)
+%https://polskiekino.com.pl/xgboost-vs-lightgbm-vs-catboost-wielki-test-na-jednym-datasetcie
+%https://digitaldefynd.com/IQ/pros-cons-of-xg-boost/
 
 XGBoost (ang. \textit{Extreme Gradient Boosting}) tłumaczona na polski jako ekstremalne wzmocnienie gradientowe to metoda, która podobnie jak las losowy wykorzystuje wiele mniejszych modeli, w tym drzew decyzyjnych, aby określić wyniki. Jednak, w przeciwieństwie do poprzednio omawianego sposobu, działa na zasadzie boostingu, a nie baggingu. Proces ten polega na budowie sekwencyjnej. Każde drzewo (oprócz pierwszego) budowane jest na podstawie poprzednika dążąc do zmniejszenia ilości błędnych założeń. Początkowe podmodele są słabo przystosowane do problemu z mocą predykcyjną zbliżoną, ale lekko lepszą, niż losowe przydzielanie wartości, posiadają wysoki wskaźnik błędu. Mimo to są one niezwykle istotne ze względu na zawieranie kluczowych informacji dotyczących dzielenia zbiorów. Wraz z postępem algorytmu uczenia, czyli poprawą tych instancji oraz ich efektywnym połączeniem, wspomniane wcześniej miary zaczynają się polepszać. Kierunek, w którym ma poruszać się boosting, czyli tworzyć nowe drzewa, jest wyznaczany przez gradient. W tym przypadku oznacza ono pojęcie matematyczne odnoszące się do „pola wektorowego wskazującego kierunki najszybszych wzrostów wartości danego pola skalarnego w poszczególnych punktach, przy czym moduł („długość”) każdego wektora jest równy szybkości wzrostu pola skalarnego w kierunku największego wzrostu.” (Wikipedia, 2026). 
 
