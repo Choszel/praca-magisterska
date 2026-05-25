@@ -333,13 +333,8 @@ Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech PFI wskazało tylko 6, kt
     \label{fig:pfi_dnn_diabetes}
 \end{figure}
 
-
-\subsection{Bank Marketing}
-https://archive.ics.uci.edu/dataset/222/bank+marketing
-https://archive.ics.uci.edu/dataset/915/differentiated+thyroid+cancer+recurrence
-
 \subsection{UCI Heart Disease Data}
-Pierwszym analizowany zbiór danych dotyczy występowania choroby serca oraz jej stadium, co czyni go problemem klasyfikacji wieloklasowej. Zawiera 16 kolumn oraz 920 rekordów. Id jest identyfikatorem pacjenta i nie jest brane pod uwagę podczas badań. Do zmiennych wejściowych należą: wiek (age), płeć (sex), miejsce badania (dataset), typ bólu klatki piersiowej (cp), spoczynkowe ciśnienie krwi (trestbps), cholesterol całkowity w surowicy (chol), czy poziom cukru we krwi na czczo jest wysoki (fbs), wynik elektrokardiograficzny w spoczynku (restecg), osiągnięte maksymalne tętno (thalach/ thalch - w bazie danych występuje literówka), dławica piersiowa wywołana wysiłkiem fizycznym (exang), obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku (oldpeak), spadek odcinka ST podczas szczytowego wysiłku fizycznego (slope), liczba głównych naczyń zabarwionych fluoroskopią (ca), niedokrwistość tarczowatokrwinkowa (thal). Natomiast zmienną docelową jest „num”, która oznacza stadium choroby serca. Może ona przyjmować jedną z 5 wartości, gdzie 0 symbolizuje brak problemów z narządem, a 4 poważne trudności \cite{heart_disease_dataset}.
+Drugi analizowany zbiór danych dotyczy występowania choroby serca oraz jej stadium, co czyni go problemem klasyfikacji wieloklasowej. Zawiera 16 kolumn oraz 920 rekordów. Id jest identyfikatorem pacjenta i nie jest brane pod uwagę podczas badań. Do zmiennych wejściowych należą: wiek (age), płeć (sex), miejsce badania (dataset), typ bólu klatki piersiowej (cp), spoczynkowe ciśnienie krwi (trestbps), cholesterol całkowity w surowicy (chol), czy poziom cukru we krwi na czczo jest wysoki (fbs), wynik elektrokardiograficzny w spoczynku (restecg), osiągnięte maksymalne tętno (thalach/ thalch - w bazie danych występuje literówka), dławica piersiowa wywołana wysiłkiem fizycznym (exang), obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku (oldpeak), spadek odcinka ST podczas szczytowego wysiłku fizycznego (slope), liczba głównych naczyń zabarwionych fluoroskopią (ca), niedokrwistość tarczowatokrwinkowa (thal). Natomiast zmienną docelową jest „num”, która oznacza stadium choroby serca. Może ona przyjmować jedną z 5 wartości, gdzie 0 symbolizuje brak problemów z narządem, a 4 poważne trudności \cite{heart_disease_dataset}.
 
 \begin{figure}[H]
     \centering
@@ -771,10 +766,8 @@ Wszystkie cechy zostały uznane przez PFI jako istotne, jednakże uzyskane przez
     \label{fig:box_plot_dnn_pfi}
 \end{figure}
 
-
-
 \subsection{Brain MRI Images for Brain Tumor Detection}
-"'Brain MRI Images for Brain Tumor Detection"' jest zbiorem danych zawierającym 253 obrazy rezonansów magnetycznych mózgów. Na jego podstawie można przeprowadzać klasyfikację polegającą na wykrywaniu guzów. 155 zdjęć znajduje się w folderze "'yes"' oznaczającym wykrycie patologii, reszta została umieszczona w katalogu "'no"' \cite{brain_dataset}.
+"'Brain MRI Images for Brain Tumor Detection"' jest zbiorem danych zawierającym 253 obrazy rezonansów magnetycznych mózgów. Na jego podstawie można przeprowadzać klasyfikację polegającą na wykrywaniu guzów. 155 zdjęć znajduje się w folderze "'yes"' oznaczającym wykrycie patologii, reszta została umieszczona w katalogu "'no"' \cite{brain_dataset}. W dalszej części rozdziału próbki bez zmian nowotworowych będą określane jako klasa '0', a te z guzem - '1'. Na Rys. \ref{fig:6_no_brain_tumor} i \ref{fig:6_yes_brain_tumor} znajduje się po 6 przykładowych obrazów z obu klas decyzyjnych. Zauważamy na nich, że zdjęcia są czarno-białe, a zmiany nowotworowe to białe plamy, bądź miejsca posiadające obwódkę w tym kolorze, o nieregularnych kształtach.
 
 \begin{figure}[H]
     \centering
@@ -786,7 +779,7 @@ Wszystkie cechy zostały uznane przez PFI jako istotne, jednakże uzyskane przez
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.65\linewidth]{rysunki//brain/brain_yes.png}
-    \caption{Sześć przykładowych obrazów ze zmianami nowotworowych [źródło własne]}
+    \caption{Sześć przykładowych obrazów ze zmianami nowotworowymi [źródło własne]}
     \label{fig:6_yes_brain_tumor}
 \end{figure}
 
@@ -795,12 +788,9 @@ Na początku stworzyłam 3 foldery o nazwach "'TRAIN"', "'VAL"' i "'TEST"', w kt
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{rysunki/brain/tested_sample_brain.png}
-    \caption{Zdjęcie badanej próbki [źródło własne]}
+    \caption{Zdjęcie badanej próbki do zbioru dotyczącego zmian nowotworowych w mózgu [źródło własne]}
     \label{fig:tested_sample_brain}
 \end{figure}
-
-
-Macro avg odbiegały od weighted avg 1 punktem procentowym
 
 \begin{table}[H]
 \centering
@@ -817,12 +807,16 @@ Macro avg odbiegały od weighted avg 1 punktem procentowym
     \label{tab:brain_vgg16_metrics}
 \end{table}
 
+Jak możemy wyczytać z Tabeli \ref{tab:brain_vgg16_metrics} model VGG-16 uzyskał ROC AUC na poziomie 0.91. Zbiór testowy składał się jedynie z 26 obrazów. Do klasy decyzyjnej '0' należało 10, a '1' - 16. Spowodowało to niewielkie różnice pomiędzy średnią macro a ważoną w postaci 1 punktu procentowego dla pierwszych miar. Precyzja, czułość i F1-score dla klasy '0' wyniosły 80\%, a dla '1' - 88\%. Dokładność modelu osiągnęła 85\%. Macierz pomyłek zaprezentowana na Rys. \ref{fig:confusion_matrix_vgg16_brain} pokazuje, że model poprawnie zaklasyfikował 8 z 10 obrazów bez zmian nowotworowych oraz 14 z 16 ze zmianami. Badany model z prawdopodobieństwem w przybliżeniu 100\% zaklasyfikował badaną próbkę jako wariant z guzem, co było poprawnym wyborem.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/brain/confusion_matrix_vgg16_brain.png}
     \caption{Macierz pomyłek modelu VGG-16 dla zbioru dotyczącego zmian nowotworowych w mózgu [źródło własne]}
     \label{fig:confusion_matrix_vgg16_brain}
 \end{figure}
+
+Metoda LIME poprawnie wskazała dla badanej próbki klasę decyzyjną '1'. Na Rys. \ref{fig:lime_vgg16_1_brain} znajdują się 3 obrazki przedstawiające jej wytłumaczenia. Widzimy z niego, że wśród 5 najbardziej wpływowych obszarów nie znalazła się zmiana nowotworowa. Zostały zaznaczone części lewej strony obrazu, na których znajduje się kontur i leżące przy nim szare obszary. Pojawia się ona dopiero, gdy metoda podaje 10 najbardziej wpływowych superpixeli, zaraz obok dwóch rogów zdjęcia nie przedstawiających mózgu oraz oznaczonego na czerwono fragmentu nie zawierającego podejrzanych zmian. 
 
 \begin{figure}[H]
     \centering
@@ -831,12 +825,16 @@ Macro avg odbiegały od weighted avg 1 punktem procentowym
     \label{fig:lime_vgg16_1_brain}
 \end{figure}
 
+SHAP poprawnie zaklasyfikował badaną próbkę jako zawierającą zmiany nowotworowe. Rys. \ref{fig:shap_vgg16_1_brain} przedstawia obrazki pokazujące jego wyjaśnienia. Na środkowym zdjęciu zauważamy, że metoda oznaczyła większą część obrazka jako przemawiającą za wskazaną klasyfikacją. Znajduje się w tym obszarze zmiana nowotworowa, jednak nasycenie koloru czerwonego nie wskazuje, żeby była najistotniejsza w przewidywaniu. Takim miejscem jest lewy dolny róg zdjęcia, który przedstawie kontur mózgu i obszar poza głową. Na przeciw diagnozie klasy '1' wychodzi znajdujący się zaraz obok kawałek oznaczony kolorem niebieskim. Ze zdjęcia zamieszczonego po lewej stronie dostrzegamy, że rzeczywiście nie widać na nim podejrzanych elementów. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{rysunki/brain/shap_vgg16_1_brain.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody SHAP dla modelu VGG-16   [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody SHAP dla modelu VGG-16 [źródło własne]}
     \label{fig:shap_vgg16_1_brain}
 \end{figure}
+
+Na mapie stworzonej przy pomocy Grad-Cam, która znajduje się na Rys. \ref{fig:gradcam_vgg16_1_brain}, zostało zaznaczonych sporo obszarów. Wśród nich znajduje się zmiana nowotworowa, jednak jej oznaczenie zdaje się być trochę przesunięte wprawy dolny róg. Za najistotniejszy fragment metoda uznała lewą, środkową część obrazu przedstawiającą kontur mózgu i jego na szaro zaznaczone wnętrze poprzecinane ciemniejszymi liniami. W danej części nie widać jednak żadnych zmian nowotworowych. 
 
 \begin{figure}[H]
     \centering
@@ -844,10 +842,6 @@ Macro avg odbiegały od weighted avg 1 punktem procentowym
     \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-Cam dla modelu VGG-16   [źródło własne]}
     \label{fig:gradcam_vgg16_1_brain}
 \end{figure}
-
-
-   macro avg       0.97      0.95      0.96        26
-weighted avg       0.96      0.96      0.96        26
 
 \begin{table}[H]
 \centering
@@ -857,13 +851,14 @@ weighted avg       0.96      0.96      0.96        26
 \multicolumn{5}{|c|}{ROC AUC: 1.0}  \\ \hline
 \multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
 \multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{1.0}   & \multicolumn{1}{c|}{0.90}  & \multicolumn{1}{c|}{0.95}     & 10    \\ \hline
-\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.94}  & \multicolumn{1}{c|}{1.0}  & \multicolumn{1}{c|}{0.97}   & 16 \\ \hline
+\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.94}  & \multicolumn{1}{c|}{1.0}  & \multicolumn{1}{c|}{0.97}  & 16 \\ \hline
 \multicolumn{5}{|c|}{}  \\ \hline
 \multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.96} & 26 \\ \hline
 \end{tabular}
     \label{tab:brain_resNet50_metrics}
 \end{table}
 
+Analizując dane zamieszczone w Tabeli \ref{tab:brain_resNet50_metrics} zauważamy, że model ResNet50 osiągnął ROC AUC na poziomie 1.0. Precyzja dla klasy '0' wyniosła 100\%, a czułość - 90\%, co dało F1-score na poziomie 95\%. Dla klasy '1' owe metryki osiągnęły kolejno 94\%, 100\%, oraz 97\%. Średnie macro i ważone 3 omawianych miar oscylowały w przedziale od 95\% do 97\%. Model wykazał dokładność na poziomie 96\%. Owe wyniki potwierdza zamieszcona na Rys. \ref{fig:confusion_matrix_resNet50_brain} macierz pomyłek. Możemy z niej odczytać, że w klasyfikacji popełniony został tylko jeden błąd, a mianowicie jeden z przypadków klasy '0' został błednie oznaczony jako '1'. Badana próbka została poprawnie zdiagnozowana z praktycznie 100\% pewnością jako posiadająca zmiany nowotworowe.  
 
 \begin{figure}[H]
     \centering
@@ -872,12 +867,16 @@ weighted avg       0.96      0.96      0.96        26
     \label{fig:confusion_matrix_resNet50_brain}
 \end{figure}
 
+LIME wyjaśniający działanie modelu ResNet50 poprawnie zdiagnozował badaną próbkę jako posiadającą zmiany nowotworowe. Z jego wytłumaczeń znajdujących się na Rys. \ref{fig:lime_resNet50_1_brain} możemy zauważyć, że pośród 5 najistotniejszych obszarów nie znalazł się ten z guzem. Metoda oznaczyła jedynie górną część zdjęcia oraz prawy środek zdjęcia, czyli fragment sąsiadujący z  patologiczną częścią. Wśród 10 najbardziej wpływowych superpixeli już pojawiła się zmiana nowotworowa i nie wskazano żadnych elementów przeczących danej diagnozie. Zaistniały jednak obszary wykraczające poza kontur głowy. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{rysunki/brain/lime_resNet50_1_brain.png}
     \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody LIME dla modelu ResNet50   [źródło własne]}
     \label{fig:lime_resNet50_1_brain}
 \end{figure}
+
+Analizując utworzone dla poprawnej klasy decyzyjnej wyjaśnienia SHAP, które znajdują się na Rys. \ref{fig:shap_resNet50_1_brain}, dostrzegamy, że guz mózgu został poprawnie oznaczony dosyć intensywnym czerwonym kolorem. Jednak nie jest najbardziej istotną częścią zdjęcia, albowiem według metody, owym elementem jest  fragment konturu głowy znajdujący się w lewym górnym rogu oraz leżąca obok niego po prawej stronie część. Przeczące diagnozie elementy mieszczą się głównie na środku obrazka i są oznaczone kolorem niebieskim, patrząc na oryginalne zdjęcie widzimy, iż nie ma tam niepożądanych zmian. 
 
 \begin{figure}[H]
     \centering
@@ -886,16 +885,14 @@ weighted avg       0.96      0.96      0.96        26
     \label{fig:shap_resNet50_1_brain}
 \end{figure}
 
+Na mapie stworzonej przy pomocy Grad-Cam, która znajduje się na Rys. \ref{fig:gradcam_resNet50_1_brain}, został wskazany tylko jeden obszar. Jest to znaleziona zmiana nowotworowa, jednak jej oznaczenie kieruje się bardziej do środka obrazka niż do samego guza. Dodatkowo kwadraty jakich użyto do zaznaczenia owego fragmentu są dosyć duże, przez co wyjaśnienie wydaje się być mało precyzyjne.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/brain/gradcam_resNet50_1_brain.png}
     \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-Cam dla modelu ResNet50   [źródło własne]}
     \label{fig:gradcam_resNet50_1_brain}
 \end{figure}
-
-
-   macro avg       0.94      0.90      0.92        26
-weighted avg       0.93      0.92      0.92        26
 
 \begin{table}[H]
 \centering
@@ -913,12 +910,16 @@ weighted avg       0.93      0.92      0.92        26
 \end{table}
 
 
+Jak pokazuje Tablea \ref{tab:brain_xception_metrics} Xception osiągnął ROC AUC na poziomie 0.99. Jego dokładność wyniosła 92\%. Precyzja klasy '0' była perfekcyjna i wskazała 100\%, jednak czułość od niej znacznie odbiegała, bo uzyskała 80\%, co skutkowało 89\% F1-score. Odwrotna sytuacja miała miejsce w przypadku drugiego wariantu, gdzie znakomita czułość nadrabiała nieco niższą precyzję osiągającą 89\%, dając w efekcie 94\% F1-score. Dokładność modelu oceniono na 92\%. Jego średnie macro i ważone opisanych wcześniej dla poszczególnych klas miar mieściły się w przedziale od 90\% do 94\%. Zamieszczona na Rys. \ref{fig:confusion_matrix_xception_brain} macierz pomyłek przedstawia rozkład klasyfikacji. Widać na niej, że tylko 2 przypadki zostały źle zdiagnozowane. Stwierdzono na nich zmiany nowotworowe, gdy w rzeczywistości ich tam nie było. Badana próbka została poprawnie zaklasyfikowana jako posiadająca zmiany nowotworowe z prawdopodobieństwem bliskim 100\%. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/brain/confusion_matrix_xception_brain.png}
     \caption{Macierz pomyłek modelu Xception dla zbioru dotyczącego zmian nowotworowych w mózgu [źródło własne]}
     \label{fig:confusion_matrix_xception_brain}
 \end{figure}
+
+Metoda LIME poprawnie zaklasyfikowała badaną próbkę jako klasę '1'. Jak możemy zauważyć na Rys. \ref{fig:lime_xception_1_brain}, wśród 5 najbardziej wpływowych obszarów znalazła się zmiana nowotworowa. Oprócz niej widnieją tam trzy fragmenty przedstawiające kontur głowy z czego jeden zawiera również szaro oznaczone wnętrze. Pośród 10 najistotniejszych przesłanek nie znalazła się żadna, która przeczyłaby danej diagnozie. Oprócz wcześniej wymienionych części pojawiły się tam trzy obszary znajdujące się poza głową, będące rogami zdjęcia.   
 
 \begin{figure}[H]
     \centering
@@ -927,12 +928,16 @@ weighted avg       0.93      0.92      0.92        26
     \label{fig:lime_xception_1_brain}
 \end{figure}
 
+SHAP poprawnie zdiagnozował badaną próbkę jako posiadającą patologiczne zmiany. Z Rys. \ref{fig:shap_xception_1_brain} możemy odczytać, że metoda zaznaczyła większą część zdjęcia jako istotną dla danej klasy decyzyjnej. Znalazł się tam fragment zdjęcia z guzem, a jego część odznaczała się intensywnie nasyconą czerwienią. Na zmianie nowotworowej znajdują się wyszarzone pola mówiące, że dane miejsce nie ma wartości predykcyjnej. Znalazły się dwa niewielkie obszary przeczące danej predykcji, jeden mieszczący się w lewym dolnym rogu, a drugi po środku z lekka z prawej przy samym krańcu zdjęcia. Są to części nie posiadające żadnych niepokojących elementów. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{rysunki/brain/shap_xception_1_brain.png}
     \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody SHAP dla modelu Xception   [źródło własne]}
     \label{fig:shap_xception_1_brain}
 \end{figure}
+
+Jak widzimy na Rys. \ref{fig:gradcam_xception_1_brain} Grad-Cam wskazał jeden bardzo duży fragment zdjęcia. Znajduje się na nim guz, a jednemu z jego fragmentów przypisano jaskrawy żółty kolor, oznaczający jego wysoki, a nawet największy, wpływ na predykcję. Kwadraty użyte do oznaczania istotności poszczególnych części obrazu są sporawe, co prowadzi do ich mniejszej precyzji w próbie wyjaśnienia danej klasyfikacji. 
 
 \begin{figure}[H]
     \centering
@@ -942,7 +947,7 @@ weighted avg       0.93      0.92      0.92        26
 \end{figure}
 
 \subsection{Cats and Dogs Classification Dataset}
-\cite{cats&dogs_dataset, cats&dogs_dataset_preprocessing}
+Ostatni analizowany zbiór danych składa się z 12,499 zdjęć kotów i tylu samo psów, dając łącznie 24,998 próbek. Pochodzi on ze strony Kaggle i jest przeznaczony do klasyfikacji binarnej, gdzie klasa '0' oznacza obrazy mruczków, a '1' czworonogów szczekających \cite{cats&dogs_dataset}. Na Rys. \ref{fig:cats&dogs_data} zaprezentowanych zostało 5 przykładowych zdjęć ze zbioru treningowego reprezentujących przedstawicieli obu klas decyzyjnych. Jak widzimy są to obrazy kolorowe, które zostały już przycięte do rozmiaru 224 x 224 pikseli.
 
 \begin{figure}[H]
     \centering
@@ -951,6 +956,14 @@ weighted avg       0.93      0.92      0.92        26
     \label{fig:cats&dogs_data}
 \end{figure}
 
+W ramach procesu przygotowania danych, podobnie jak w przypadku poprzedniej bazy, utworzyłam 3 foldery w folderze przeznaczonym na przetworzone zbiory o nazwach "'TRAIN"', "'VAL"' i "'TEST"', do których trafiły odpowiednio obrazy do nauki, walidacji i testu. Pierwszy podział dzielił zbiór w stosunku 4:1 z czego ta mniejsza część została przeznaczona na walidację. Druga została poddana ponownemu rodzieleniu w takiej samej proporcji, z czego większy podzbiór został zbiorem treningowym, a reszta - testowym. W taki sposób na naukę przypadło 7999 obrazów przynależących do poszczególnych klas decyzyjnych, po 2500 do walidacji i 2000 do testu. Po przekopiowaniu ich do odpowiednich katalogów, zostały one wczytane do programu za pomocą funkcji pozwalającej na ich przycięcie do wymaganego przez modele rozmiaru 224 x 224 pikseli. Okazało się, że jedno ze zdjęć z folderu dotyczącego kotów o nazwie "10404.jpg" ma błędny format, więc zostało pominięte podczas tych badań. Ze względu na użycie opcji losowo podającej kolejność zdjęć przy każdej próbie iteracji stworzyłam duplikaty zmiennych przechowujących zbiory treningowe i walidacyjne bez tej możliwości. Do części testowej nie wykorzystałam przetasowania \cite{cats&dogs_dataset_preprocessing}. Badane próbki pochodzą z podzbioru przeznaczonego na naukę i mieszczą się pod indeksami 10, z czego zdjęcie z kotem pochodzi z \textit{batch}'a o numerze 0, a z psem - 321. Zostały one zaprezentowane na Rys. \ref{fig:cats&dogs_tested_samples}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{rysunki/cats&dogs/tested_samples_cats&dogs.png}
+    \caption{Zdjęcia badanych próbek do zbioru dotyczącego klasyfikacji psów i kotów [źródło własne]}
+    \label{fig:cats&dogs_tested_samples}
+\end{figure}
 
 \begin{table}[H]
 \centering
@@ -967,6 +980,7 @@ weighted avg       0.93      0.92      0.92        26
     \label{tab:cats&dogs_vgg16_metrics}
 \end{table}
 
+Z Tabeli \ref{tab:cats&dogs_vgg16_metrics} możemy odczytać, że model VGG-16 osiągnął ROC AUC na poziomie 0.99. Precyzja, czułość i F1-score dla klasy '0' wyniosły odpowiednio 96\%, 97\% i 97\%. Dla klasy '1' te metryki osiągnęły kolejno 97\%, 96\% i 97\%. Dokładność modelu oceniono na 97\%. Średnie macro i ważone ze względu na taki sam rozkład próbek względem klas decyzyjnych były jednakowe. Tak dobre wyniki potwierdza zamieszczona na Rys. \ref{fig:confusion_matrix_vgg16_cats&dogs} macierz pomyłek. Możemy z niej wyczytać, że model poprawnie rozpoznał na 1940 z 2000 obrazach kota, a 1929 z 2000 psa. Tak niezwykle wysoka umiejętność klasyfikacji przełożyła się na fakt, że VGG-16 badanej próbce należącej do klasy '0' przypisał wartość 0.03, a do '1' - 1. Świadczy to o jego dużej pewności, co do wskazanych predykcji, które sa poprawne.      
 
 \begin{figure}[H]
     \centering
@@ -975,6 +989,8 @@ weighted avg       0.93      0.92      0.92        26
     \label{fig:confusion_matrix_vgg16_cats&dogs}
 \end{figure}
 
+Metoda LIME diagnozując badaną diagnozę poprawnie wskazała jej przynależność do klasy '0'. Jak widzimy na Rys. \ref{fig:lime_vgg16_0_cats&dogs} wśród 5 najistotniejszych obszarów znalazł się kawałek główki kota, jego szyja oraz tło. Rozszerzenie przestrzeni do 10 najbardziej znaczących fragmentów poszerzyło wskazane wcześniej części o ich sąsiedztwo, czyli całą głowę, przestrzeń od szyji do połowy łapek, kark oraz kolejne części tła. Wśród nich nie znalazł się żaden, obszar przeczący danej klasyfikacji.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{rysunki/cats&dogs/lime_vgg16_0_cats&dogs.png}
@@ -982,12 +998,16 @@ weighted avg       0.93      0.92      0.92        26
     \label{fig:lime_vgg16_0_cats&dogs}
 \end{figure}
 
+Podobna sytuacj ma miejsce w przypadku próbki przedstawiającej pieska, która widnieje na Rys. \ref{fig:lime_vgg16_1_cats&dogs}. Tutaj LIME też poprawie zaklasyfikował obraz. Wśród 5 najbardziej wpływowych obszarów zaznaczył część pyszczka, a również kawałek łapki i udo z fragmentem ogona. Pośród 10 najistotniejszych cech znalazło się trochę tła obok kończyn stworzenia, przednia część torsu oraz większość tylnej lewej łapy. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{rysunki/cats&dogs/lime_vgg16_1_cats&dogs.png}
     \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej psa za pomocą metody LIME dla modelu VGG-16 [źródło własne]}
     \label{fig:lime_vgg16_1_cats&dogs}
 \end{figure}
+
+Analizując wyjaśnienia SHAP dla badanych próbek, które znajdują się na Rys. \ref{fig:shap_vgg16_0_cats&dogs} i \ref{fig:shap_vgg16_1_cats&dogs}, poprawnie zaklasyfikowane przez metodę, możemy zauważyć, że w dużej mierze wskazują one na ciała zwierząt. Szczególnie widać to w przypadku kota. Niestety zaznaczona została też część tła. W przypadku mruczka najważniejszym wskazanym fragmentem okazuje się być jego tylna część grzbietu, a wyjaśnienie pieska koncentruje się w znacznym stopniu na pyszczku. Niebieska część, mowiąca o przeciwnej klasyfikacji pierwszego z tłumaczeń znajduje się w lewym dolnym rogu, w którym widnieje tył zwierzęcia. Na wersji ze szczekającym czworonogiem takie elementy są porozrzucane po całym zdjęciu, wskazując na tło, kawałek ogona, czy łapy.     
 
 \begin{figure}[H]
     \centering
@@ -1003,6 +1023,8 @@ weighted avg       0.93      0.92      0.92        26
     \label{fig:shap_vgg16_1_cats&dogs}
 \end{figure}
 
+Analizując wyjaśnenia Grad-Cam widniejące na Rys. \ref{fig:gradcam_vgg16_0_cats&dogs} i Rys. \ref{fig:gradcam_vgg16_1_cats&dogs}, dostrzegamy, że w przypadku próbki z kotem metoda wskazała bardzo nikłe obszary. Znajdują się na nich tło, kawałek górnej części pyszczka oraz fragment torsu zwierzęcia. Lepiej w tym zadaniu poradził sobie z drugim obrazem, gdzie wyraźnie oznaczył pysk stworzenia w szczególności oczy oraz dodatkowo, ale już mniej intensywnie, tors, przednie łapy i końcówkę ogona.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_vgg16_0_cats&dogs.png}
@@ -1016,7 +1038,6 @@ weighted avg       0.93      0.92      0.92        26
     \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-Cam dla modelu VGG-16   [źródło własne]}
     \label{fig:gradcam_vgg16_1_cats&dogs}
 \end{figure}
-
 
 
 \begin{table}[H]
@@ -1034,12 +1055,16 @@ weighted avg       0.93      0.92      0.92        26
     \label{tab:cats&dogs_resNet50_metrics}
 \end{table}
 
+ROC AUC modelu ResNet50 było perfekcyjnie i osiągnęło 1.0. Precyzja, czułość i F1-score dla obu klas były identyczne i wyniosły 98\%. Taki sam wynik uzyskała także dokładność. Dane zawarte w Tabeli \ref{tab:cats&dogs_resNet50_metrics} uzasadnia zamieszczona na Rys. \ref{fig:confusion_matrix_resNet50_cats&dogs} macierz pomyłek. Analizując ją zauważamy, że model poprawnie rozpoznał 1953 przypadki z 2000 przedstawiające kota poprawnie, a 1969 z 2000 obrazów psa, co przekłada się na prawie przeciwne kolory kafelków. Próbka przynależąca do klasy '0' została zaklasyfikowana z 5\% prawdopodobieństwem do klasy przeciwnej, czyli model był niemal zupełnie pewny jej odmiennej diagnozy. Drugą ResNet50 ocenił na 99\% jako przeddstawiającą reprezentanta klasy '1'.   
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/confusion_matrix_resNet50_cats&dogs.png}
     \caption{Macierz pomyłek modelu ResNet50 dla zbioru dotyczącego klasyfikacji psów i kotów [źródło własne]}
     \label{fig:confusion_matrix_resNet50_cats&dogs}
 \end{figure}
+
+LIME diagnozując próbkę z kotem poprawnie ją zaklasyfikował. Rozpatrując jego wyjaśnienia zamieszczone na Rys. \ref{fig:lime_resNet50_0_cats&dogs} spostrzegamy, że oznaczył on część głowy kota wycinając prawy fragment od nosa do policzka, a także bluzkę osoby trzymającej zwierzę z kawałkiem stroju w jaki zostało ono ubrane. Prawdopodobnie metoda mogła pomylić biały materiał z ogonem stworzenia, które ma podobne umaszczenie. Wśród 10 najbardziej wpływowych obszarów znalazło się wiele czerwonych plam, które zostały umiejscowione na łapach, szyi i części tła. Z pozytywnych elementów została usunięta lewa strona pyszczka i pozostała tylko ta górna. W przypadku próbki z psem, również dobrze sklasyfikowanej, przedstawionej na Rys. \ref{fig:lime_resNet50_1_cats&dogs}, LIME wskazał łapy zwierzęcia, górną część głowy i znajdujące się nad nią tło przedstawiające prawdopodobnie samochód. Rozszerzenie przestrzeni rozwiązań do 10 obszarów dodało do tłumaczenia więcej fragmentów scenerii, a także końcówkę ogona.
 
 \begin{figure}[H]
     \centering
@@ -1055,6 +1080,8 @@ weighted avg       0.93      0.92      0.92        26
     \label{fig:lime_resNet50_1_cats&dogs}
 \end{figure}
 
+SHAP jak wynika z zaprezentowanych Rys. \ref{fig:shap_resNet50_0_cats&dogs} i \ref{fig:shap_resNet50_1_cats&dogs} skupił się głównie na elementach pyszczków zwierząt. Dla kota oznaczył bardzo intensywnym czerwonym kolorem jego oczy z czołem a psa nos i policzek. Oprócz nich pojawiło się wiele innych pozytywnie wpływających na predykcję fragmentów, jednak w przypadku pierwszego obrazu były one porozrzucane po całym zdjęciu, często wskazując na tło, a drugim znajdowały się po lewej stronei zdjęcia, również z równą częstotliwością trafiając na scenerię. Analizując fotografię mruczka zauważamy porównywalnie wiele niebieskich obszarów, jednak żaden nie odznaczał się wyjątkową intensywnością. U psa elementów takich było niewiele i one również blakły na tle ich przeciwieństw.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{rysunki/cats&dogs/shap_resNet50_0_cats&dogs.png}
@@ -1068,6 +1095,8 @@ weighted avg       0.93      0.92      0.92        26
     \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody SHAP dla modelu ResNet50 [źródło własne]}
     \label{fig:shap_resNet50_1_cats&dogs}
 \end{figure}
+
+Obserwując zamieszcozne na Rys. \ref{fig:gradcam_resNet50_0_cats&dogs} i \ref{fig:gradcam_resNet50_1_cats&dogs} wyjaśnienia Grad-Cam dostrzegamy, że metoda wskazała w obydwu przypadkach dwa duże fragmenty zdjęć. Epicentrum kolorystyczne znalazło się na szyi kota oraz tylnej części torsu psa. Bardziej trefnym oznaczeniem wydaje się być to osiągnięte przy fotografii psa, gdzie trochę mniej istotnym w danej metryce kolorem oznaczono resztę tłowia stworzenia z kawałkiem jego głowy. 
 
 \begin{figure}[H]
     \centering
@@ -1099,6 +1128,7 @@ weighted avg       0.93      0.92      0.92        26
     \label{tab:cats&dogs_xception_metrics}
 \end{table}
 
+Analizując wyniki modelu Xception zawarte w Tabeli \ref{tab:cats&dogs_xception_metrics} dostrzegamy, że osiągnął imponujące wyniki. Jego ROC AUC było na poziomie 1.0, a dokładność 99\%. Precyzja, czułość i F1-score osiągnęły dla klasy '0' odpowiednio 99\%, 98\% i 99\%, a '1' - 98\%, 99\% oraz 99\%. Średnie macro i ważone były identyczne. Tak wysokie rezultaty odwzorowuje zamieszczona na Rys. \ref{fig:confusion_matrix_xception_cats&dogs} macierz pomyłek. Zauważamy na niej, iż model poprawnie sklasyfikował 1967 zdjęć kotów i 1976 psów z 2000 dostępnych dla obu klas. Pierwsza z badanych próbek zawierająca fotografię kota została oceniona na zaledwie 1\% jako przedstawiająca przeciwne w tym porówaniu stworzenie. Druga z nich, czyli ta z psem, została oceniona na 98\% jako reprezentantka klasy '1'. Przekłada się to na dużą pewność modelu co do jego predykcji. 
 
 \begin{figure}[H]
     \centering
@@ -1106,6 +1136,8 @@ weighted avg       0.93      0.92      0.92        26
     \caption{Macierz pomyłek modelu Xception dla zbioru dotyczącego klasyfikacji psów i kotów [źródło własne]}
     \label{fig:confusion_matrix_xception_cats&dogs}
 \end{figure}
+
+Metoda LIME w swoich poprawnie sklasyfikowanym wytłumaczeniu, mieszczącym się na Rys. \ref{fig:lime_xception_0_cats&dogs}, doskonale wyodrębniła głowę kota i wskazała ją jako jeden z najwazniejszych obszarów predykcyjnych. Obok niej znalazło się także udo zwierzęcia. Wśród 10 najbardziej wpływowych fragmentów, oprócz tych wcześniej wskazanych znalazła się bluzka osoby trzymajacej stworzenie, jego przednie łapy oraz tło, z czego te dwa ostatnie obszary były zaznaczone na czerwono. Oznacza to ich negatywny wpływ na predykcję. W przypadku również dobrze sklasyfikowanego psa LIME zwróciło najpierw uwagę na jego prawy dolny skrawek pyszczka, oraz części przedniej i tylnej łapy. Rozszerzając przestrzeń rozwiązań do tłumaczenia dołączone zostało tło pomiędzy wspomnianymi już kończynami oraz kolejny fragment głowy zwierzęcia.  
 
 \begin{figure}[H]
     \centering
@@ -1121,6 +1153,8 @@ weighted avg       0.93      0.92      0.92        26
     \label{fig:lime_xception_1_cats&dogs}
 \end{figure}
 
+Patrząc na Rys. \ref{fig:shap_xception_0_cats&dogs} i \ref{fig:shap_xception_1_cats&dogs} widzimy, że SHAP w zadaniu klasyfikacji w dużej mierze kierował się głowami czworonogów, które odznaczały się największą intensywnością koloru czerwonego. Kolejnymi ważnymi w pozytywnym aspekcie w odpowiadających im przewidywaniach była reszta ciała stworzeń. Niestety wśród czerwonych punktów znalazło się też trochę tła. Niebieskie kwadraty, oznaczające przeciwną predykcję o wiele bardziej rzucały się w oczy w przypadku zdjęcia z kotem niż z psem. W obu wariantach wskazywały one jednak głównie scenerię, a nie elementy czworonogów.  
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{rysunki/cats&dogs/shap_xception_0_cats&dogs.png}
@@ -1134,6 +1168,8 @@ weighted avg       0.93      0.92      0.92        26
     \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody SHAP dla modelu Xception [źródło własne]}
     \label{fig:shap_xception_1_cats&dogs}
 \end{figure}
+
+Grad-Cam, jak zwracamy uwagę na Rys. \ref{fig:gradcam_xception_0_cats&dogs} i \ref{fig:gradcam_xception_1_cats&dogs}, kierował się wyjątkowo duzymi punktami w celu wytłumaczenia odpowiadających im diagnoz, co prowadzi do sceptycznego spojrzenia na jego dokładność. W przypadku kota najintensywniejszym miejscem okazała się być tylna część grzbietu, od której w postaci swego rodzaju gradientu odchodziły mniej istotne fragmenty. Natomiast na obrazku przedstawiającym psa oznaczona została lewa oraz górna część fotografii, gdzie jej epicentrum znalazło się po środku. Znajdowało się pod tym tło oraz głowa z przodem torsu i znajdującymi się pod nim łapami. 
 
 \begin{figure}[H]
     \centering
