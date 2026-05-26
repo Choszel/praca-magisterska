@@ -1,6 +1,26 @@
 \section{Podsumowanie}
 
 \subsection{Diabetes Prediction}
+Co zaskakujące, największe ROC AUC osiągnęła niezbyt złożona sieć neuronowa o zaledwie dwóch warstwach ukrytych składających się z 64 neuronów każda. Najpewniejszy predykcji bandanej próbki jako klasa '0' był XGBoost z pewnością 98\%, przy czym był na 2. miejscu w rozpoznawaniu reprezentantów tej grupy, radził sobie najlepiej ze wszystkich z wariantem '1'. Najgorszą predykcję przedstawiła już wspomniana DNN z wynikiem 80\%, przy czym równie słabo radziła sobie z odnajdywaniem osób chorych na cukrzycę (choć odstępstwo to było niewielkie). Las losowy miał wyniki pośrednie pomiędzy jego konkurentami, nie wyróżnił się w przeciwieństwie do nich niczym szczególnym. 
+
+\begin{table}[H]
+\centering
+\caption{3 najistotniejsze cechy wskazane przez metody dla każdego z modeli w zbiorze dotyczącym diabetyków}
+\label{tab:3_top_diabetes}
+\begin{tabular}{|c|c|c|}
+\hline
+Model & Metoda & 3 najistotniejsze cechy \\ \hline
+\multirow{3}{*}{Random Forest}& LIME& HvyAlcoholConsump, GenHlth, Age\\ \cline{2-3} 
+ & SHAP& GenHlth, GenHlth, BMI\\ \cline{2-3} 
+ & PFI& GenHlth, BMI, HighBP\\ \hline
+\multirow{3}{*}{XGBoost}& LIME& HighBP, Income, BMI\\ \cline{2-3} & SHAP& GenHlth, BMI, Age\\ \cline{2-3} 
+ & PFI& BMI, Age, GenHlth\\ \hline
+\multirow{3}{*}{Sieć neuronowa}& LIME& HvyAlcoholConsump, GenHlth, BMI\\ \cline{2-3} & SHAP& GenHlth, BMI, HighBP\\ \cline{2-3} & PFI& GenHlth, BMI, Age\\ \hline
+\end{tabular}
+\end{table}
+
+Spoglądając na Tabelę \ref{tab:3_top_diabetes} zauważamy, że pojawiły się dwie cechy wśród 3 najistotniejszych występujące w 8 na 9 przypadków. Pierwszą z nich była ocena własnego stanu zdrowia ('GenHlth'), która nie wystąpiła tylko w tłumaczeniu LIME modelu XGBoost, gdzie znalazła się na 4 miejscu. Na równi z nią widnieje wskaźnik BMI ('BMI'), którego zabrakło w wyjaśnieniu LIME dla lasu losowego. Najbardziej nieoczekiwaną zmienną w tym zestawieniu bez dwóch zdań są zarobki ('Income') wskazane przez ponownie LIME modelu XGBoost. Zdawałoby się, że w zestawieniu jest parę innych, bardziej logicznych do uznania cech, takich jak wiek ('Age') czy spore spożycie alkoholu ('HvyAlcoholConsump') pojawiające się w innych wytłumaczeniach. 
+Niezwykle wiele danych zostało odrzuconych przez metodę PFI sieci neuronowej, w jej tłumaczeniu znalazło się tylko 6 zmiennych z 21. Analizując cechy najmniej wpływowe dostrzegamy, że często powtarzają się wśród nich: posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare'), spożywanie warzyw ('Veggies') czy owoców ('Fruits'), sprawdzenie poziomu cholesterolu ('CholCheck'); chociaż w niektórych zestawieniach pojawiają się wysoko na liście.
 
 \subsection{UCI Heart Disease Data}
 Wszystkie modele uczone i testowane na tych samych zbiorach pod względem dokladności uzyskały wyniki na przeciętnym poziomie. Były one do siebie zbliżone i oscylowały w granicach 60\%-64\%. Najlepiej pod tym względem poradził sobie XGBoost, jednak miał o około 1 jednostkę mniejsze ROC AUC od lasu losowego, u którego miara ta wyniosła 0.85. We wszystkich przypadkach najtrafniej diagnozowano klasę '0', przy czym najwięcej poprawnie należących do niej próbek, bo aż 70 z 82 wskazała sieć neuronowa, osiągając przy tym precyzję i czułość na poziomie 85\%. Podobnie decydowano o przynależności próbek do poszczególnych wariantów, z równą tendendcją spadkową, pogłębiającą się wzrast z numerem przewidywanej kategorii. Wyniki większości średnich macro były niezadowalające. Ich wartości ewidentnie wynikały z niezbilansowania danych, co możemy dostrzec analizując ilości rekordów dla poszczególnych klas znajdujące się w kolumnie 'Liczba'. Zauważamy wtedy, że liczebność zbioru testowego klasy '0' wyniosła 82 przypadki, a wariantu '4' jedynie 6. Z powodu tej ogromnej dysproporcji oraz niskiej zbiorowości prawie nigdy nie zaliczano próbek do najwyższej grupy ryzyka. Dla dwoch pierwszych modeli się udało ją poprawnie sklasyfikować, sieć neuronowa postawiła na błędną diagnozę o numerze '3'.  
@@ -38,6 +58,30 @@ W sieci neuronowej wyjaśnienia były do siebie dosyć zbliżone. Z pośród 3 n
 W 8 na 9 przypadków za jedną z najmniej istotnych cech wskazano płeć ('sex'), nie pojawiła się ona wyłącznie w wytłumaczeniu SHAP dla sieci neuronowej, gdzie uznano ją za dosyć wartościową informację. Przy lesie losowym oraz XGBoost SHAP z PFI podawały identyczne wartości w 4 kolumnie. LIME bez względu na model zawsze za jedną z naistotniejszych cech podawał 'exang', a najmniej ważnych 'trestbps' i 'sex', SHAP 'cp' z 'thalch' a także 'fbs' oraz 'slope', natomiast PFI nie miał faworyta w pierwszej kategorii, w drugiej 'sex' i 'slope'.
 
 \subsection{Brain MRI Images for Brain Tumor Detection}
+
+Analizując wszystkie dostępne metryki, tj. ROC AUC, dokładność, precyzję, czułość i F1-score, najepiej ze wszystkich badanych modeli poradził sobie ResNet50. Popełniłł on tylko jeden błąd na zbiorze testowym klasyfikując próbkę należącą w rzeczywistości do klasy decyzyjnej '1'. Najgorzej pod względem tych samych miar wypadł VGG-16 posiadający najprostszą architekturę. Odbiegał on od lidera o 11\% w poprawności swoich predykcji. Popełnił on aż 4 błędy klasyfikując próbki zbioru testującego. Śmiem zatem twierdzić, że niestety nie najlepiej sprawdza się on w tak trudnym zadaniu jak wykrywanie zmian nowotworowych mózgu.
+
+\begin{table}[H]
+\centering
+\caption{Podsumowanie wyników uzyskanych przy zbiorze dotyczącym zmian nowotworowych}
+\label{tab:summary_brain}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Model & Nowotwór & Metoda & Guz w tłumaczeniu? & Tło w tłumaczeniu? \\ \hline
+\multirow{3}{*}{VGG-16} & \multirow{3}{*}{100\%} & LIME & Tak* & Tak* \\ \cline{3-5} 
+ &  & SHAP & Tak** & Tak \\ \cline{3-5} 
+ &  & Grad-Cam & Tak** & Tak \\ \hline
+\multirow{3}{*}{ResNet50} & \multirow{3}{*}{100\%} & LIME & Tak* & Tak* \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak \\ \cline{3-5} 
+ &  & Grad-Cam & Tak & Nie \\ \hline
+\multirow{3}{*}{Xception} & \multirow{3}{*}{99.67\%} & LIME & Tak & Tak* \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-Cam & Tak & Nie \\ \hline
+\end{tabular}
+\end{table}
+
+Dane zawarte w Tabeli \ref{tab:summary_brain} przedstawiają drobne podsumowanie wyników uzyskanych przez poszczególne metody dla modeli i badanej próbki. Kolumna "'Nowotwór"' oznacza wskazane przez konwolucyjne sieci neuronowe prawdopodobieństwo występowania na poddanym analizie obrazie zmian patologicznych. Odpowiedź "'Tak*"' oznajmia - wystąpiło ale biorąc pod uwagę 10 najistotniejszych obszarów; a 
+"'Tak**"' - wystąpiło, ale nie było jedną z najważniejszych części fotografii. Z zaprezentowanych danych wynika, że biorąc pod uwagę częstotliwość występowania tła najlepszym wyborem byłby Grad-Cam, który tylko raz je oznaczył dla modelu VGG-16. Wracając jednak do jego szczegółowych wyników przypominamy sobie o wspomnianym problemie potencjalnie zbyt dużego i przez to mało precyzyjnego, obszaru wyjaśniającego. Kolejną w hierarchii wydaje się być metoda SHAP. Była ona jednak równie mało dokładna, często oznaczając dużą część zdjęcia, nierzadko mieszczącą się poza obrysem głowy. Pozostaje więc LIME, który w swoim tłumaczeniu zaznczał bardzo szczegółowo fragmenty. Po rozszerzeniu przestrzeni rozwiązań do 10 obszarów pojwiał się wśród nich szukany guz i, niestety, rogi obrazu będące tłem. 
 
 \subsection{Cats and Dogs Classification Dataset}
 
