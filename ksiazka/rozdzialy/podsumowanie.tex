@@ -83,15 +83,65 @@ Model & Nowotwór & Metoda & Guz w tłumaczeniu? & Tło w tłumaczeniu? \\ \hlin
 Dane zawarte w Tabeli \ref{tab:summary_brain} przedstawiają drobne podsumowanie wyników uzyskanych przez poszczególne metody dla modeli i badanej próbki. Kolumna "'Nowotwór"' oznacza wskazane przez konwolucyjne sieci neuronowe prawdopodobieństwo występowania na poddanym analizie obrazie zmian patologicznych. Odpowiedź "'Tak*"' oznajmia - wystąpiło ale biorąc pod uwagę 10 najistotniejszych obszarów; a 
 "'Tak**"' - wystąpiło, ale nie było jedną z najważniejszych części fotografii. Z zaprezentowanych danych wynika, że biorąc pod uwagę częstotliwość występowania tła najlepszym wyborem byłby Grad-Cam, który tylko raz je oznaczył dla modelu VGG-16. Wracając jednak do jego szczegółowych wyników przypominamy sobie o wspomnianym problemie potencjalnie zbyt dużego i przez to mało precyzyjnego, obszaru wyjaśniającego. Kolejną w hierarchii wydaje się być metoda SHAP. Była ona jednak równie mało dokładna, często oznaczając dużą część zdjęcia, nierzadko mieszczącą się poza obrysem głowy. Pozostaje więc LIME, który w swoim tłumaczeniu zaznczał bardzo szczegółowo fragmenty. Po rozszerzeniu przestrzeni rozwiązań do 10 obszarów pojwiał się wśród nich szukany guz i, niestety, rogi obrazu będące tłem. 
 
+
 \subsection{Cats and Dogs Classification Dataset}
 
+Sieci konwolucyjnie poradziły obie znakomicie w rozpoznawaniu kotów i psów, a każda z nich osiągnęła dokładność większą, bądź równą, 97\%. Najlepiej w tym zadaniu klasyfikacyjnym popradził sobie pod względem wszystkich metryk Xception, chociaż inne modele były od niego minimalnie gorsze. Łącznie zrobił on tylko 57 błędów przydzielając poszczególne klasy próbkom. Najgorszy okazał się być VGG-16, ale patrząc na to, że jest najprostsze architektonicznie rozwiązanie, to trzeba uznać, iż wypadł on świetnie.  
 
+\begin{table}[H]
+\centering
+\caption{Podsumowanie wyników uzyskanych przy próbce przedstawiającej kota ze zbioru dotyczącego klasyfikacji kotów i psów}
+\label{tab:summary_0_catsdogs}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Model & Pies? & Metoda & Pysk w tłumaczeniu? & Tło w tłumaczeniu ? \\ \hline
+\multirow{3}{*}{VGG-16} & \multirow{3}{*}{3.56\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak** & Tak** \\ \cline{3-5} 
+ &  & Grad-Cam & Tak** & Tak** \\ \hline
+\multirow{3}{*}{ResNet50} & \multirow{3}{*}{5.8\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-Cam & Tak** & Tak** \\ \hline
+\multirow{3}{*}{Xception} & \multirow{3}{*}{1.42\%} & LIME & Tak & Tak* \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-Cam & Tak** & Tak** \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Podsumowanie wyników uzyskanych przy próbce przedstawiającej psa ze zbioru dotyczącego klasyfikacji kotów i psów}
+\label{tab:summary_1_catsdogs}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Model & Pies? & Metoda & Pysk w tłumaczeniu? & Tło w tłumaczeniu ? \\ \hline
+\multirow{3}{*}{VGG-16} & \multirow{3}{*}{100\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-Cam & Tak & Tak** \\ \hline
+\multirow{3}{*}{ResNet50} & \multirow{3}{*}{99.41\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-Cam & Tak** & Tak** \\ \hline
+\multirow{3}{*}{Xception} & \multirow{3}{*}{98.06\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-Cam & Tak & Tak \\ \hline
+\end{tabular}
+\end{table}
+
+Analizując dane zawarte w Tabelach \ref{tab:summary_0_catsdogs} i \ref{tab:summary_1_catsdogs} dostrzegamy brak jakiejkolwiek odpowiedzi "'Nie"'. Napisy "'Tak*"' oznacza, że obiekt pojawił się dopiero wśród 10 najistotniejszych obszarów, a "'Tak**"' - nie był on najistotniejszy w zaprezentowanym tłumaczeniu. Wynika z tego, iż najgorzej poradził sobie Grad-Cam, w którego odpowiadających komórkach często widniały gwiazdki. Zaskakująco dobrze w owym zestawieniu wypada LIME dający najklarowniejsze wytłumaczenia i jeśli spojrzeć na poszczególne przypadki, najdokładniejsze. SHAP zaznaczał właściwe obszary jednak jego zakres odpowiedzi był zbyt obszerny i mało precyzyjny.
+
+\newpage
 \subsection{Ogólne spostrzeżenia}
-LIME
-Ciężko zaufać wynikom ze względu na to, że mogą się one zmienić po ponownym uruchomieniu programu. Jego wartości są relatywne, pozwalają tylko na interpretację porównawczą wzgledem siebie.
+Zaprezentowane metody rzeczywiście pozwalają na wgląd w pracę modelu. Potrafią dostarczać wyjaśnienia bez wątpienia pomagające nam zrozumieć czym kieruje się badany system. Możemy za ich pomocą sprawdzić, czy badana architektura, osiągająca bardzo dobre rezultaty, kieruje się poprawnymi, znanymi nam istotnymi czynnikami, zauważyć dzięki niej nowe zależności, których wcześniej nie dostrzegaliśmy, bądź nie braliśmy pod uwagę. A te modele, których wyniki są niezadowalające, zdiagnozować i zobaczyć dlaczego ich miary są tak mizerne.
 
-SHAP
-Ciężki w zrozumieniu. Jego wykresy są bardzo ładne i podają fajną interpretację pokazując to jak każda z cech wpływała na prawdopodobieństwa bądź log odds.
+LIME będący za każdym razem pierwszą omawianą metodą w przypadku danych tabelarycznych tworzył czytelny wykres wodospadowy. Patrząc na niego człowiek od razu wiedział, która z cech w jaki sposób wpływa na przewidywanie. Przedstawione na nim dane nie zlewają się ani nie zachodzą na siebie, dając przy tym większy wgląd w rozumienie badanego modelu. Wyniki dla każdej z próbek mogą zostać zebrane w celu stworzenia wglądu w ich ogólną istotność na przestrzeni całego zbioru. Niestety tłumaczeniom ciężko jest zaufać ze względu na to, że mogą się one zmienić po ponownym uruchomieniu programu. Uzyskane wartości są jedynie relatywne, pozwalając tylko na interpretację porównawczą wzgledem siebie i nie pokazują rzeczywistego wpływu na predykcję, a wyłącznie w pewnym sensie przybliżony.
+Wykorzystany do tłumaczeń decyzji klasyfikacyjnych zdjęć przedstawia konkretne, sprecyzowane obszary oznaczając je odpowiednim kolorem w zależności od ich wpływu na predykcję. Takie rozwiązanie jest bardzo precyzyjne, aczkolwiek metoda często wśród pierwszych najistotniejszych cech nie zwraca tej, która rzeczywiście powinna się tam znaleźć. Powoduje to konieczność jego odpowieniego dostrojenia, zwiększenia przestrzeni rozwiązań, bądź badanego sąsiedztwa.
 
-PFI
-Prosty, daje mało wyników.
+SHAP pozwalał na zaprezentowanie wyników danych tabelarycznych w formie bardzo zmyślnie skonstruowanego wykresu wodospadowego. Początkowa problematyka związana ze zrozumieniem działania tak spomplikowanej metody wiązała się z poźniejszym przystępnym tłumaczeniem względem wartości średniej. Prezentowane wyniki dawały bezpośredni wgląd cech w ich wpływ na uzyskiwane prawdopodobieństwa lub \textit{log odds}. W jego ofercie znajdzie się wiele przydatnych prezentacji w postaci wykresów typu \textit{"'beeswarm"'} czy "'\textit{force}"'. Uzyskane przez niego tłumaczenia danych obrazowych pozostawiają jednak wiele do życzenia. Wskazane przez ową metodę obszary rozwiązań pokrywały zbyt duży obszar zdjęć sczycąc się niezwykle niską precyzją, dając wrażenie prawie że wyboru losowego, gdyby nie wyraźne oznaczanie intensywnością barw miejsc szczególnie istotnych. Zaprezentowane wyjaśnienia bazują na kolorystyce, które poprzez skojarzenia tworzą nieskomplikowane w interpretacji wyniki. 
+
+PFI pomimo bycia najprostszą metodą nie oferował tłumaczeń odbiegających jakościowo od jego konkurencji. Oprócz banalnie prostego działania jego wyniki były równie proste w interpretacji, dając wgląd na to jak każda z cech wpływa bezpośrednio na dokładność modelu. Należy jednak pamiętać, że jest to metoda permutująca kolumny, przez co może ona tworzyć i poddawać ewaluacji dane nie posiadające odwzorowania w świecie rzeczywistym. Nie potrafi analizować danych będącymi obrazami, przez co możliwości jej wykorzystania są ograniczone, niemniej jednak tam gdzie można ją użyć radzi sobie dobrze. 
+
+Grad-Cam będący ostatnią badaną metodą w owej pracy tworzył odznaczające się mapy cieplne. Nie znajdziemy na nich cech przeczących danej predykcji, a jedynie oznaczenia tych najistotniejszych pozytywnie miejsc. Uważam, że jest to pośredni wybór pomiędzy innymi omówionymi już metodami. Czasami tak jak LIME wskaże jeden konkretniejszy obszar, co prawda o wiele mniej precyzyjny, a z drugiej strony zdarza mu się oznaczyć wiele fragmentów zdjęcia, jak ma to miejsce w przypadku SHAP, uznając ewidentnie zbyt wiele obszarów za ważnych.
+
+Po przeanalizowaniu wad i zalet badanych metod, uważam, że pomimo problematyki związanej ze zrozumieniem działania najlepszym rozwiązaniem w przypadku danych tabelarycznych będzie SHAP. Jest on popularnym rozwiązaniem oferującym wiele możliwości wizualizacji otrzymanych wyników. Choć początkowo przestawienie myślenia z punktu zerowego do średniej może być trudne, tak uzyskane rezultaty są warte swojej ceny. Najbardziej odradzałabym w przypadku tych danych użycia metody LIME. Głównie ze względu na nierelatywność jej miar zalecałabym wykorzystanie jej zamienników, w tym PFI.  
+W kontekście zbiorów składających się z obrazów bezkompromisowo wybrałabym LIME. Wyjątkowo miernie w obu zadaniach klasyfikacyjnych poradził sobie SHAP. W jednym z przypadków oznaczył praktycznie wszystkie obszary na zdjęciu jako istotne w predykcji. Jest to ogromna przepaść pomiędzy jego wspaniałymi wręcz tłumaczeniami danych tabelarycznych a niezwykle niezadowalającymi obrazów. Grad-Cam jest od niego lepszą alternatywą, aczkolwiek, co widać szczególnie na zbiorze dotyczącym psów i kotów, zaznaczone przez niego obszary są zastanawiające.   
+
+Wszystkie uzyte metody są różne pod względem działania czy uzyskanych tłumaczeń, więc wybranie konkretnej z nich będzie zależeć od preferencji poszczególnych użytkowników oraz rodzaju zadania. W owej pracy starałam się przybliżyć ich działanie, mocne i słabe strony oraz pokusiłam się o wtrącenie swojej opinii na ich temat.

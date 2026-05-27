@@ -1,5 +1,5 @@
 Magisterka - co zostało do zrobienia?:
-	- 1 podsumowanie zbioru
-	- podsumowanie ogólne
 	- napisać opis implementacji
 	- sparafrazować rozdziały
+	- 1 stronicowy opis w języku obcym nowożytnym
+	- oświadczenie nt. samodzielności wykonanai pracy
