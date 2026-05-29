@@ -1,38 +1,13 @@
 \section{Opis implementacji}
-Program wykorzystany w danej pracy został napisany w Pythonie. Wszystkie wykorzystywane przeze mnie zbiory pochodzą z witryny Kaggle \cite{diabetes_dataset,heart_disease_dataset, brain_dataset, cats&dogs_dataset}. Na niej też znalazłam prace, na których wzorowałam się przetwarzając dane \cite{diabetes_dataset_preprocessing, heart_disease_dataset_labelencoder, brain_dataset_preprocessing, cats&dogs_dataset_preprocessing}. Random Forest oraz sieć neuronowa pochodzą z biblioteki scikit-learn (sklearn) \cite{rfc_documentation,mlpc_documentation}. XGBoost jest oddzielnym modułem, którego biblioteka nosi nazwę "'xgboost"' \cite{xgb_documentation}. VGG-16, ResNet50 i Xception są częścią biblioteki Keras, której frameworkiem backendowym był TensorFlow w wersji 2.20.0 \cite{vgg16_documentation,resnet50_documentation, xception_documentation}. 
+Program wykorzystany w danej pracy został napisany w Pythonie. Wszystkie wykorzystywane przeze mnie zbiory pochodzą z witryny Kaggle \cite{diabetes_dataset,heart_disease_dataset, brain_dataset, cats&dogs_dataset}. Na niej też znalazłam prace, którymi wzorowałam się przetwarzając dane \cite{diabetes_dataset_preprocessing, heart_disease_dataset_labelencoder, brain_dataset_preprocessing, cats&dogs_dataset_preprocessing}. Random Forest oraz sieć neuronowa pochodzą z biblioteki scikit-learn (sklearn) \cite{rfc_documentation,mlpc_documentation}. XGBoost jest oddzielnym modułem, którego biblioteka nosi nazwę "'xgboost"' \cite{xgb_documentation}. VGG-16, ResNet50 i Xception są częścią biblioteki Keras, której frameworkiem backendowym był TensorFlow w wersji 2.20.0 \cite{vgg16_documentation,resnet50_documentation, xception_documentation}. W przypadku zbioru dotyczącego wykrywania zmian nowotworowych w mózgu wagi do modeli VGG-16 oraz Xception również pochodzą ze strony Kaggle \cite{kaggle_pretrain_models}. 
 
-Implementując metodę LIME dla danych tabelarycznych wzorowałam się na artukule zamieszczonym na stronie GeekForGeeks oraz dokumentacją. 
+Oceniałam modele na podstawie metryk, które możemy znaleźć w pakiecie biblioteki scikit-learn. "'roc\_auc\_score"' to funkcja obliczająca pole pod krzywą ROC na podstawie osiągniętych predykcji. W przypadku zbioru dotyczącego choroby serca, który jest problemem wieloklasowym, w parametrach wejściowych podałam zmienną "'multi\_class"' równą "'ovr"' oraz "'average"' "'macro"'. Pierwsza z nich oznacza, że AUC będzie obliczana w sposób jedna klasa przeciwko wszystkim innym, czyli będzie uznana za pozytywną, a reszta - negatywną \cite{roc_ovr_documentation}. Druga, że wyniki zostaną uśrednione za pomocą średniej arytmetycznej, bez wag \cite{roc_auc_score_documentation}.  Precyzja, czułość, F1-score, liczebność, dokładność oraz średnie macro i ważone zostały obliczone poprzez "'classification\_report"' \cite{classification_report_documentation}. Średnia macro to zwykła średnia arytmetyczna, która jest podatna na niezbilansowanie klas. To czyni ją gorszym wyborem w przypadku wspomnianego przed chwilą zbioru. Macierz pomyłek została stworzona przy pomocy "'confusion\_matrix"' \cite{confusion_matrix_documentation}.
 
-%https://lime-ml.readthedocs.io/en/latest/lime.html
+Metodę LIME zaimportowałam z biblioteki o takiej samej nazwie. Tworząc część dla danych tabelarycznych skorzystałam z artukułu zamieszczonego na stronie GeekForGeeks, filmu użytkownika "'A Adata Odyssey"' na platformie YouTube oraz dokumentacji \cite{lime_tabular_code, lime_yt_video, lime_documentation}. Dwoma najważniejszymi funkcjami są "'LimeTabularExplainer"' oraz "'explain\_instance"'. Ta pierwsza pozwala na stworzenie obiektu do predykcji wszystkich próbek, a druga tworzy tłumaczenie jednego konkretnego przypadku. Pisząc wersję do obrazów wykorzystałam fragmenty kodu znajdujące się w poradniku stworzonym przez twórcę biblioteki \cite{lime_images_code}. Tutaj używam "'LimeImageExplainer"', która działa analogicznie do tej wykorzystywanej przy rekordach tabel oraz również "'explain\_instance"'. W obu przypadkach zmodyfikowałam kody, tak aby działały z używanymi przeze mnie danymi oraz ich niektóre linie wykonywały się w pętli.
 
-%https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html
+Biblioteka "'shap"' pozwoliła mi na korzystanie z kolejnej metody. Jej dokumentacja oraz kolejny film wcześniej już wspomnianego twórcy zamieszczony na platformie YouTube znacznie pomogły w pisaniu kodu do tabelrycznej części zbiorów \cite{shap_documentation, shap_yt_video}. Jedną z najważniejszych jego części jest funkcja "'get\_explainer"', w której znajduje się metoda "'shap.Explainer"' pozwalająca na stworzenie obiektu tłumaczącego model. Ze względu na format danych wejściowych jaki jest przez nią wymagany znajduje się tam instrukcja warunkowa oparta na nazwie przekazanego modelu, która dobiera odpowiedni format. Sama metoda potrafi własnoręcznie wybrać odpowiedni rodzaj obiektu wyjaśniającego, w tym "'shap.TreeExplainer"' i "'shap.DeepExplainer"'. Część programu do danych będących obrazami jest jednym z przykładowych znajdujych się na stronie z dokumentacją \cite{shap_image_documentation}. Najpierw tworzony jest w niej masker, następnie obiekt objaśniający, któremu przekazywana jest badana próbka. Zwraca on wartości, które na koniec są prezentowane za pomocą funckji "'shap.image\_plot"'.
 
-%https://scikit-learn.org/stable/modules/permutation_importance.html
+PFI jest jedną z funkcji biblioteki scikit-learn pakietu "'inspection"'. Na stronie dedykowanej właśnie jej możemy znaleźć przydatne kody wykorzystujące ową metodę, tworząc przy tym proste, zrozumiałe wyniki. Fragment programu stworzony na rzecz omawianego zagadnienia jest połączeniem dwóch znajdujących się na tej witrynie \cite{pfi_documentation, pfi_example}. Najważniejszą jego częścią jest wywołanie funkcji "'permutation\_importance"' odpowiadającej za wykonanie metody PFI i zwrócenie jej wyników \cite{permutation_importance_function}. Takie dane są sortowanie malejąco po uzyskanym średnim wpływie na dokładność i wypisywane na ekran. Następnie na ich podstawie tworzona jest tabela, której zawartość umieszczona zostaje na wykresie.
 
-%https://shap.readthedocs.io/en/latest/
+Implementując metodę Grad-Cam użyłam kodu znalezionego na stronie dedykowanej bibliotece Keras. Jest on jednym z przykładów, w którym został uzyty model Xception. Został on przerobiony w taki sposób, aby pozwalał na wykorzystanie używanych przeze mnie danych i różnych modeli o ile posiadają one taką samą struktorę stworzoną na rzecz \textit{fine-tuning}'u \cite{grad-cam_code}. Najważniejszą częścią kodu jest funkcja "'make\_gradcam\_heatmap"', w której najpierw pobierany jest model bazowy. Tworzony jest nowy model łączący wejściowy obraz z wyjściami wskazanej warstwy konwolucyjnej (ostatniej). Następnie odtwarzana jest struktura powstała na skutek dostrajania a na jej podstawie powstają gradienty i mapa cieplna.
 
-%https://www.geeksforgeeks.org/machine-learning/classification-using-sklearn-multi-layer-perceptron/
-
-%https://shap.readthedocs.io/en/latest/generated/shap.Explainer.html
-
-
-roc auc score macro ovr:
-%https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
-
-%https://shap.readthedocs.io/en/latest/generated/shap.Explainer.html
-
-METRYKI:
-%https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html
-
-%https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html
-
-%https://scikit-learn.org/stable/modules/model_evaluation.html#classification-report
-
-%https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
-
-SHAP obrazy kod: 
-%https://shap.readthedocs.io/en/latest/example_notebooks/api_examples/plots/image.html
-
-LIME obrazy kod: %https://marcotcr.github.io/lime/tutorials/Tutorial%20-%20images.html
-
-Grad - CAM kod: %https://keras.io/examples/vision/grad_cam/
