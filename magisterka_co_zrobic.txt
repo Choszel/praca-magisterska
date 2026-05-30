@@ -1,5 +1,4 @@
 Magisterka - co zostało do zrobienia?:
-	- sparafrazować rozdział metody_xai
 	- sparafrazować rozdział problem_klasyfikacji
 	- 1 stronicowy opis w języku obcym nowożytnym
 	- oświadczenie nt. samodzielności wykonanai pracy

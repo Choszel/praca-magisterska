@@ -834,12 +834,12 @@ SHAP poprawnie zaklasyfikował badaną próbkę jako zawierającą zmiany nowotw
     \label{fig:shap_vgg16_1_brain}
 \end{figure}
 
-Na mapie stworzonej przy pomocy Grad-Cam, która znajduje się na Rys. \ref{fig:gradcam_vgg16_1_brain}, zostało zaznaczonych sporo obszarów. Wśród nich znajduje się zmiana nowotworowa, jednak jej oznaczenie zdaje się być trochę przesunięte wprawy dolny róg. Za najistotniejszy fragment metoda uznała lewą, środkową część obrazu przedstawiającą kontur mózgu i jego na szaro zaznaczone wnętrze poprzecinane ciemniejszymi liniami. W danej części nie widać jednak żadnych zmian nowotworowych. 
+Na mapie stworzonej przy pomocy Grad-CAM, która znajduje się na Rys. \ref{fig:gradcam_vgg16_1_brain}, zostało zaznaczonych sporo obszarów. Wśród nich znajduje się zmiana nowotworowa, jednak jej oznaczenie zdaje się być trochę przesunięte wprawy dolny róg. Za najistotniejszy fragment metoda uznała lewą, środkową część obrazu przedstawiającą kontur mózgu i jego na szaro zaznaczone wnętrze poprzecinane ciemniejszymi liniami. W danej części nie widać jednak żadnych zmian nowotworowych. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/brain/gradcam_vgg16_1_brain.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-Cam dla modelu VGG-16   [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-CAM dla modelu VGG-16   [źródło własne]}
     \label{fig:gradcam_vgg16_1_brain}
 \end{figure}
 
@@ -885,12 +885,12 @@ Analizując utworzone dla poprawnej klasy decyzyjnej wyjaśnienia SHAP, które z
     \label{fig:shap_resNet50_1_brain}
 \end{figure}
 
-Na mapie stworzonej przy pomocy Grad-Cam, która znajduje się na Rys. \ref{fig:gradcam_resNet50_1_brain}, został wskazany tylko jeden obszar. Jest to znaleziona zmiana nowotworowa, jednak jej oznaczenie kieruje się bardziej do środka obrazka niż do samego guza. Dodatkowo kwadraty jakich użyto do zaznaczenia owego fragmentu są dosyć duże, przez co wyjaśnienie wydaje się być mało precyzyjne.
+Na mapie stworzonej przy pomocy Grad-CAM, która znajduje się na Rys. \ref{fig:gradcam_resNet50_1_brain}, został wskazany tylko jeden obszar. Jest to znaleziona zmiana nowotworowa, jednak jej oznaczenie kieruje się bardziej do środka obrazka niż do samego guza. Dodatkowo kwadraty jakich użyto do zaznaczenia owego fragmentu są dosyć duże, przez co wyjaśnienie wydaje się być mało precyzyjne.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/brain/gradcam_resNet50_1_brain.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-Cam dla modelu ResNet50   [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-CAM dla modelu ResNet50   [źródło własne]}
     \label{fig:gradcam_resNet50_1_brain}
 \end{figure}
 
@@ -937,12 +937,12 @@ SHAP poprawnie zdiagnozował badaną próbkę jako posiadającą patologiczne zm
     \label{fig:shap_xception_1_brain}
 \end{figure}
 
-Jak widzimy na Rys. \ref{fig:gradcam_xception_1_brain} Grad-Cam wskazał jeden bardzo duży fragment zdjęcia. Znajduje się na nim guz, a jednemu z jego fragmentów przypisano jaskrawy żółty kolor, oznaczający jego wysoki, a nawet największy, wpływ na predykcję. Kwadraty użyte do oznaczania istotności poszczególnych części obrazu są sporawe, co prowadzi do ich mniejszej precyzji w próbie wyjaśnienia danej klasyfikacji. 
+Jak widzimy na Rys. \ref{fig:gradcam_xception_1_brain} Grad-CAM wskazał jeden bardzo duży fragment zdjęcia. Znajduje się na nim guz, a jednemu z jego fragmentów przypisano jaskrawy żółty kolor, oznaczający jego wysoki, a nawet największy, wpływ na predykcję. Kwadraty użyte do oznaczania istotności poszczególnych części obrazu są sporawe, co prowadzi do ich mniejszej precyzji w próbie wyjaśnienia danej klasyfikacji. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/brain/gradcam_xception_1_brain.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-Cam dla modelu Xception   [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-CAM dla modelu Xception   [źródło własne]}
     \label{fig:gradcam_xception_1_brain}
 \end{figure}
 
@@ -1023,19 +1023,19 @@ Analizując wyjaśnienia SHAP dla badanych próbek, które znajdują się na Rys
     \label{fig:shap_vgg16_1_cats&dogs}
 \end{figure}
 
-Analizując wyjaśnenia Grad-Cam widniejące na Rys. \ref{fig:gradcam_vgg16_0_cats&dogs} i Rys. \ref{fig:gradcam_vgg16_1_cats&dogs}, dostrzegamy, że w przypadku próbki z kotem metoda wskazała bardzo nikłe obszary. Znajdują się na nich tło, kawałek górnej części pyszczka oraz fragment torsu zwierzęcia. Lepiej w tym zadaniu poradził sobie z drugim obrazem, gdzie wyraźnie oznaczył pysk stworzenia w szczególności oczy oraz dodatkowo, ale już mniej intensywnie, tors, przednie łapy i końcówkę ogona.
+Analizując wyjaśnenia Grad-CAM widniejące na Rys. \ref{fig:gradcam_vgg16_0_cats&dogs} i Rys. \ref{fig:gradcam_vgg16_1_cats&dogs}, dostrzegamy, że w przypadku próbki z kotem metoda wskazała bardzo nikłe obszary. Znajdują się na nich tło, kawałek górnej części pyszczka oraz fragment torsu zwierzęcia. Lepiej w tym zadaniu poradził sobie z drugim obrazem, gdzie wyraźnie oznaczył pysk stworzenia w szczególności oczy oraz dodatkowo, ale już mniej intensywnie, tors, przednie łapy i końcówkę ogona.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_vgg16_0_cats&dogs.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-Cam dla modelu VGG-16 [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-CAM dla modelu VGG-16 [źródło własne]}
     \label{fig:gradcam_vgg16_0_cats&dogs}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_vgg16_1_cats&dogs.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-Cam dla modelu VGG-16   [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-CAM dla modelu VGG-16   [źródło własne]}
     \label{fig:gradcam_vgg16_1_cats&dogs}
 \end{figure}
 
@@ -1096,19 +1096,19 @@ SHAP jak wynika z zaprezentowanych Rys. \ref{fig:shap_resNet50_0_cats&dogs} i \r
     \label{fig:shap_resNet50_1_cats&dogs}
 \end{figure}
 
-Obserwując zamieszcozne na Rys. \ref{fig:gradcam_resNet50_0_cats&dogs} i \ref{fig:gradcam_resNet50_1_cats&dogs} wyjaśnienia Grad-Cam dostrzegamy, że metoda wskazała w obydwu przypadkach dwa duże fragmenty zdjęć. Epicentrum kolorystyczne znalazło się na szyi kota oraz tylnej części torsu psa. Bardziej trefnym oznaczeniem wydaje się być to osiągnięte przy fotografii psa, gdzie trochę mniej istotnym w danej metryce kolorem oznaczono resztę tłowia stworzenia z kawałkiem jego głowy. 
+Obserwując zamieszcozne na Rys. \ref{fig:gradcam_resNet50_0_cats&dogs} i \ref{fig:gradcam_resNet50_1_cats&dogs} wyjaśnienia Grad-CAM dostrzegamy, że metoda wskazała w obydwu przypadkach dwa duże fragmenty zdjęć. Epicentrum kolorystyczne znalazło się na szyi kota oraz tylnej części torsu psa. Bardziej trefnym oznaczeniem wydaje się być to osiągnięte przy fotografii psa, gdzie trochę mniej istotnym w danej metryce kolorem oznaczono resztę tłowia stworzenia z kawałkiem jego głowy. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_resNet50_0_cats&dogs.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-Cam dla modelu ResNet50 [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-CAM dla modelu ResNet50 [źródło własne]}
     \label{fig:gradcam_resNet50_0_cats&dogs}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_resNet50_1_cats&dogs.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-Cam dla modelu ResNet50 [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-CAM dla modelu ResNet50 [źródło własne]}
     \label{fig:gradcam_resNet50_1_cats&dogs}
 \end{figure}
 
@@ -1169,18 +1169,18 @@ Patrząc na Rys. \ref{fig:shap_xception_0_cats&dogs} i \ref{fig:shap_xception_1_
     \label{fig:shap_xception_1_cats&dogs}
 \end{figure}
 
-Grad-Cam, jak zwracamy uwagę na Rys. \ref{fig:gradcam_xception_0_cats&dogs} i \ref{fig:gradcam_xception_1_cats&dogs}, kierował się wyjątkowo duzymi punktami w celu wytłumaczenia odpowiadających im diagnoz, co prowadzi do sceptycznego spojrzenia na jego dokładność. W przypadku kota najintensywniejszym miejscem okazała się być tylna część grzbietu, od której w postaci swego rodzaju gradientu odchodziły mniej istotne fragmenty. Natomiast na obrazku przedstawiającym psa oznaczona została lewa oraz górna część fotografii, gdzie jej epicentrum znalazło się po środku. Znajdowało się pod tym tło oraz głowa z przodem torsu i znajdującymi się pod nim łapami. 
+Grad-CAM, jak zwracamy uwagę na Rys. \ref{fig:gradcam_xception_0_cats&dogs} i \ref{fig:gradcam_xception_1_cats&dogs}, kierował się wyjątkowo duzymi punktami w celu wytłumaczenia odpowiadających im diagnoz, co prowadzi do sceptycznego spojrzenia na jego dokładność. W przypadku kota najintensywniejszym miejscem okazała się być tylna część grzbietu, od której w postaci swego rodzaju gradientu odchodziły mniej istotne fragmenty. Natomiast na obrazku przedstawiającym psa oznaczona została lewa oraz górna część fotografii, gdzie jej epicentrum znalazło się po środku. Znajdowało się pod tym tło oraz głowa z przodem torsu i znajdującymi się pod nim łapami. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_xception_0_cats&dogs.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-Cam dla modelu Xception [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-CAM dla modelu Xception [źródło własne]}
     \label{fig:gradcam_xception_0_cats&dogs}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_xception_1_cats&dogs.png}
-    \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-Cam dla modelu Xception [źródło własne]}
+    \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-CAM dla modelu Xception [źródło własne]}
     \label{fig:gradcam_xception_1_cats&dogs}
 \end{figure}
