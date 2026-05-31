@@ -1,4 +1,4 @@
-\section{Metody XAI}
+\section{Metody XAI} \label{metody_xai}
 
 Interpretowalność możemy podzielić ze względu na sposób jej przeprowadzenia. Modele proste strukturalnie i w zrozumieniu, nie wymagające przy tym od nas żadnych zewnętrznych pomocy są określane mianem interpretowalnych przez design. Post-hoc odnosi się do trudniejszyh systemów, na których dopiero po przeprowadzeniu uczenia stosujemy metody XAI. Dzieli się to na dwa podejścia niezależne i zależne od modelu. Z tych pierwszych dodatkowo rozróżniamy lokalne, tłumaczące wskazane przypadki, oraz globalne analizujące dane wejściowe \cite{molnar2025}.
 
@@ -29,10 +29,6 @@ SHAP  wyróżnia się tym, że dodaje wpływy cech. Wyjaśnienie określone jest
 \begin{equation} \label{shap_eqn}
 g(z')\ =\ \phi_0\ +\ \sum_{j=1}^{M} \phi_j\ z'_j
 \end{equation}
-
-
-%https://www.sciencedirect.com/science/article/pii/S1566253523001148
-%https://christophm.github.io/interpretable-ml-book/shap.html
 
 gdzie, $g$ jest modelem objaśniającym, $z' = (z'_1,\dots, z'_M)^T \in\{0,1\}^M$ jest wskaźnikiem mówiącym czy dana zmienna występuje w równaniu (przyjmuje wartość 0 jeśli jest, 1 jeśli jej nie ma), $M$ to maksymalna wielkość koalicji, a $\phi_j \in \mathbb{R}$ oznacza atrubucję cechy $j$. Przy interpretacji wartości Shapley’a należy zachować ostrożność. Może nam się wydawać słusznym postrzegać je jako różnicę w przewidywaniu po usunięciu cechy z modelu. Jest to jednak błędne podejście, ponieważ nie pełnią one takiej roli – mówią tylko o wpływie cechy na prognozę w różnych koalicjach, a nie co się stanie przy jej nieobecności.  
 
@@ -79,4 +75,4 @@ Aby uzyskać pochodną logitu względem elementu mapy cech, czyli poszukiwany gr
 gdzie $a^c_k$, to uzyskana waga filtra $k$, $Z$ oznacza ilość gradientów, $i$ odpowiada szerokości na jakiej znajduje sie element, a $j$ wysokości; $\frac{\partial y^c}{\partial A^k_ij}$ jest gradientem, w którym $y^c$, to logit dla wskazanej wcześniej klasy decyzyjnej, natomiast $A^k_ij$ definiuje element. 
 
 Aby uzyskać ważoną mapę cech sumujemy mapy cech pomnożone przez odpowiadające im wagi.
-Niektóre z jej elementów mogą posiadać ujemne wartości wskazujące na to, że dana instancja wpływała negatywnie na wskazaną predykcję. Z tego powodu używamy funkcji aktywacji o nazwie ReLU, która zamienia wartości ujemne na zera. W przedstawiony sposób uzyskujemy mapę cieplną o wielkości map cech w wybranej przez nas warstwie konwolucyjnej. W celu analizy należy zwiększyć jej rozmiar do tego odpowiadającego obrazowi wejściowemu. Możemy tego dokonać wykorzystując technikę upsampling’u z wykorzystaniem technik interpolacji. Proces ten polega na uzupełnieniu rozszerzanego obrazu poprzez wstawianie pixeli, pomiędzy te już istniejące, które mają jak najbardziej odpowiadać brakom. Grad-CAM można wykorzystać w tłumaczeniu różnego rodzaju sieci konwolucyjnych jednak jego wyniki są mało szczegółowe \cite{grad-cam_theory, grad-cam_theory2, ALI2023101805}. 
+Niektóre z jej elementów mogą posiadać ujemne wartości wskazujące na to, że dana instancja wpływała negatywnie na wskazaną predykcję. Z tego powodu używamy funkcji aktywacji o nazwie ReLU, która zamienia wartości ujemne na zera. W przedstawiony sposób uzyskujemy mapę cieplną o wielkości map cech w wybranej przez nas warstwie konwolucyjnej. W celu analizy należy zwiększyć jej rozmiar do tego odpowiadającego obrazowi wejściowemu. Możemy tego dokonać wykorzystując technikę upsampling’u z wykorzystaniem technik interpolacji. Proces ten polega na uzupełnieniu rozszerzanego obrazu poprzez wstawianie pixeli, pomiędzy te już istniejące, które mają jak najbardziej odpowiadać brakom. Grad-CAM można wykorzystać w tłumaczeniu różnego rodzaju sieci konwolucyjnych jednak jego wyniki są mało szczegółowe \cite{grad-cam_theory, grad-cam_theory2, interpolation_definition, ALI2023101805}. 

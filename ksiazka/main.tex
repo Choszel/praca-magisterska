@@ -17,6 +17,22 @@
 \usepackage{amssymb}
 \usepackage{tocloft}
 \usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{xurl}
+\emergencystretch=3em
+\usepackage{csquotes}           
+\usepackage[
+    backend=biber,
+    style=numeric,
+    sorting=none,
+    giveninits=true,
+    url=true,
+    doi=false,
+    isbn=false,
+    eprint=false
+]{biblatex}
+
+\addbibresource{bibliografia.bib}
 
 \onehalfspacing
  \geometry{
@@ -100,8 +116,8 @@ OŚWIADCZENIE NA TEMAT SAMODZIELNOŚCI WYKONANIA PRACY
 \import{rozdzialy/}{podsumowanie.tex}
 
 \newpage
-\addcontentsline{toc}{section}{Literatura}
-\bibliographystyle{unsrt}
-\bibliography{bibliografia}
-
+\pagestyle{empty}
+\cleardoublepage
+\phantomsection
+\printbibliography[heading=bibintoc,title={Literatura}]
 \end{document}
