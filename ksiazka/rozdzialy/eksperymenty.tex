@@ -1,39 +1,18 @@
 \section{Eksperymenty}
 
 \subsection{Diabetes Prediction}
-Zbiór danych 'Diabetes Prediction' jest binarnym problemem klasyfikacyjnym polegającym na przewidzeniu czy dana osoba posiada cukrzycę. Składa się z 22 kolumn i ponad 250 000 rekordów. Zmienną docelową jest w nim 'Diabetes\_binary' mówiąca o braku ('0') lub występowaniu choroby ('1'), do danych objaśniających należą:    
-\begin{itemize}
-    \item  'HighBP' - dorośli, którzy usłyszeli od personelu medycznego, że mają wysokie ciśnienie krwi ('0' - nie, '1' - tak);
-    \item 'HighChol' - osoby, które kiedykolwiek usłyszały od personelu medycznego, iż mają wysoki poziom cholesterolu we krwi ('0' - nie, '1' - tak);
-    \item 'CholCheck' - czy w przeciągu ostatnich 5 lat sprawdzony został poziom cholesterolu? ('0' - nie, '1' - tak);
-    \item 'BMI' - wskaźnik masy ciała;
-    \item 'Smoker' - czy wypaliłeś(-łaś) co najmniej 100 papierosów w swoim życiu? ('0' - nie, '1' - tak);
-    \item 'Stroke' - czy kiedykolwiek miałeś (-aś) zawał? ('0' - nie, '1' - tak); 
-    \item 'HeartDiseaseorAttack' - czy kiedykolwiek zgłoszona została choroba wieńcowa lub zawał mięśnia sercowego? ('0' - nie, '1' - tak);
-    \item 'PhysActivity' - czy w przeciągu ostatnich 30 dni wykonywana była jakakolwiek aktywność fizyczna niezwiązana z wykonywaną na co dzień pracą? ('0' - nie, '1' - tak);
-    \item 'Fruits' - czy przynajmniej raz dziennie spożywany jest owoc? ('0' - nie, '1' - tak);
-    \item 'Veggies' - czy przynajmniej raz dziennie spożywane jest warzywo? ('0' - nie, '1' - tak);
-    \item 'HvyAlcoholConsump' - osoby dużo pijące, do których zalicza się mężczyzn spożywających więcej niż 14 drinków tygodniowo oraz kobiety spożywające więcej niż 7 drinków tygodniowo? ('0' - nie, '1' - tak);
-    \item 'AnyHealthcare' - czy posiadasz ubezpieczenie zdrowotne? ('0' - nie, '1' - tak);
-    \item 'NoDocbcCost' - czy w przeciągu ostatniego roku zdarzyła się sytuacja, w której potrzebna tobie była opieka zdrowotna, ale nie mogłeś (-aś) z niej skorzystać ze względu na koszty? ('0' - nie, '1' - tak);
-    \item 'GenHlth' - na ile oceniasz swoje zdrowie? (1 - 5);
-    \item 'MentHlth' - biorąc pod uwagę stres, depresję oraz problemy z emocjami przez ile dni w przeciągu ostatnich 30 dni twoje zdrowie psychiczne nie było w dobrym stanie? (0 - 30);
-    \item 'PhysHlth' - biorąc pod uwagę choroby fizyczne i kontuzje ile dni w przeciągu ostatnich 30 dni twój stan fizyczny nie był dobry? (0 - 30);
-    \item 'DiffWalk' - czy masz poważne problemy z chodzeniem lub wchodzeniem po schodach? ('0' - nie, '1' - tak);
-    \item 'Sex' - płeć ('0' - kobieta, '1' - mężczyzna);
-    \item 'Age' - wiek respondenta zapisany jako 1 z 14 kategorii (1 - 14);
-    \item 'Education' - jakie jest twoje najwyższe wykształcenie lub ukończony rok szkoły (1 - 6);
-    \item 'Income' - dochód respondenta należący do jednej z 8 kategorii (1 - 8). \cite{diabetes_dataset}
-\end{itemize}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{rysunki/diabetes/diabetes_data.png}
-    \caption{Wykaz 5 pierwszych rekordów zbioru dotyczącego diabetyków [źródło własne]}
-    \label{fig:diabetes_data}
-\end{figure}
 
-Zbiór nie zawierał braków a wszystkie zawarte w nim dane były nominalne. Zgodnie z opisem większość cech jest zerem lub jedynką, najwięcej unikalnych wyników możemy znaleźć w kolumnie 'BMI'. Badania nie wykazały jakichkolwiek wartości odstających, jednak pojawiły się duplikaty, które zostały przeze mnie usunięte. Mapa cieplna oraz VIF nie wskazały, aby pomiędzy którymikolwiek cechami zachodziła znaczna współliniowość (założony próg 0.85). Po przeanalizowaniu histogramów można zauważyć, że dane nie znajdują się w rozkładzie normalnym. W ramach zbadania istotności zmiennych użyłam testu U-Manna Whitneya, z którego nie wynikło, aby w zbiorze znajdywały się nadmiarowe informacje. Zbiór składał się z prawie 230 000 rekordów, co znacznie wpłynęłoby na czas potrzebny do przeprowadzenia badań. W związku z tym losowo wybrałam po 2500 wierszy z obu klas decyzyjnych i połączyłam je w jeden zestaw danych. Został on podzielony na zbiór treningowy i testowy w stosunku 4:1 z użyciem opcji \textit{stratify} pozwalającej na rozdzielenie rekordów w taki sposób, aby w obu podzbiorach znalazła się równa ilość danych poszczególnych predykcji. Następnie dokonałam standaryzacji zmiennych objaśniających stosując średnią oraz odchylenie standardowe uzyskane na zbiorze treningowym \cite{diabetes_dataset_preprocessing}. Badana przeze mnie próbka znajduje się na pozycji 9 i została zdiagnozowana jako '0'.
+\begin{xltabular}{\textwidth}{|>{\centering\arraybackslash}X|c|c|c|c|c|c|}
+\caption{Wyniki metryk poszczególnych modeli dla zbioru dotyczącego diabetyków}
+\label{tab:metrics_diabetes}\\
+\hline
+Model \textbackslash Metryka & ROC AUC & Precyzja & Czułość & Specyficzność & F1-score & Dokładność \\ \hline
+\endfirsthead
+Random Forest & 0.79 & 0.71 & 0.73 & 0.70 & 0.72 & 0.72 \\ \hline
+XGBoost & 0.77 & 0.70 & 0.69 & 0.70 & 0.70 & 0.70 \\ \hline
+Sieć neuronowa & 0.80 & 0.71 & 0.74 & 0.70 & 0.72 & 0.72 \\ \hline
+\end{xltabular}
 
 \begin{table}[H]
 \centering
@@ -334,17 +313,6 @@ Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech PFI wskazało tylko 6, kt
 \end{figure}
 
 \subsection{UCI Heart Disease Data}
-Drugi analizowany zbiór danych dotyczy występowania choroby serca oraz jej stadium, co czyni go problemem klasyfikacji wieloklasowej. Zawiera 16 kolumn oraz 920 rekordów. Id jest identyfikatorem pacjenta i nie jest brane pod uwagę podczas badań. Do zmiennych wejściowych należą: wiek (age), płeć (sex), miejsce badania (dataset), typ bólu klatki piersiowej (cp), spoczynkowe ciśnienie krwi (trestbps), cholesterol całkowity w surowicy (chol), czy poziom cukru we krwi na czczo jest wysoki (fbs), wynik elektrokardiograficzny w spoczynku (restecg), osiągnięte maksymalne tętno (thalach/ thalch - w bazie danych występuje literówka), dławica piersiowa wywołana wysiłkiem fizycznym (exang), obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku (oldpeak), spadek odcinka ST podczas szczytowego wysiłku fizycznego (slope), liczba głównych naczyń zabarwionych fluoroskopią (ca), niedokrwistość tarczowatokrwinkowa (thal). Natomiast zmienną docelową jest „num”, która oznacza stadium choroby serca. Może ona przyjmować jedną z 5 wartości, gdzie 0 symbolizuje brak problemów z narządem, a 4 poważne trudności \cite{heart_disease_dataset}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{rysunki/heart/heart_disease_data.png}
-    \caption{Wykaz 5 pierwszych rekordów zbioru dotyczącego występowania choroby serca [źródło własne]}
-    \label{fig:heart_disease_5_first_records}
-\end{figure}
-
-W trakcie analizy zbioru odkryłam, że znajduje się w nim wiele danych brakujących. Najwięcej braków występuje w kolumnie "'ca"'\ - aż 611, co stanowi 66,41\% całości. Dodatkowo zauważyłam, iż cholesterol w surowiny (chol) nie może przyjąć wartości 0. Takie przypadki również uznałam za ubytki. Postanowiłam usunąć te kolumny, w których procent owych wartości przekroczył połowę, czyli uprzednio wspomnianą oraz thal. Resztę uzupełniłam średnią (zmienne numeryczne) oraz medianą (zmienne kategoryczne). Dane tekstowe zostały prze ze mnie zakodowane za pomocą \textit{Label Encoding}'u \cite{heart_disease_dataset_labelencoder}. Po obejrzeniu wyników wykresów pudełkowych, rozstępu międzykwartylowego (IQR) oraz miary z-score zdecydowałam się pominąć w swoich badaniach rekordy o indeksach: 632, 754, 547. 632 - thalch, czyli osiągnięte maksymalne tętno (tutaj 60) jest znacznie niższe od średniej (dla osób w wieku 50 lat wynosi 170 uderzeń na minutę). Ten rekord nie pojawia się we wszystkich testach, aczkolwiek mimo wszystko zostanie usunięty. 754 - trestbps, czyli spoczynkowe ciśnienie krwi nie może wynieść 0, oznaczałoby to śmierć. Wartość była liczona, gdy pacjent trafił do szpitala, co jest teoretycznie możliwe, gdyby w tamtym momencie miał zatrzymanie akcji serca i udałoby się go uratować. Inną możliwością jest to, że osobnikowi przy przyjęciu nie zmierzono ciśnienia i wpisano daną wartość. 547 - chol, czyli cholesterol w surowicy 603 mg/dl to wynik ekstremalnie wysoki \cite{heart_disease_dataset_chol_mean}. Badanie mapą cieplną wykazało silną korelację  (założyłam próg 0.85) na poziomie 0.95 pomiędzy identyfikatorem a numerem zbioru, z którego dane pochodziły. Pierwsza z tych cech nie będzie brana pod uwagę w dalszych analizach, co skutkowało brakiem jakichkolwiek zmian. Dane nie znajdowały się w rozkładzie normalnym, więc za pomocą testu Kruskala-Wallisa zbadałam zmienne. Wykazał on brak różnic istotnych statystycznie dla restecg, którego wartość p była większa od założonego progu (0.07106 > 0.05). Dodatkowo istnieje duże niezbilansowanie dotyczące przynależności osób do konkretnych klas. Oznacza to, że jest znacznie mniej przypadków zakwalifikowanych z czwartym stadium choroby niż osób bez przypadłości. Na koniec po podziale danych na zbiór testowy i treningowy w stosunku 4:1 dokonałam standaryzacji zmiennych obu podzbiorów używając średniej oraz odchylenia standardowego uzyskanego na tym wykorzystywanym do nauki. Badana przeze mnie próbka ma pozycję w zbiorze testowym równą 9 a jej poprawną predykcją jest klasa '0'.
-
 \begin{table}[H]
  \centering
     \caption{Wyniki uzyskane przy modelu Random Forest dla zboru dotyczącego choroby serca}
@@ -767,31 +735,6 @@ Wszystkie cechy zostały uznane przez PFI jako istotne, jednakże uzyskane przez
 \end{figure}
 
 \subsection{Brain MRI Images for Brain Tumor Detection}
-"'Brain MRI Images for Brain Tumor Detection"' jest zbiorem danych zawierającym 253 obrazy rezonansów magnetycznych mózgów. Na jego podstawie można przeprowadzać klasyfikację polegającą na wykrywaniu guzów. 155 zdjęć znajduje się w folderze "'yes"' oznaczającym wykrycie patologii, reszta została umieszczona w katalogu "'no"' \cite{brain_dataset}. W dalszej części rozdziału próbki bez zmian nowotworowych będą określane jako klasa '0', a te z guzem - '1'. Na Rys. \ref{fig:6_no_brain_tumor} i \ref{fig:6_yes_brain_tumor} znajduje się po 6 przykładowych obrazów z obu klas decyzyjnych. Zauważamy na nich, że zdjęcia są czarno-białe, a zmiany nowotworowe to białe plamy, bądź miejsca posiadające obwódkę w tym kolorze, o nieregularnych kształtach.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.65\linewidth]{rysunki//brain/brain_no.png}
-    \caption{Sześć przykładowych obrazów bez zmian nowotworowych [źródło własne]}
-    \label{fig:6_no_brain_tumor}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.65\linewidth]{rysunki//brain/brain_yes.png}
-    \caption{Sześć przykładowych obrazów ze zmianami nowotworowymi [źródło własne]}
-    \label{fig:6_yes_brain_tumor}
-\end{figure}
-
-Na początku stworzyłam 3 foldery o nazwach "'TRAIN"', "'VAL"' i "'TEST"', w których znalazły się odpowiednio obrazy do nauki, walidacji i testu. 10\% pierwszych plików z obu klas decyzyjnych trafiało do zbioru testowego, kolejne 15\% do walidacyjnego, a reszta - treningowego. Następnie je przerobiłam wykorzystując kod przycinający zdjęcia do wykrytego konturu głowy dodatkowo je zmniejszając lub powiększając do rozmiaru 224 x 224 pikseli. Takie obrazy zostały przekopiowane do nowoutworzonej analogicznej struktury katalogów w folderze przeznaczonym na przetworzone zbiory. Do nauki modeli użyłam augmentacji danych \cite{brain_dataset_preprocessing}. Badana przeze mnie próbka pochodzi ze zbioru treningowego i jest zamieszczona pod indeksem o numerze 94. Widać na niej zmiany nowotworowe, została przedstawiona na Rys. \ref{fig:tested_sample_brain}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{rysunki/brain/tested_sample_brain.png}
-    \caption{Zdjęcie badanej próbki do zbioru dotyczącego zmian nowotworowych w mózgu [źródło własne]}
-    \label{fig:tested_sample_brain}
-\end{figure}
-
 \begin{table}[H]
 \centering
     \caption{Wyniki uzyskane przy modelu VGG-16 dla zbioru dotyczącego zmian nowotworowych w mózgu}
@@ -947,24 +890,6 @@ Jak widzimy na Rys. \ref{fig:gradcam_xception_1_brain} Grad-CAM wskazał jeden b
 \end{figure}
 
 \subsection{Cats and Dogs Classification Dataset}
-Ostatni analizowany zbiór danych składa się z 12 499 zdjęć kotów i tylu samo psów, dając łącznie 24 998 próbek. Pochodzi on ze strony Kaggle i jest przeznaczony do klasyfikacji binarnej, gdzie klasa '0' oznacza obrazy mruczków, a '1' czworonogów szczekających \cite{cats&dogs_dataset}. Na Rys. \ref{fig:cats&dogs_data} zaprezentowanych zostało 5 przykładowych zdjęć ze zbioru treningowego reprezentujących przedstawicieli obu klas decyzyjnych. Jak widzimy są to obrazy kolorowe, które zostały już przycięte do rozmiaru 224 x 224 pikseli.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{rysunki/cats&dogs/cats&dogs_data.png}
-    \caption{5 przykładowych zdjęć z podzbioru testowego zbioru dotyczącego klasyfikacji psów i kotów [źródło własne]}
-    \label{fig:cats&dogs_data}
-\end{figure}
-
-W ramach procesu przygotowania danych, podobnie jak w przypadku poprzedniej bazy, utworzyłam 3 foldery w folderze przeznaczonym na przetworzone zbiory o nazwach "'TRAIN"', "'VAL"' i "'TEST"', do których trafiły odpowiednio obrazy do nauki, walidacji i testu. Pierwszy podział dzielił zbiór w stosunku 4:1 z czego ta mniejsza część została przeznaczona na walidację. Druga została poddana ponownemu rodzieleniu w takiej samej proporcji, z czego większy podzbiór został zbiorem treningowym, a reszta - testowym. W taki sposób na naukę przypadło 7 999 obrazów przynależących do poszczególnych klas decyzyjnych, po 2 500 do walidacji i 2 000 do testu. Po przekopiowaniu ich do odpowiednich katalogów, zostały one wczytane do programu za pomocą funkcji pozwalającej na ich przycięcie do wymaganego przez modele rozmiaru 224 x 224 pikseli. Okazało się, że jedno ze zdjęć z folderu dotyczącego kotów o nazwie "10404.jpg" ma błędny format, więc zostało pominięte podczas tych badań. Ze względu na użycie opcji losowo podającej kolejność zdjęć przy każdej próbie iteracji stworzyłam duplikaty zmiennych przechowujących zbiory treningowe i walidacyjne bez tej możliwości. Do części testowej nie wykorzystałam przetasowania \cite{cats&dogs_dataset_preprocessing}. Badane próbki pochodzą z podzbioru przeznaczonego na naukę i mieszczą się pod indeksami 10, z czego zdjęcie z kotem pochodzi z \textit{batch}'a o numerze 0, a z psem - 321. Zostały one zaprezentowane na Rys. \ref{fig:cats&dogs_tested_samples}. 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\linewidth]{rysunki/cats&dogs/tested_samples_cats&dogs.png}
-    \caption{Zdjęcia badanych próbek do zbioru dotyczącego klasyfikacji psów i kotów [źródło własne]}
-    \label{fig:cats&dogs_tested_samples}
-\end{figure}
-
 \begin{table}[H]
 \centering
     \caption{Wyniki uzyskane przy modelu VGG-16 dla zbioru dotyczącego klasyfikacji psów i kotów}

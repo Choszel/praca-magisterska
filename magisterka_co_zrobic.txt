@@ -1,4 +1,30 @@
 Magisterka - co zostało do zrobienia?:
-	- 1 stronicowy opis w języku obcym nowożytnym
-	- oświadczenie nt. samodzielności wykonanai pracy
-	- poprawić wstęp
+	- stronę 3: wydrukować, podpisać, zeskanować, wstawić
+	- połączyć 2 pierwsze rozdziały
+	- rozszerzyć początek klasyfikacji, zrobić wstęp do tego, czym jesst klasyfikacja
+	- rozszerzyć opis modeli klasyfikacyjnych
+	- rozszerzyć opis metod, dodać opis jak inni wykorzystali te metody
+	- zrobić podrozdział "Metody oceny" w problemie klasyfikacji i opisać w nim miary 
+	-  w opisach metod dodać każdy rodzaj używanego wykresu i opisać co przedstawia
+	- opis implementacji jest zbyt chaotyczny, zmienic go, przenieść do niego opisy zbiorów
+	- we wstępnie napisać z ilu rozdziałów składa się praca i co robią poszczególne z nich
+	- podsumowanie powinno składac się z 2-3 stron, po każdym eksperymencie drobne podsumowanie oznaczone jako podpodrozdział
+	- poprawić błędy językowe i literówki
+	- odwołania na początku a nie na końcu
+	- opisy metod są zbyt skomplikowane
+	- poprawić odwołania z witryny Kaggle
+	- średnia macro zamienić na średnia arytmetyczna
+	- nie trzeba dokładnie opisywać źródła
+        - podrozdział "Analizowane zbiory" w opisie implementacji, tam przenieść opisy zbiorów i ich przygotowanie
+	- poprawić tabelki do klasyfikacji binarnych -> czułość klasy '0' to specyficzność
+	- dodać jedną tabelkę zbiorczą klasyfikacji binarnych zawierającą wyniki każdego z uzytych modeli
+	- w klasyfikacjach binarnych usunąć macierze pomyłek
+	- w klasyfikacji binarnej danych tabelarycznych usunąć wytłumaczenia LIME dla pojedynczej próbki
+	- dodać opis jak przeprowadzane są eksperymenty w opisie implementacji
+	- zmniejszyć rysunki, dbac o wizualny aspekty pracy, tak aby nie zostawała połowa pustej strony
+	- odchylenie standardowe bez +/-
+	- dogłębiej przeanalizować wykresy beeswarm
+	- nie zamieniać pojęć statystycznych na jakieś wymyślone zamienniki w celu minimalizacji powtórzeń
+	- w podsumowaniach zdjęć zmienić nazwy kolumn na bardziej opisowe
+	- nie dodawać swoich przemyśleń, nie pisać tak mocnych słów jak 'bezkompromisowo'
+	- podsumowanie to: co zostało zrobione -> wnioski -> co można jeszcze zrobić
