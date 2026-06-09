@@ -1,6 +1,55 @@
 \section{Problem klasyfikacji}
+Informacje zebrane w postaci zbiorów danych można poddać analizie, aby odnaleźć w nich pewne reguły pochodzące ze świata rzeczywistego. Celem automatyzacji tego procesu powstał odłam sztucznej inteligencji nazywany uczeniem maszynowym. Polega on na tym, że komputer uczy się zbiorów danych i wykrywa w nich zależności, które wykorzystuje do przewidywania wyników. Dane mogą być w różnej postaci. W owej pracy wykorzystywane jest uczenie nadzorowane, czyli każda z próbek (jedna instancja danych) ma przypisane rozwiązanie. Nauka to proces polegający na dostrajaniu wybranego algorytu, któremu przekazywane są dane treningowe będące wydzieloną częścią zbioru poddawanego analizie. Po przeanalizowaniu przekazanych na wejście informacji algorytm porównuje wydedukowany przez siebie wynik z tym dołączonym do badanej próbki. W przypadku gdy odpowie błędnie poprawia on swoje parametry w celu minimalizacji straty, czyli ilości błędnych predykcji. Po nauce modelowi przekazywany jest zbiór testowy również będący wydzieloną częścią oryginalnego zbioru danych. Chcemy osiągnąć jak najwyższą generalizację, czyli sytuację, gdy model popełnia mało błędów po podaniu mu próbek odbiegających od tych, na których został on nauczony. Klasyfikacja jest jednym z możliwych do uzyskania rodzaji odpowiedzi. Mamy z nią do czynienia, kiedy wejściu przyporządkowywana jest jedna ze skończonej liczby niepokrywających się grup. Dzieli się ona na dwie wersje - binarną, gdy istnieją tylko dwie klasy decyzyjne, np. pies lub kot; oraz wieloklasową, gdzie wyników może być wiele, np. 5 stopniowe stadium choroby \cite{bishop2006pattern, classification_gov, classification_google}. 
 
-W tym rozdziale pragnę przybliżyć 3 wybrane modele klasyfikacyjne. Należą do nich: las losowy, XGBoost oraz sieci neuronowe. To właśnie one zostaną poddane nauce wyselekcjonowanych zbiorów danych, a następnie zinterpretowane za pomocą metod wyjaśnialnej sztucznej inteligencji omówionych w rozdziale \ref{metody_xai}. Metody XAI.
+Do zadań klasyfikacji moglibyśmy użyć prostego, łatwo interpretowalnego modelu, takiego jak drzewo decyzyjne albo regresja liniowa. Przy mało skomplikowanych danych owe rozwiązanie byłoby wystarczające, jednak w rzeczywistości często mamy do czynienia ze złożonymi problemami wymagającymi trudniejszych w użyciu, zrozumieniu czy stworzeniu rozwiązań. Random forest, XGBoost oraz sieci neuronowe są w stanie przeprowadzić precyzyjniejsze analizy i osiągać większą dokładność. Wiąże się to niestety z utratą ich przejrzystości i czytelności. Dzieje się tak, ponieważ starając się jak najlepiej przybliżyć korelacje zaistniałe pomiędzy cechami danych wejściowych, budują one olbrzymie struktury, które przez swoje gigantyczne rozmiary stają się nieczytelne dla człowieka prowadząc do braku jakiejkolwiek możliwości ich interpretacji bądź analizy \cite{ALI2023101805}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Deep-Neural-Network-architecture.jpg}
+    \caption{Przykładowa struktura sieci neuronowej \cite{dnn_conference_image}}
+    \label{fig:example_of_dnn}
+\end{figure}
+
+Badacze, w celu określenia przejrzystości modeli, wprowadzili pojęcia różnokolorowych skrzynek. Należą do nich:
+\begin{itemize}
+    \item biała skrzynka (bądź też nazywana przezroczystą) – zaliczają się do niej prostsze modele uczenia maszynowego, które możemy zazwyczaj bez jakiejkolwiek pomocy bezproblemowo analizować spoglądając na ich strukturę, wyniki oraz parametry. Nie potrafią odwzorowywać skomplikowanych zależności, z tego powodu ich dokładność jest niska bądź średnia. Nie są one dostosowane do trudniejszych dziedzin, takich jak medycyna czy finanse.
+    \item szara skrzynka – systemy będące pośrednim rozwiązaniem pomiędzy innymi pudełkami. Istnieje możliwość ich częsciowej interpretacji przy założeniu, że zostały starannie zaprojektowane. Do tej kategorii mogą się zaliczać, np. sieci bayesowskie. Mają lepszą jakość klasyfikacji niż poprzedni przypadek. Dzieje się tak ponieważ są bardziej rozbudowane, co zarazem przekłada się na większe problemy z ich zrozumiem.
+    \item czarna skrzynka – należą do niej głównie sztuczne sieci neuronowe, które ze względu na swoją znaczną złożoność są kompletnie nieczytelne. Tę sytuację obrazuje Rys. \ref{fig:example_of_dnn}. Mają wysoką dokładność, jednak nie jesteśmy w stanie, patrząc na ich strukturę, ocenić skąd ona wynika.
+\end{itemize}	
+
+ \begin{figure}[H]
+     \centering
+     \includegraphics[width=1\linewidth]{colorful_boxes.jpg}
+     \caption{Rysunek obrazujący podział modeli ze względu na ich przejrzystość \cite{ALI2023101805}}
+     \label{fig:colorful_boxes}
+ \end{figure}
+
+Dochodzą do tego dwa często stosowane w kontekście XAI pojęcia - interpretowalność i wyjaśnialność. Pierwsze z nich dotyczy stopnia sposobności zrozumienia całokształtu działania. Drugie oznacza w jakim stopniu człowiek jest w stanie zrozumieć dlaczego model podjął akurat taką decyzję posiadając określone dane wejściowe. Jest to lokalna analiza względem konkretnego przypadku, zkłada m.in. pokazanie toku ,,myślowego'' algorytmu \cite{IBM_interpretability_explainability, molnar2025}.
+ 
+Techniki XAI powstały, aby kosztem dokładności zwiększyć przejrzystość modeli, bądź odwrotnie – zwiększyć jakość klasyfikacji w zamian za możliwość ich częściowego zrozumienia. Zamieniają, więc one czarne oraz białe skrzynki w szare skrzynki, poświęcając większą wartość na tę, której systemowi brakuje. Celem takich zabiegów może być: 
+\begin{itemize}
+    \item zwiększenie poprawności modelu, poprzez możliwość przeanalizowania jego działania, przy czym znalezienia miejsc, w których model doszedł do błędnych związków, nietypowych rozwiązań wcześniej nam nieznanych, dyskryminował przypadki (klasy, grupy) rzadkie lub jego wnioskowanie pochodziło z błędu ludzkiego np. powstałego przy obróbce danych wejściowych, a następnie ich naprawa lub wyeksponowanie; 
+    \item znalezienie inspiracji do przyszłych prac. Owe niekonwencjonalne sytuacje mogą nam dostarczyć wiedzę i pomysły, które moglibyśmy wykorzystać przy innych projektach;
+    \item wytłumaczenie modelu i jego przewidywań;
+    \item aby odkryć dlaczego dochodzi do danego wyniku \cite{molnar2025}.
+\end{itemize}
+
+\subsection{Metody oceny}
+Mamy do dyspozycji wiele miar określających jakość uzyskanego w trakcie nauki modelu. Najpopularniejsze z nich użwywane w problemach klasyfikacji zostały zamieszczone w Tabeli \ref{tab:metrics_description}. Dodatkowo precyzję, \textit{recall} (czułość, specyficzność) oraz F1-score można w przypadku klasyfikacji wieloklasowej zagregować za pomocą średniej arytmetycznej bądź ważonej. Wagą średniej ważonej jest liczebność próbek danej klasy.  
+\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+\caption{Metryki, ich opisy i sposób obliczania \cite{zheng2015evaluating, f1_score_wikipedia}}
+\label{tab:metrics_description}\\
+\hline
+Metryka & Opis & Sposób obliczania \\ \hline
+\endfirsthead
+ROC AUC & AUC (ang. \textit{area under the curve}), to powierzchnia pod krzywą ROC będącą wyznacznikiem jak zwiększyłaby się liczba poprawnych klasyfikacji pozwalając na więcej negatywnych klasyfikacji. AUC jest sposobem na reprezentację tej funkcji za pomocą jednej wartości.  & Krzywą ROC rysujemy poprzez punkty, których zmienną X jest wskaźnik wyników fałszywie dodatnich, a Y wskaźnik wyników prawdziwie dodatnich (czułość)  \\ \hline
+Dokładność & Częstość prawidłowej klasyfikacji & Stosunek poprawnych predykcji do wszystkich predykcji\\ \hline
+Precyzja & Mówi ile jednostek z przewidzianych jako dodatnie rzeczywiście zostało prawidłowo przydzielonych do tej grupy  & Stosunek próbek przewidzianych poprawnie jako dodatnie do wszystkich próbek sklasyfikowanych jako dodatnie \\ \hline
+Czułość & Miara mówiąca o tym, jak często model poprawnie klasyfikowałby próbki jako dodatnie posiadając do dyspozycji wyłącznie próbki dodatnie & Stosunek próbek poprawnie zaklasyfikowanych jako dodatnie do wszystkich dodatnich próbek \\ \hline
+Specyficzność & Miara mówiąca o tym, jak często model poprawnie klasyfikowałby próbki jako ujemne posiadając do dyspozycji wyłącznie próbki ujemne & Stosunek próbek poprawnie zaklasyfikowanych jako ujemne do wszystkich próbek ujemnych \\ \hline
+F1-score & Łączy precyzję i czułość w jedną zbalansowaną wartość. & Średnia harmoniczna pomiędzy precyzją a czułością - dwukrotność precyzji pomnożonej przez czułość dzielona na sumę precyzji i czułości \\ \hline
+\end{xltabular}
+
 
 \subsection{Random Forest}
 

@@ -2,8 +2,7 @@
 
 \subsection{Diabetes Prediction}
 
-
-\begin{xltabular}{\textwidth}{|>{\centering\arraybackslash}X|c|c|c|c|c|c|}
+\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|c|c|c|c|}
 \caption{Wyniki metryk poszczególnych modeli dla zbioru dotyczącego diabetyków}
 \label{tab:metrics_diabetes}\\
 \hline
@@ -14,33 +13,11 @@ XGBoost & 0.77 & 0.70 & 0.69 & 0.70 & 0.70 & 0.70 \\ \hline
 Sieć neuronowa & 0.80 & 0.71 & 0.74 & 0.70 & 0.72 & 0.72 \\ \hline
 \end{xltabular}
 
-\begin{table}[H]
-\centering
-    \caption{Wyniki uzyskane przy modelu Random Forest dla zbioru dotyczącego diabetyków}
-\begin{tabular}{|ccccc|}
-\hline
-\multicolumn{5}{|c|}{ROC AUC: 0.79} \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
-\multicolumn{1}{|c|}{0}  &
-\multicolumn{1}{c|}{0.73} & \multicolumn{1}{c|}{0.70}  & \multicolumn{1}{c|}{0.71} & 500    \\ \hline
-\multicolumn{1}{|c|}{1} & \multicolumn{1}{c|}{0.71}   & \multicolumn{1}{c|}{0.73}    & \multicolumn{1}{c|}{0.72}  & 500    \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.72}  & 1000   \\ \hline
-\end{tabular}
-    \label{tab:diabetes_rf_metrics}
-\end{table}
+\subsubsection{Random Forest}
+Jak wskazuje Tabela \ref{tab:metrics_diabetes} las losowy osiągnął dokładność na poziomie 72\%. Ze względu na równy rozkład próbek przynależących do poszczególnych klas decyzyjnych średnie arytmetyczne oraz ważone tej miary były jednakowe. Z 500 przypadków niebędących diabetykami model dobrze rozpoznał 352, co skutkuje w specyficzności równej 70\%. Mając do dyspozycji same próbki osób chorujących na cukrzycę model poprawnie zaklasyfikował 367 przypadków. Precyzja osiągnęła poziom 71\%, czułość 73\% a F1-score 72\%. Pole powierzchni pod krzywą ROC wyliczone zostało w przybliżeniu na 0.79. Model na 87\% był pewny klasyfikacji badanej próbki jako klasę '0'.\\
 
-Jak wskazuje Tabela \ref{tab:diabetes_rf_metrics} las losowy osiągnął dokładność na poziomie 72\%. Ze względu na równy rozkład próbek przynależących do poszczególnych klas decyzyjnych średnie macro oraz ważone tej miary były jednakowe. Z macierzy pomyłek zamieszczonej na Rys. \ref{fig:confusion_matrix_rf_diabetes} możemy wyczytać, że z 500 przypadków nie będących diabetykami model dobrze rozpoznał 352, co skutkuje w precyzji równej 73\%. Mając do dyspozycji same próbki osób nie chorujących na cukrzycę model poprawnie wskaże 70\% z nich (miara czułości). Średnia harmoniczna wynosi w tej sytuacji 71\%. Bardzo zbliżone wyniki widnieją dla drugiej klasy decyzyjnej, którą Random Forest diagnozował częściej. Precyzja osiągnęła poziom 71\%, czułość 73\% a F1-score 72\%. Pole powierzchni pod krzywą ROC wyliczone zostało w przybliżeniu na 0.79. Model na 87\% był pewny klasyfikacji badanej próbki jako klasę '0'. 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/diabetes/macierz_pomylek_rf_diabetes.png}
-    \caption{Macierz pomyłek modelu Random Forest dla zbioru dotyczącego diabetyków [źródło własne]}
-    \label{fig:confusion_matrix_rf_diabetes}
-\end{figure}
-
-
-Jak pokazuje Rys. \ref{fig:lime_classpredplot_rf_diabetes} w celu poparcia owej klasyfikacji wskazała ona wpływ poszczególnych cech, w których na pierwszym miejscu w rankingu istotności znalazła się ocena własnego zdrowia przez pacjenta ('GenHlth') z wartością ustandaryzowaną wynoszącą mniej lub równo -0.82 i wagą 0.18. Na kolejnym miejscu plasował się wiek osoby badanej ('Age') z miarą LIME 0.15. Przeciwko owej tezie pojawiła się zmienna mówiąca o dużym spożyciu alkoholu ('HvyAlcoholConsump') z wagą równą 0.15. Na danej wizualizacji możemy również dostrzec jak wiele cech nie miało praktycznie jakiegokolwiek znaczenia na predykcję, a należą do nich m.in.: to czy osoba wypaliła przynajmniej 100 papierosów w swoim życiu ('Smoker'), ocena własnego zdrowia psychicznego ('MentHlth'), płeć ('Sex'), albo spożywane owoców ('Fruits'), bądź warzyw ('Veggies'). 
+\iffalse
+Jak pokazuje Rys. \ref{fig:lime_classpredplot_rf_diabetes} w celu poparcia owej klasyfikacji wskazała ona wpływ poszczególnych cech, w których na pierwszym miejscu w rankingu istotności znalazła się ocena własnego zdrowia przez pacjenta ('GenHlth') z wartością ustandaryzowaną wynoszącą nie więcej niż -0.82 i wagą 0.18. Na kolejnym miejscu plasował się wiek osoby badanej ('Age') z miarą LIME 0.15. Przeciwko owej tezie pojawiła się zmienna mówiąca o dużym spożyciu alkoholu ('HvyAlcoholConsump') z wagą równą 0.15. Na danej wizualizacji możemy również dostrzec jak wiele cech nie miało praktycznie jakiegokolwiek wpływu na predykcję, a należą do nich m.in.: to czy osoba wypaliła przynajmniej 100 papierosów w swoim życiu ('Smoker'), ocena własnego zdrowia psychicznego ('MentHlth'), płeć ('Sex'), albo spożywane owoców ('Fruits'), bądź warzyw ('Veggies'). 
 
 \begin{figure}[H]
     \centering
@@ -48,6 +25,7 @@ Jak pokazuje Rys. \ref{fig:lime_classpredplot_rf_diabetes} w celu poparcia owej 
     \caption{Wykres słupkowy przedstawiający wpływ cech na predykcję wskazanej próbki według metody LIME w modelu Random Forest zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:lime_classpredplot_rf_diabetes}
 \end{figure}
+\fi
 
 Po wyliczeniu średniej z bezwzględnych wartości wag metody LIME otrzymujemy wykres zamieszczony na Rys. \ref{fig:lime_absolutemeanplot_rf_diabetes}. Widzimy na nim, że najistotniejszą informacją wpływającą na predykcje jest, to czy badana osoba spożywa dużo alkoholu ('HvyAlcoholConsump'), której obliczona miara na przestrzeni całego zbioru treningowego wyniosła ok. 0.16. Kolejną znaczną przesłanką jest ocena przez pacjenta stanu własnego zdrowia ('GenHlth') z wynikiem w przybliżeniu 0.13. Wiek ('Age'), BMI ('BMI'), odpowiedź, czy kiedykolwiek zgłoszona została choroba wieńcowa lub zawał mięśnia sercowego ('HeartDiseaseorAttack') i czy masz poważne problemy z chodzeniem lub wchodzeniem po schodach ('DiffWalk') należą do kolejnych przydatnych cech, których wagi oscylują w przedziale od 0.05 do 0.1. Informacjami bez jakichkolwiek wartości okazały się być: spożywanie warzyw ('Veggies'), informacja, czy w przeciągu ostatnich 5 lat sprawdzony został poziom cholesterolu ('CholCheck') oraz posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare'). 
 
@@ -58,7 +36,8 @@ Po wyliczeniu średniej z bezwzględnych wartości wag metody LIME otrzymujemy w
     \label{fig:lime_absolutemeanplot_rf_diabetes}
 \end{figure}
 
-Jak pokazuje wykres widniejący na Rys. \ref{fig:shap_rf_diabetes} za 87\% pewnością diagnozy '0' wskazanej próbki, według metody SHAP, najbardziej przemawiają: ocena własnego stanu zdrowia ('GenHlth') z wartością +11\%,  informacja o wysokim ciśnieniu krwi ('HighBP'),  ocena własnego zdrowia psychicznego ('MentHlth') oraz wiek pacjenta ('Age') wszystkie zwiększające prawdopodobieństwo o 8\%. Tylko dwie cechy wpływały istotnie w negatywny sposób na przewidywanie, a były to przesłanka o wysokim poziomie cholesterolu ('HighChol') z miarą -6\% i płeć ('Sex') z -2\%. Aż 12 cech miało praktycznie żadenego wpływu na predykcję. Zaliczają się do nich m.in. informacje na temat spożywania owoców ('Fruits') czy warzyw ('Veggies'),  przebycie zawału ('Stroke'), a także  palenie papierosów ('Smoker').
+\iffalse
+Jak pokazuje wykres widniejący na Rys. \ref{fig:shap_rf_diabetes} za 87\% pewnością diagnozy '0' wskazanej próbki, według metody SHAP, najbardziej przemawiają: ocena własnego stanu zdrowia ('GenHlth') z wartością +11\%,  informacja o wysokim ciśnieniu krwi ('HighBP'),  ocena własnego zdrowia psychicznego ('MentHlth') oraz wiek pacjenta ('Age') wszystkie zwiększające prawdopodobieństwo o 8\%. Tylko dwie cechy wpływały istotnie w negatywny sposób na przewidywanie, a były to przesłanka o wysokim poziomie cholesterolu ('HighChol') z miarą -6\% i płeć ('Sex') z -2\%. Aż 12 cech miało praktycznie żadnego wpływu na predykcję. Zaliczają się do nich m.in. informacje na temat spożywania owoców ('Fruits') czy warzyw ('Veggies'),  przebycie zawału ('Stroke'), a także  palenie papierosów ('Smoker').
 
 \begin{figure}[H]
     \centering
@@ -66,16 +45,18 @@ Jak pokazuje wykres widniejący na Rys. \ref{fig:shap_rf_diabetes} za 87\% pewno
     \caption{Wykres wodospadowy wartości SHAP prawidłowej klasyfikacji wskazanej próbki w modelu Random Forest zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:shap_rf_diabetes}
 \end{figure}    
+\fi
+
 Z Rys. \ref{fig:shap_absolutemeanplot_rf_diabetes} można wyczytać, że po przeanalizowaniu wszystkich próbek zbioru testowego za najważniejszą cechę predykcyjną metoda SHAP uznała własną ocenę zdrowia ('GenHlth') zmieniającą średnio przewidywanie o ok. 9\%. Zaraz po w rankingu istotności znajduje się informacja odnośnie posiadania wysokiego ciśnienia krwi ('HighBP') z miarą bardzo zbliżoną do pierwszej zmiennej. Na trzecim miejscu nalazł się wskaźnik masy ciała ('BMI') wpływający na prawdopodobieństwo diagnozy w przybliżeniu o 7\%. Tutaj również zauważamy, iż aż 12 cech miało znikome znaczenie. Ich suma przedstawiona na dole wykresu wyniosła raptem 11\%, co średnio każdej z poszczególnych zmiennych daje mniej niż 1\% istotności.  Ponownie do owych cech zaliczamy kolumny: 'Fruits', 'Veggies', 'Smoker' czy 'Stroke'.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/diabetes/shap_absolutemeanplot_rf_diabetes.png}
-    \caption{Wykres średnich obliczonych z bezwzględnych wartości SHAP modelu Ranodm Forest zbioru dotyczącego diabetyków [źródło własne]}
+    \caption{Wykres średnich obliczonych z bezwzględnych wartości SHAP modelu Random Forest zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:shap_absolutemeanplot_rf_diabetes}
 \end{figure}
 
-Wykres przedstawiony na Rys. \ref{fig:shap_beeswarm_rf_diabetes} pozwala nam zobaczyć jak wartości poszczególnych cech przekładały się na ich wpływ pozytywny, bądź negatywny,  na przewidywanie - wartości SHAP. 'GenHlth', 'HighBP' oraz 'Age' charakteryzowały się tym, że ich wysokie wartości miały znacznie mniejsze znaczenie, na wizualizacji występują po środku, mniej więcej od -1\% do +2\%, natomiast niskie osiągi miały znacznie wyraźniejsze przesłanie, za czym przemawia ich rozłożenie na krańcach odpowiadających wierszy. Odwrotna sytuacja ma miejsce w przypadku 'DiffWalk' i 'MentHlth', gdzie na brzegach widnieją czerwone kropki, a pomiędzy nimi niebieskie. Wartości 3 wskazanej wcześniej najistotniejszej cechy ('BMI') są przemieszane nie wskazując na jakąś ogólną zależność.  
+Wykres przedstawiony na Rys. \ref{fig:shap_beeswarm_rf_diabetes} pozwala nam zobaczyć jak wartości poszczególnych cech przekładały się na ich wpływ pozytywny, bądź negatywny,  na przewidywanie - wartości SHAP. 'GenHlth', 'HighBP' oraz 'Age' charakteryzowały się tym, że ich wysokie wartości miały znacznie mniejsze znaczenie, na wizualizacji występują pośrodku, mniej więcej od -1\% do +2\%, natomiast niskie osiągi miały znacznie wyraźniejsze przesłanie, za czym przemawia ich rozłożenie na krańcach odpowiadających wierszy. Odwrotna sytuacja ma miejsce w przypadku 'DiffWalk' i 'MentHlth', gdzie na brzegach widnieją czerwone kropki, a pomiędzy nimi niebieskie. Wartości 3 wskazanej wcześniej najistotniejszej cechy ('BMI') są przemieszane niewskazując na jakąś ogólną zależność.  
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{rysunki/diabetes/shap_beeswarm_rf_diabetes.png}
@@ -89,31 +70,31 @@ Wykres przedstawiony na Rys. \ref{fig:shap_beeswarm_rf_diabetes} pozwala nam zob
     \begin{tabular}{|c|c|c|}
         \hline
         Cecha & Średnia & Odch. standardowe \\ \hline
-        GenHlth              & 0.146 & +/- 0.005 \\ \hline
-        BMI                  & 0.143 & +/- 0.004 \\ \hline
-        HighBP               & 0.115 & +/- 0.003 \\ \hline
-        Age                  & 0.109 & +/- 0.003 \\ \hline
-        HighChol             & 0.072 & +/- 0.003 \\ \hline
-        Income               & 0.059 & +/- 0.002 \\ \hline
-        PhysHlth             & 0.051 & +/- 0.002 \\ \hline
-        MentHlth             & 0.037 & +/- 0.002 \\ \hline
-        Education            & 0.031 & +/- 0.002 \\ \hline
-        Sex                  & 0.027 & +/- 0.001 \\ \hline
-        DiffWalk             & 0.027 & +/- 0.001 \\ \hline
-        HeartDiseaseorAttack & 0.024 & +/- 0.002 \\ \hline
-        Smoker               & 0.023 & +/- 0.001 \\ \hline
-        Fruits               & 0.017 & +/- 0.001 \\ \hline
-        PhysActivity         & 0.014 & +/- 0.001 \\ \hline
-        Veggies              & 0.009 & +/- 0.001 \\ \hline
-        HvyAlcoholConsump    & 0.008 & +/- 0.001 \\ \hline
-        Stroke               & 0.006 & +/- 0.000 \\ \hline
-        NoDocbcCost          & 0.004 & +/- 0.000 \\ \hline
-        CholCheck            & 0.004 & +/- 0.001 \\ \hline
-        AnyHealthcare        & 0.003 & +/- 0.000 \\ \hline
+        GenHlth              & 0.146 &  0.005 \\ \hline
+        BMI                  & 0.143 &  0.004 \\ \hline
+        HighBP               & 0.115 &  0.003 \\ \hline
+        Age                  & 0.109 &  0.003 \\ \hline
+        HighChol             & 0.072 &  0.003 \\ \hline
+        Income               & 0.059 &  0.002 \\ \hline
+        PhysHlth             & 0.051 &  0.002 \\ \hline
+        MentHlth             & 0.037 &  0.002 \\ \hline
+        Education            & 0.031 &  0.002 \\ \hline
+        Sex                  & 0.027 &  0.001 \\ \hline
+        DiffWalk             & 0.027 &  0.001 \\ \hline
+        HeartDiseaseorAttack & 0.024 &  0.002 \\ \hline
+        Smoker               & 0.023 &  0.001 \\ \hline
+        Fruits               & 0.017 &  0.001 \\ \hline
+        PhysActivity         & 0.014 &  0.001 \\ \hline
+        Veggies              & 0.009 &  0.001 \\ \hline
+        HvyAlcoholConsump    & 0.008 &  0.001 \\ \hline
+        Stroke               & 0.006 &  0.000 \\ \hline
+        NoDocbcCost          & 0.004 &  0.000 \\ \hline
+        CholCheck            & 0.004 &  0.001 \\ \hline
+        AnyHealthcare        & 0.003 &  0.000 \\ \hline
     \end{tabular}
     \label{tab:pfi_rf_diabetes}
 \end{table}
-Jak pokazuje wykres znajdujący się na Rys. \ref{fig:pfi_rf_diabetes} metoda PFI uznała wszystkie cechy za istotne w przewidywaniu. Z Tabeli \ref{tab:pfi_rf_diabetes} możemy wyczytać, że najważniejszą z nich okazała się być ocena własnego zdrowia ('GenHlth') średnio zmieniająca dokładność o 14.6\% z odchyleniem standardowym +/- 0.005. Cechą o bardzo zbliżonym wyniku jest wskaźnik masy ciała ('BMI'), którego permutacja zmniejsza miarę o 14.3\% z marginesem 0.004. Na trzecim miejscu plasuje się informacja o wysokim ciśneiniu krwi ('HighBP') z wynikiem od 11.2\% do 11.8\%. Najmniej informacji niosły za sobą odpowiedź, czy z powodów pienieżnych pacjent nie mógł skorzystać z opieki zdrowotnej, której potrzebował ('NoDocbcCost'), sprawdzenie poziomu cholesterolu ('CholCheck') oraz posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare'). Wartości owych zmiennych oscylowały w granicach ok. 0.4\% - 0.3\%.
+Jak pokazuje wykres znajdujący się na Rys. \ref{fig:pfi_rf_diabetes} metoda PFI uznała wszystkie cechy za istotne w przewidywaniu. Z Tabeli \ref{tab:pfi_rf_diabetes} możemy wyczytać, że najważniejszą z nich okazała się być ocena własnego zdrowia ('GenHlth') średnio zmieniająca dokładność o 14.6\% z odchyleniem standardowym  0.005. Cechą o bardzo zbliżonym wyniku jest wskaźnik masy ciała ('BMI'), którego permutacja zmniejsza miarę o 14.3\% z marginesem 0.004. Na trzecim miejscu plasuje się informacja o wysokim ciśnieniu krwi ('HighBP') z wynikiem od 11.2\% do 11.8\%. Najmniej informacji niosły za sobą odpowiedź, czy z powodów pienieżnych pacjent nie mógł skorzystać z opieki zdrowotnej, której potrzebował ('NoDocbcCost'), sprawdzenie poziomu cholesterolu ('CholCheck') oraz posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare'). Wartości owych zmiennych oscylowały w granicach ok. 0.4\% - 0.3\%.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/diabetes/pfi_rf_diabetes.png}
@@ -121,32 +102,10 @@ Jak pokazuje wykres znajdujący się na Rys. \ref{fig:pfi_rf_diabetes} metoda PF
     \label{fig:pfi_rf_diabetes}
 \end{figure}
 
+\subsubsection{XGBoost}
+Prawie wszystkie przedstawione w Tabeli \ref{tab:metrics_diabetes} miary wyniosły 70\%. Jedynie ROC AUC i czułość różniły się, gdzie w pierwszym przypadku model osiągnął 0.77, a drugim 0.69. Rozkład prawidłowych i błędnych predykcji są bardzo zbliżone. Jako klasa '0' zostało zdiagnozowanych 5 próbek więcej niż do jej alternatywy. XGBoost poprawnie zakwalifikował badaną instancję, oznaczając ją jako '0' z prawdopodobieństwem 97.92\%.\\
 
-\begin{table}[H]
-\centering
-    \caption{Wyniki uzyskane przy modelu XGBoost dla zbioru dotyczącego diabetyków}
-\begin{tabular}{|ccccc|}
-\hline
-\multicolumn{5}{|c|}{ROC AUC: 0.77}  \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
-\multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{0.70}   & \multicolumn{1}{c|}{0.70}  & \multicolumn{1}{c|}{0.70}     & 500    \\ \hline
-\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.70}  & \multicolumn{1}{c|}{0.69}  & \multicolumn{1}{c|}{0.70}   & 500    \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.70}   & 1000   \\ \hline
-\end{tabular}
-    \label{tab:diabetes_xgb_metrics}
-\end{table}
-
-Prawie wszystkie przedstawione w Tabeli \ref{tab:diabetes_xgb_metrics} miary wyniosły 70\%. Jedynie ROC AUC i czułość przy klasyfikowaniu przypadku jako diabetyka różniły się, gdzie w pierwszym przypadku model osiągnął 0.77, a drugim 0.69. Analizując wykres zwizualizowany na Rys. \ref{fig:confusion_matrix_xgb_diabetes} dostrzegamy jak bardzo zbliżony był rozkład prawidłowych i błędnych predykcji. Jako klasa '0' zostało zdiagnozowanych 5 próbek więcej niż do jej alternatywy. XGBoost poprawnie zakwalifikował badaną instancję, oznaczając ją jako '0' z prawdopodobieństwem 97.92\%.
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/diabetes/macierz_pomylek_xgb_diabetes.png}
-    \caption{Macierz pomyłek modelu XGBoost dla zbioru dotyczącego diabetyków [źródło własne]}
-    \label{fig:confusion_matrix_xgb_diabetes}
-\end{figure}
-
+\iffalse
 Według Rys. \ref{fig:lime_classpredplot_xgb_diabetes} pokazującego wyniki metody LIME, największą przesłanką mówiącą o tym, że wskazana próbka nie należy do diabetyka jest  informacja, czy pacjent ma wysokie ciśnienie krwi ('HighBP'), której waga wyniosła 0.16. Była to jedyna cecha osiągająca miarę ponad 0.10. Następnymi istotnymi wskaźnikami okazały się być dochód ('Income') oraz ocena przez pacjenta własnego stanu zdrowia ('GenHlth').  Za przeciwną klasyfikacją przemawiał poziom spożywania alkoholu respondenta ('HvyAlcoholConsump'), jego tendencja do spożywania owoców ('Fruits'), czy płeć ('Sex'). Na ową diagnozę wpływu nie miały takie chechy, jak  spożywanie warzyw ('Veggies'), posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare') czy przeprowadzenie badania cholesterolu w ciągu ostatnich 5 lat ('CholCheck'). 
 
 \begin{figure}[H]
@@ -155,6 +114,7 @@ Według Rys. \ref{fig:lime_classpredplot_xgb_diabetes} pokazującego wyniki meto
     \caption{Wykres słupkowy przedstawiający wpływ cech na predykcję wskazanej próbki według metody LIME w modelu XGBoost zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:lime_classpredplot_xgb_diabetes}
 \end{figure}
+\fi
 
 Na Rys. \ref{fig:lime_absolutemeanplot_xgb_diabetes} przedstawione zostały uśrednienione wagi LIME bez podziału na klasy. Możemy z niego wyczytać, że najistotniejszą cechą przy przewidywaniu klas próbek zbioru testowego jest wiadomość, czy pacjent usłyszał, iż ma wysokie ciśnienie krwi ('HighBP') z miarą ponad 0.16. Trochę mniej wartościową informację niesie za sobą dochód respondenta ('Income') z wynikiem ok. 0.13, a zaraz po nim znajduje się stosunek wagi do wzrostu ('BMI') osiągający w przybliżeniu wartość 0.11. W ogóle nieprzydatne okazały się być zmienne wskazane już przy omawianiu poprzedniego wykresu, tj. spożywanie warzyw ('Veggies'), badanie cholesterolu ('CholCheck') oraz posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare').
 
@@ -165,6 +125,7 @@ Na Rys. \ref{fig:lime_absolutemeanplot_xgb_diabetes} przedstawione zostały uśr
     \label{fig:lime_absolutemeanplot_xgb_diabetes}
 \end{figure}
 
+\iffalse
 Z Rys. \ref{fig:shap_xgb_diabetes} wynika, że SHAP za najważniejszą cechę wpływającą na \textit{log odds}, prowadząc do klasyfikacji badanej próbki jako '0', określa ocenę własnego stanu zdrowia ('GenHlth') zmniejszającą wartość o -1.17. Następną bardzo znaczącą zmienną jest ocena przez pacjenta jego zdrowia psychicznego ('MentHlth') z wynikiem -0.95, a później wiek ('Age') z -0.84. 12 cech nie przekazywało zbyt wartościowych informacji, a należało do nich m.in. spożywanie warzyw ('Veggies'), zarobki ('Income') czy ubezpieczenie zdrowotne ('AnyHealthcare'). Jedynie dwie zmienne były przeciwne danej klasyfikacji - informacja o wysokim cholesterolu ('HighChol') zwiększająca logarytm szansy o 0.48 oraz płeć z wartością +0.25. 
 \begin{figure}[H]
     \centering
@@ -172,6 +133,7 @@ Z Rys. \ref{fig:shap_xgb_diabetes} wynika, że SHAP za najważniejszą cechę wp
     \caption{Wykres wodospadowy wartości SHAP prawidłowej klasyfikacji wskazanej próbki w modelu XGBoost zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:shap_xgb_diabetes}
 \end{figure}    
+\fi
 
 Po zebraniu wyników metody SHAP ze wszystkich próbek zbioru testowego i utworzeniu z ich wartości bezwzględnych średnich uzyskuje się wykres zaprezentowany na Rys. \ref{fig:shap_absolutemeanplot_xgb_diabetes} . Pokazuje on, że najistotniejszy wpływ na wynik przewidywania miała ocena własnego zdrowia ('GenHlth') z wartością 0.73, następnie był to wskaźnik masy ciała ('BMI') z wynikiem 0.57, a na 3 miejscu ex aequo wiek ('Age') oraz informacja o wysokim ciśnieniu krwi ('HighBP') z miarą 0.55. Wśród 12 najmniej znaczących cech znalazło się m.in.: spożywanie warzyw ('Veggies'), owoców ('Fruits') oraz w śladowych ilościach alkoholu ('HvyAlcoholConsump'), płeć ('Sex') i zmienna dotycząca palenia papierosów ('Smoker').
 \begin{figure}[H]
@@ -181,7 +143,7 @@ Po zebraniu wyników metody SHAP ze wszystkich próbek zbioru testowego i utworz
     \label{fig:shap_absolutemeanplot_xgb_diabetes}
 \end{figure}
 
-Wykres typu "'rój pszczół"' zamieszczony na Rys. \ref{fig:shap_beeswarm_xgb_diabetes} pokazuje bardzo wyraźne zależności pomiędzy wartościami cech a wartościami uzyskanymi poprzez metodę SHAP. Kropki odpowiadające niskim liczbom pięciu najważniejszych cech, czyli 'GenHlth', 'BMI', 'Age', 'HighBP' oraz HighChol', zostały narysowane po lewej stronie, co oznacza, że zmniejszają one \textit{log odds}. Ich filoetowe punkty mieszczą się wokół 0, natomiast czerwone - przeważają znajdują się po prawej, przemawiajac za ich dodatnim wpływem. Dla reszty cech punkty są przemieszane, nie oferując zbyt wartościowego wglądu w badaną korelację.   
+Wykres typu "'rój pszczół"' zamieszczony na Rys. \ref{fig:shap_beeswarm_xgb_diabetes} pokazuje bardzo wyraźne zależności pomiędzy wartościami cech a wartościami uzyskanymi poprzez metodę SHAP. Kropki odpowiadające niskim liczbom pięciu najważniejszych cech, czyli 'GenHlth', 'BMI', 'Age', 'HighBP' oraz HighChol', zostały narysowane po lewej stronie, co oznacza, że zmniejszają one \textit{log odds}. Ich fioletowe punkty mieszczą się wokół 0, natomiast czerwone - przeważają znajdują się po prawej, przemawiajac za ich dodatnim wpływem. Dla reszty cech punkty są przemieszane, nie oferując zbyt wartościowego wglądu w badaną korelację.   
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{rysunki/diabetes/shap_beeswarm_xgb_diabetes.png}
@@ -195,31 +157,31 @@ Wykres typu "'rój pszczół"' zamieszczony na Rys. \ref{fig:shap_beeswarm_xgb_d
     \begin{tabular}{|c|c|c|}
         \hline
         Cecha & Średnia & Odch. standardowe \\ \hline
-        BMI                  & 0.149 & +/- 0.004 \\ \hline
-        Age                  & 0.128 & +/- 0.004 \\ \hline
-        GenHlth              & 0.126 & +/- 0.003 \\ \hline
-        Income               & 0.085 & +/- 0.003 \\ \hline
-        PhysHlth             & 0.063 & +/- 0.004 \\ \hline
-        Education            & 0.055 & +/- 0.002 \\ \hline
-        MentHlth             & 0.055 & +/- 0.002 \\ \hline
-        HighBP               & 0.049 & +/- 0.003 \\ \hline
-        HighChol             & 0.034 & +/- 0.002 \\ \hline
-        Smoker               & 0.028 & +/- 0.002 \\ \hline
-        Sex                  & 0.025 & +/- 0.002 \\ \hline
-        Fruits               & 0.024 & +/- 0.002 \\ \hline
-        PhysActivity         & 0.023 & +/- 0.002 \\ \hline
-        DiffWalk             & 0.019 & +/- 0.002 \\ \hline
-        Veggies              & 0.019 & +/- 0.002 \\ \hline
-        HeartDiseaseorAttack & 0.017 & +/- 0.002 \\ \hline
-        HvyAlcoholConsump    & 0.015 & +/- 0.002 \\ \hline
-        CholCheck            & 0.010 & +/- 0.001 \\ \hline
-        NoDocbcCost          & 0.009 & +/- 0.001 \\ \hline
-        Stroke               & 0.008 & +/- 0.001 \\ \hline
-        AnyHealthcare        & 0.004 & +/- 0.001 \\ \hline
+        BMI                  & 0.149 &  0.004 \\ \hline
+        Age                  & 0.128 &  0.004 \\ \hline
+        GenHlth              & 0.126 &  0.003 \\ \hline
+        Income               & 0.085 &  0.003 \\ \hline
+        PhysHlth             & 0.063 &  0.004 \\ \hline
+        Education            & 0.055 &  0.002 \\ \hline
+        MentHlth             & 0.055 &  0.002 \\ \hline
+        HighBP               & 0.049 &  0.003 \\ \hline
+        HighChol             & 0.034 &  0.002 \\ \hline
+        Smoker               & 0.028 &  0.002 \\ \hline
+        Sex                  & 0.025 &  0.002 \\ \hline
+        Fruits               & 0.024 &  0.002 \\ \hline
+        PhysActivity         & 0.023 &  0.002 \\ \hline
+        DiffWalk             & 0.019 &  0.002 \\ \hline
+        Veggies              & 0.019 &  0.002 \\ \hline
+        HeartDiseaseorAttack & 0.017 &  0.002 \\ \hline
+        HvyAlcoholConsump    & 0.015 &  0.002 \\ \hline
+        CholCheck            & 0.010 &  0.001 \\ \hline
+        NoDocbcCost          & 0.009 &  0.001 \\ \hline
+        Stroke               & 0.008 &  0.001 \\ \hline
+        AnyHealthcare        & 0.004 &  0.001 \\ \hline
     \end{tabular}
     \label{tab:pfi_xgb_diabetes}
 \end{table}
-Jak podaje wykres na Rys. \ref{fig:pfi_xgb_diabetes} według metody PFI permutacja którejkolwiek z cech powoduje spadek w dokładności modelu. Największy ma miejsce przy zmianie wskaźnika masy ciała ('BMI') i wynosi średnio 14.9\% z odchyleniem standardowym rzędu +/- 0.004. Kolejną cechą o dużym znaczeniu jest wiek ('Age') z miarą 12.8\% i granicą 0.004. Zaraz po nim znajduje się ocena własnego zdrowia ('GenHlth') z wynikiem od 12.3\% do 12.9\%. Jak czytamy w Tabeli \ref{tab:pfi_xgb_diabetes} trzy ostatnie zmienne nie wpływają na dokładność o więcej niż 1\%, a są to:  brak możliwości uzyskania potrzebnej opieki medycznej ze względu na koszta ('NoDocbcCost'), przebycie zawału ('Stroke') oraz posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare').
+Jak podaje wykres na Rys. \ref{fig:pfi_xgb_diabetes} według metody PFI permutacja którejkolwiek z cech powoduje spadek w dokładności modelu. Największy ma miejsce przy zmianie wskaźnika masy ciała ('BMI') i wynosi średnio 14.9\% z odchyleniem standardowym rzędu  0.004. Kolejną cechą o dużym znaczeniu jest wiek ('Age') z miarą 12.8\% i granicą 0.004. Zaraz po nim znajduje się ocena własnego zdrowia ('GenHlth') z wynikiem od 12.3\% do 12.9\%. Jak czytamy w Tabeli \ref{tab:pfi_xgb_diabetes} trzy ostatnie zmienne nie wpływają na dokładność o więcej niż 1\%, a są to:  brak możliwości uzyskania potrzebnej opieki medycznej ze względu na koszta ('NoDocbcCost'), przebycie zawału ('Stroke') oraz posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare').
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/diabetes/pfi_xgb_diabetes.png}
@@ -227,30 +189,10 @@ Jak podaje wykres na Rys. \ref{fig:pfi_xgb_diabetes} według metody PFI permutac
     \label{fig:pfi_xgb_diabetes}
 \end{figure}
 
-\begin{table}[H]
-\centering
-    \caption{Wyniki uzyskane przy modelu sieci neuronowej dla zbioru dotyczącego diabetyków}
-\begin{tabular}{|ccccc|}
-\hline
-\multicolumn{5}{|c|}{ROC AUC: 0.80}  \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba  \\ \hline
-\multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{0.73}  & \multicolumn{1}{c|}{0.70}  & \multicolumn{1}{c|}{0.71}  & 500  \\ \hline
-\multicolumn{1}{|c|}{1}   & \multicolumn{1}{c|}{0.71}  & \multicolumn{1}{c|}{0.74}  & \multicolumn{1}{c|}{0.72}   & 500  \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność} & \multicolumn{3}{c|}{0.72}  & 1000  \\ \hline
-\end{tabular}
-    \label{tab:diabetes_dnn_metrics}
-\end{table}
+\subsubsection{Sieć neuronowa}
+Wybrana za pomocą przeszukiwania określonej przestrzeni hiperparametrów sieć neuronowa składa się z warstw ukrytych w postaci 64-64 neuronów, używa funkcji aktywacji tanh, mechanizm \textit{Early Stopping}'u oraz optymalizator Adam. Osiągnięta przez nią dokładność wyniosła 72\%, a ROC AUC 0.8. Model częściej zaliczał próbkę jako diabetyka. Znacznie lepiej szło mu też diagnozowanie tej klasy - o 21 poprawnych przypadków więcej w porównaniu do wyboru alternatywnego. Sieć neuronowa zaliczyła badaną próbkę jako osobę zdrową z prawdopodobieństwem 80.2\%.\\
 
-Wybrana za pomocą przeszukiwania określonej przestrzeni hiperparametrów sieć neuronowa składa się z warstw ukrytych w postaci 64-64 neuronów, używa funkcji aktywacji tanh, mechanizm \textit{Early Stopping}'u oraz optymalizator Adam. Osiągnięta przez nią dokładność wyniosła 72\%, a ROC AUC 0.8. Jak czytamy z załączonej mapy cieplnej, znajdującej się na Rys. \ref{fig:confusion_matrix_dnn_diabetes}, model częściej zaliczał próbkę jako diabetyka. Znacznie lepiej szło mu też diagnozowanie tej klasy - o 21 poprawnych przypadków więcej w porównaniu do wyboru alternatywnego, co odznacza się jaśniejszym polem w prawym dolnym rogu obrazka. Sieć neuronowa zaliczyła badaną próbkę jako osobę zdrową z prawdopodobieństwem 80.2\%.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/diabetes/macierz_pomylek_dnn_diabetes.png}
-    \caption{Macierz pomyłek modelu sieci neuronowej dla zbioru dotyczącego diabetyków [źródło własne]}
-    \label{fig:confusion_matrix_dnn_diabetes}
-\end{figure}
-
+\iffalse
 Jak pokazuje Rys. \ref{fig:lime_classpredplot_dnn_diabetes} według metody LIME najistotniejszym wskaźnikiem mającym wpływ na brak zachorowania na cukrzycę jest ocena własna pacjenta jego stanu zdrowia ('GenHlth') osiągająca wagę 0.26. 8 punktów mniej w skali istotności zostało przyznanych dla zmiennej mówiącej o znacznym spożywaniu alkoholu ('HvyAlcoholConsump'), która przemawiała za przeciwną klasyfikacją. Prawie równie jej ważny okazał się być wiek pacjenta ('Age') z miarą 0.17, ponownie mówiący o braku diabetyzmu. Inne cechy były prawie 3-krotnie mniej istotne od tej najważniejszej. W tym zestawieniu znalazły się informacje nie przekazujące jakiejkolwiek wartości, a należały do nich: ocena własnego stanu fizycznego ('PhysHlth'), sprawdzenie poziomu cholesterolu ('CholCheck'), posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare') oraz spożywanie warzyw ('Veggies'). 
 \begin{figure}[H]
     \centering
@@ -258,6 +200,7 @@ Jak pokazuje Rys. \ref{fig:lime_classpredplot_dnn_diabetes} według metody LIME 
     \caption{Wykres słupkowy przedstawiający wpływ cech na predykcję wskazanej próbki według metody LIME w modelu sieci neuronowej zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:lime_classpredplot_dnn_diabetes}
 \end{figure}
+\fi
 
 Średnie bezwzględnych wag LIME zostały zwizualizowane na Rys. \ref{fig:lime_absolutemeanplot_dnn_diabetes}, na którym zauważamy znaczną przewagę wartości predykcyjnej cechy mówiącej, czy występuje znaczne spożywanie alkoholu ('HvyAlcoholConsump'). Jej waga znacznie przekracza 0.2, wskazując jak silną niesie za sobą informację. Kolejną informacją w rankingu istotności jest ocena własnego stanu zdrowia ('GenHlth') z wagą trochę niż 0.175. Tuż za nią plasuje się BMI ('BMI')  z wynikiem ok. 0.14. Ostatnią cechą będącą nie 2-krotnie mniej wartościową od tej najważniejszej jest wiek pacjenta ('Age'). Na przestrzeni wszystkich próbek zbioru testowego brak jakiejkolwiek znaczenia miało spożywanie warzyw ('Veggies'), sprawdzenie poziomu cholesterolu ('CholCheck') oraz posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare').   
 
@@ -267,13 +210,17 @@ Jak pokazuje Rys. \ref{fig:lime_classpredplot_dnn_diabetes} według metody LIME 
     \caption{Wykres średnich obliczonych z bezwzględnych wartości wag LIME modelu sieci neuronowej zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:lime_absolutemeanplot_dnn_diabetes}
 \end{figure}
-Metoda SHAP, jak pokazuje Rys. \ref{fig:shap_dnn_diabetes}, za najważniejszą cechę przemawiającą za daną klasyfikacją wskazała ocenę własnego zdrowia ('GenHlth'), które zwiększało owo prawdopodobieństwo o 11\%. 9\% należało do zmiennej dotyczącej wieku ('Age'), a ostatnią wskaźnikiem na podium okazała się być informacja o wysokim ciśnieniu krwi ('HighBP'). Aż trzy kolumny przeczyły przynależności do klasy '0', a były to: wysoki poziom cholesterolu ('HighChol'), płeć ('Sex') oraz wysokie spożycie alkoholu ('HvyAlcoholConsump'); jednakże ich wpływ był nieduży i nie przekraczał 3\%. Wśród 12 cech nie będących zbyt istotnymi w przewidywaniu znalazło się wykształcenie ('Education'), dochód ('Income') czy palenie papierosów ('Smoker').     
+
+\iffalse
+Metoda SHAP, jak pokazuje Rys. \ref{fig:shap_dnn_diabetes}, za najważniejszą cechę przemawiającą za daną klasyfikacją wskazała ocenę własnego zdrowia ('GenHlth'), które zwiększało owo prawdopodobieństwo o 11\%. 9\% należało do zmiennej dotyczącej wieku ('Age'), a ostatnią wskaźnikiem na podium okazała się być informacja o wysokim ciśnieniu krwi ('HighBP'). Aż trzy kolumny przeczyły przynależności do klasy '0', a były to: wysoki poziom cholesterolu ('HighChol'), płeć ('Sex') oraz wysokie spożycie alkoholu ('HvyAlcoholConsump'); jednakże ich wpływ był nieduży i nie przekraczał 3\%. Wśród 12 cech niebędących zbyt istotnymi w przewidywaniu znalazło się wykształcenie ('Education'), dochód ('Income') czy palenie papierosów ('Smoker').     
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/diabetes/shap_dnn_diabetes.png}
     \caption{Wykres wodospadowy wartości SHAP prawidłowej klasyfikacji wskazanej próbki w modelu sieci neuronowej zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:shap_dnn_diabetes}
-\end{figure}    
+\end{figure}  
+\fi
+
 Skumulowane wartości bezwzględne SHAP zebrane ze wszystkich próbek zbioru testowego tworzą średnie przedstawione na wykresie słupkowym znajdującym się na Rys. \ref{fig:shap_absolutemeanplot_dnn_diabetes}. Zauważamy na nim, że największą wartość predykcyjną niesie za sobą ocena własnego zdrowia ('GenHlth') wpływająca na prawdopodobieństwo konkretnej klasyfikacji o 10\%. Kolejną najważniejszą cechą pod względem istotności jest wskaźnik masy ciała ('BMI') zmieniający szansę diagnozy o 8\%, a zaraz po nim znajduje się informacja o wysokim ciśnieniu krwi ('HighBP') z wartością 7\%. Wśród tych najmniej znaczących zmiennych ponownie znalazło się wykształcenie ('Education') czy palenie papierosów ('Smoker'), jednak cecha mówiąca o dochodzie ('Income') się już do nich nie zaliczała - jej wpływ oceniono na 1\%. Jest to wartość większa od 12 najgorszych zmiennych w owej klasyfikacji, osiągających istotność ok. 0.75\%.
 \begin{figure}[H]
     \centering
@@ -295,16 +242,16 @@ Analizując wykres zamieszczony na Rys. \ref{fig:shap_beeswarm_dnn_diabetes} zau
     \begin{tabular}{|c|c|c|}
         \hline
         Cecha & Średnia & Odch. standardowe \\ \hline
-        GenHlth           & 0.055 & +/- 0.006 \\ \hline
-        BMI               & 0.041 & +/- 0.004 \\ \hline
-        Age               & 0.023 & +/- 0.003 \\ \hline
-        HighBP            & 0.021 & +/- 0.003 \\ \hline
-        HvyAlcoholConsump & 0.007 & +/- 0.002 \\ \hline
-        CholCheck         & 0.006 & +/- 0.002 \\ \hline
+        GenHlth           & 0.055 &  0.006 \\ \hline
+        BMI               & 0.041 &  0.004 \\ \hline
+        Age               & 0.023 &  0.003 \\ \hline
+        HighBP            & 0.021 &  0.003 \\ \hline
+        HvyAlcoholConsump & 0.007 &  0.002 \\ \hline
+        CholCheck         & 0.006 &  0.002 \\ \hline
     \end{tabular}
     \label{tab:pfi_dnn_diabetes}
 \end{table}
-Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech PFI wskazało tylko 6, których permutacja zawsze miała negatywny wpływ na dokładność. Największe znaczenie wykazała ocena własnego zdrowia zmniejszająca wspomnianą miarę o 5.5\% z odchyleniem standardowym +/- 0.006. Następnie w owym rankingu znajduje się wskaźnik masy ciała ('BMI') z wynikiem 4.1\% i odchyłkami rzędu 0.004. Na ostatnim miejscu podium mieści się wiek ('Age') a zaraz po nim informacja o wysokim ciśnieniu krwi ('HighBP') osiągające odpowiednio 2.3\% i 2.1\% z marginesem błędu 0.003. Wpływ dwóch ostatnich cech był niezwykle mały i nie przekraczał 1\%. Na Rys. \ref{fig:pfi_dnn_diabetes} widzimy, że wśród kolumn pominiętych znajdują się, m.in.: palenie papierosów ('Smoker'), płeć ('Sex') oraz spożywanie owoców ('Fruits') czy warzyw ('Veggies').
+Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech PFI wskazało tylko 6, których permutacja zawsze miała negatywny wpływ na dokładność. Największe znaczenie wykazała ocena własnego zdrowia zmniejszająca wspomnianą miarę o 5.5\% z odchyleniem standardowym  0.006. Następnie w owym rankingu znajduje się wskaźnik masy ciała ('BMI') z wynikiem 4.1\% i odchyleniem standardowym rzędu 0.004. Na ostatnim miejscu podium mieści się wiek ('Age') a zaraz po nim informacja o wysokim ciśnieniu krwi ('HighBP') osiągające odpowiednio 2.3\% i 2.1\% z marginesem błędu 0.003. Wpływ dwóch ostatnich cech był niezwykle mały i nie przekraczał 1\%. Na Rys. \ref{fig:pfi_dnn_diabetes} widzimy, że wśród kolumn pominiętych znajdują się, m.in.: palenie papierosów ('Smoker'), płeć ('Sex') oraz spożywanie owoców ('Fruits') czy warzyw ('Veggies').
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\linewidth]{rysunki/diabetes/pfi_dnn_diabetes.png}
@@ -312,7 +259,32 @@ Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech PFI wskazało tylko 6, kt
     \label{fig:pfi_dnn_diabetes}
 \end{figure}
 
+\subsubsection{Podsumowanie}
+Co zaskakujące, największe ROC AUC osiągnęła niezbyt złożona sieć neuronowa o zaledwie dwóch warstwach ukrytych składających się z 64 neuronów każda. Najpewniejszy predykcji bandanej próbki jako klasa '0' był XGBoost z pewnością 98\%, przy czym był na 2. miejscu w rozpoznawaniu reprezentantów tej grupy. Radził sobie, natomiast najlepiej ze wszystkich z wariantem '1'. Najgorszą predykcję przedstawiła już wspomniana DNN z wynikiem 80\%, przy czym równie słabo odnajdywała osóby chore na cukrzycę (choć odstępstwo to było niewielkie). Las losowy miał wyniki pośrednie pomiędzy jego konkurentami, nie wyróżnił się w przeciwieństwie do nich niczym szczególnym. 
+
+\begin{table}[H]
+\centering
+\caption{3 najistotniejsze cechy wskazane przez metody dla każdego z modeli w zbiorze dotyczącym diabetyków}
+\label{tab:3_top_diabetes}
+\begin{tabular}{|c|c|c|}
+\hline
+Model & Metoda & 3 najistotniejsze cechy \\ \hline
+\multirow{3}{*}{Random Forest}& LIME& HvyAlcoholConsump, GenHlth, Age\\ \cline{2-3} 
+ & SHAP& GenHlth, GenHlth, BMI\\ \cline{2-3} 
+ & PFI& GenHlth, BMI, HighBP\\ \hline
+\multirow{3}{*}{XGBoost}& LIME& HighBP, Income, BMI\\ \cline{2-3} & SHAP& GenHlth, BMI, Age\\ \cline{2-3} 
+ & PFI& BMI, Age, GenHlth\\ \hline
+\multirow{3}{*}{Sieć neuronowa}& LIME& HvyAlcoholConsump, GenHlth, BMI\\ \cline{2-3} & SHAP& GenHlth, BMI, HighBP\\ \cline{2-3} & PFI& GenHlth, BMI, Age\\ \hline
+\end{tabular}
+\end{table}
+
+Spoglądając na Tabelę \ref{tab:3_top_diabetes} zauważamy, że pojawiły się dwie cechy wśród 3 najistotniejszych występujące w 8 na 9 przypadków. Pierwszą z nich była ocena własnego stanu zdrowia ('GenHlth'), która nie wystąpiła tylko w tłumaczeniu LIME modelu XGBoost, gdzie znalazła się na 4 miejscu. Na równi z nią widnieje wskaźnik BMI ('BMI'), którego zabrakło w wyjaśnieniu LIME dla lasu losowego. Najbardziej nieoczekiwaną zmienną w tym zestawieniu bez dwóch zdań są zarobki ('Income') wskazane przez ponownie LIME modelu XGBoost. Zdawałoby się, że w zestawieniu jest parę innych, bardziej logicznych do uznania cech, takich jak wiek ('Age') czy spore spożycie alkoholu ('HvyAlcoholConsump') pojawiające się w innych wytłumaczeniach. 
+Niezwykle wiele danych zostało odrzuconych przez metodę PFI sieci neuronowej, w jej tłumaczeniu znalazło się tylko 6 zmiennych z 21. Analizując cechy najmniej wpływowe dostrzegamy, że często powtarzają się wśród nich: posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare'), spożywanie warzyw ('Veggies') czy owoców ('Fruits') oraz sprawdzenie poziomu cholesterolu ('CholCheck'). Chociaż w niektórych zestawieniach pojawiają się wysoko na liście.
+
+
 \subsection{UCI Heart Disease Data}
+
+\subsubsection{Random Forest}
 \begin{table}[H]
  \centering
     \caption{Wyniki uzyskane przy modelu Random Forest dla zboru dotyczącego choroby serca}
@@ -327,13 +299,13 @@ Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech PFI wskazało tylko 6, kt
 \multicolumn{1}{|c|}{4}                            & \multicolumn{1}{c|}{1.00}     & \multicolumn{1}{c|}{0.17}    & \multicolumn{1}{c|}{0.29}     & 6     \\ \hline
 \multicolumn{5}{|c|}{}                                                                                                                                    \\ \hline
 \multicolumn{1}{|c|}{Dokładność}                   & \multicolumn{3}{c|}{0.62}                                                                    & 184   \\ \hline
-\multicolumn{1}{|c|}{Śr. macro}                    & \multicolumn{1}{c|}{0.61}     & \multicolumn{1}{c|}{0.44}    & \multicolumn{1}{c|}{0.46}     & 184   \\ \hline
+\multicolumn{1}{|c|}{Śr. arytmetyczna}                    & \multicolumn{1}{c|}{0.61}     & \multicolumn{1}{c|}{0.44}    & \multicolumn{1}{c|}{0.46}     & 184   \\ \hline
 \multicolumn{1}{|c|}{Śr. ważona}                   & \multicolumn{1}{c|}{0.63}     & \multicolumn{1}{c|}{0.62}    & \multicolumn{1}{c|}{0.61}     & 184   \\ \hline
 \end{tabular}
     \label{tab:heart_disease_random_forest_metrics}
 \end{table}
 
-Poprzez analizę wyników uzyskanych przez las losowy zamieszczonych w Tabela \ref{tab:heart_disease_random_forest_metrics} zauważamy, że  wykazał on dokładność ogólną, w rozumieniu mierzoną bez uwzględnienia klas (tzw. micro), na poziomie 62\%. Wyniki średniej macro obliczane jako zwykłe średnie arytmetyczne wyliczane na podstawie wszystkich klas osiągnęły dla precyzji 61\%, czułości 44\%, a F1-score 46\%. Z kolei średnia ważona biorąca pod uwagę wielkość grupy reprezentatywnej (kolumna 'Liczba') klas predykcyjnych jako wagę, uzyskała wartości kolejno 63\%, 62\% oraz 61\%. W macierzy pomyłek pokazanej na Rys. \ref{fig:confusion_matrix_random_forest_heart_disease} dostrzegamy, że model tylko raz i to poprawnie zakwalifikował 1 z próbek do '4' kategorii. Z drugiej strony bardzo dobrze radził sobie przy poprawnej ocenie rekordów należących do dwóch pierwszych wariantów. Z 82 osobników klasy '0' właściwie rozpoznał 68. Daje to precyzję na poziomie 80\%, czyli na 85 przypadków (z macierzy pomyłek wyniki pierwszej kolumny - 68 + 11 + 3 + 3 + 0 = 85) zakwalifikowanych przez model jako klasa '0', 68 rzeczywiście do niej należało. Czułość wyniosła 83\%, co oznacza, że model biorąc pod uwagę tylko przypadki klasy '0' zdiagnozuje znaczną większość z nich poprawnie. Przyczynia się to do F1-score z wartością 81\%. \cite{zheng2015evaluating}. Pole powierzchni pod krzywą (ang. \textit{AUC - Area under the curve}) ROC (ang. \textit{Receiver Operating Characteristic}) wyniosło w przybliżeniu 0.85.
+Poprzez analizę wyników uzyskanych przez las losowy zamieszczonych w Tabela \ref{tab:heart_disease_random_forest_metrics} zauważamy, że  wykazał on dokładność na poziomie 62\%. Wyniki średniej arytmetycznej wyliczane na podstawie wszystkich klas osiągnęły dla precyzji 61\%, czułości 44\%, a F1-score 46\%. Z kolei średnia ważona biorąca pod uwagę wielkość grupy reprezentatywnej (kolumna 'Liczba') klas predykcyjnych jako wagę, uzyskała wartości kolejno 63\%, 62\% oraz 61\%. W macierzy pomyłek pokazanej na Rys. \ref{fig:confusion_matrix_random_forest_heart_disease} dostrzegamy, że model tylko raz i to poprawnie zakwalifikował 1 z próbek do '4' kategorii. Z drugiej strony bardzo dobrze radził sobie przy poprawnej ocenie rekordów należących do dwóch pierwszych wariantów. Z 82 osobników klasy '0' właściwie rozpoznał 68. Daje to precyzję na poziomie 80\%. Czułość wyniosła 83\%, co przyczynia się do F1-score z wartością 81\%. Pole powierzchni pod krzywą (ang. \textit{AUC - Area under the curve}) ROC (ang. \textit{Receiver Operating Characteristic}) wyniosło w przybliżeniu 0.85.
 
 \begin{figure}[H]
     \centering
@@ -342,13 +314,14 @@ Poprzez analizę wyników uzyskanych przez las losowy zamieszczonych w Tabela \r
     \label{fig:confusion_matrix_random_forest_heart_disease}
 \end{figure}
 
+\iffalse
 \begin{table}[H]
 \centering
 \caption{Prawdopodobieństwa predykcji klas wskazanej próbki według modelu bazowego a metody LIME w modelu Random Forest zbioru dotyczącego choroby serca [źródło własne]}
 \label{tab:lime_predprob_rf_heart}
 \begin{tabular}{|c|cc|}
 \hline
-\multirow{2}{*}{Klasa} & \multicolumn{2}{c|}{Prawdopodobieństwo predyckji (\%)} \\ \cline{2-3} 
+\multirow{2}{*}{Klasa} & \multicolumn{2}{c|}{Prawdopodobieństwo predykcji (\%)} \\ \cline{2-3} 
  & \multicolumn{1}{c|}{Model bazowy} & Metoda LIME \\ \hline
 0 & \multicolumn{1}{c|}{96.0} & 96.0 \\ \hline
 1 & \multicolumn{1}{c|}{4.0 } & 4.0  \\ \hline
@@ -366,6 +339,7 @@ Metoda LIME, jak wynika z Tabela \ref{tab:lime_predprob_rf_heart}, wskazała, ż
     \caption{Wykres słupkowy przedstawiający wpływ cech na predykcję wskazanej próbki według metody LIME w modelu Random Forest zbioru dotyczącego choroby serca [źródło własne]}
     \label{fig:lime_classpredplot_rf_heart}
 \end{figure}
+\fi
 
 Wykres zaprezentowany na Rys. \ref{fig:lime_barchar_rf_heart} przedstawia średnie wagi cech poszczególnych klas obliczone z ich wartości bezwzględnych uzyskanych dla wszystkich próbek zbioru testowego. Pokazuje on, że najważniejszą informację predykcyjną zawiera w wariantcie '0' i '1' dławica piersiowa wywołana wysiłkiem fizycznym ('exang'), z czego w pierwszym przypadku jej waga wynosi ok. 0.175, a drugim - 0.125. Miejsce badań ('dataset') było czynnikiem przeważającym nad klasyfikacją do '2' i '3'  kategorii, a obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu ze spoczynkiem ('oldpeak') - '4'. Cechą wnoszącą najmniej okazała się być płeć pacjenta ('sex'), której średnia wag wyniosła 0 dla każdej z klas.
 
@@ -385,6 +359,7 @@ Dane średnie z różnych klas zebrane da się zebrać, żeby zobrazować ogóln
     \label{fig:lime_absolutemeanplot_rf_heart}
 \end{figure}
 
+\iffalse
 Na Rys. \ref{fig:shap_rf_heart}, został przedstawiony wykres wodospadowy wartości SHAP przypadku o wskazanym przeze mnie numerze. Dana próbka została zakwalifikowana do klasy predykcyjnej '0'. $E[f(x)]$ oznacza bazowe prawdopodobieństwo przynależności do owego wariantu, natomiast $f(x)$ - rzeczywiste prawdopodobieństwo obliczone po przeanalizowaniu wartości zmiennych. Czerwone strzałki to pozycje, które przemawiają na korzyść danej klasyfikacji, niebieskie analogicznie - pokazują cechy minimalizujące szanse tej diagnozy. Według omawianej metody największy wpływ na klasyfikację ma wartość 'cp', która jest równa 0.215. Zwiększa ona daną predykcję o 18\%. Do innych elementów o pozytywnym działaniu można zaliczyć 'thalch', 'dataset', 'oldpeak' oraz 'age'. Najbardziej negatywny przekaz niesie za sobą 'trestbps' zmniejszający prawdopodobieństwo o 2\%. SHAP wskazał, że dwie cechy nie mają zbytniego znaczenia w owej klasyfikacji, a należały do nich spadek odcinka ST podczas szczytowego wysiłku fizycznego ('slope') oraz czy poziom cukru we krwi na czczo jest wysoki ('fbs'). Na wykresach przewidywań przynależności do innych klas na 3 pierwszych miejscach cech posiadających największe znaczenie znajdują się: 'cp', 'dataset', 'oldpeak', 'age', 'thalch' i 'chol'. Wszystkie z nich przedstawione są za pomocą niebieskich strzałek. Dla klasy '4' wartości SHAP są zbliżone do 0. Inne kategorie mają wyraźniejsze wskaźniki, przemawiające za ich przynależnością.
 
 \begin{figure}[H]
@@ -393,6 +368,7 @@ Na Rys. \ref{fig:shap_rf_heart}, został przedstawiony wykres wodospadowy warto�
     \caption{Wykres wodospadowy wartości SHAP prawidłowej klasyfikacji wskazanej próbki w modelu Random Forest zbioru dotyczącego choroby serca [źródło własne]}
     \label{fig:shap_rf_heart}
 \end{figure}
+\fi
 
 Z wykresu znajdującego się na Rys. \ref{fig:shap_barchar_rf_heart} możemy wyczytać, które cechy mają największy wpływ na prawdopodobieństwo przynależności do danej klasy. Są to średnie wartości bezwględne nie uwzględniające tego, czy dana cecha przemawia za, czy przeciw klasyfikacji. Najbardziej odznaczającym się słupkiem jest typ bólu klatki piersiowej ('cp'), która średnio osiąga dla wariantu '0' średnią bezwzględną wartość SHAP równą w przybliżeniu 0.13. Podobnie jest w przypadku '1' stopnia, gdzie cecha ta wynosi ok. 0.065. Dla kategorii '2' i '3' najważniejszym wyznacznikiem jest miejsce badania ('dataset'), a '4' obniżenie odcinka ST podczas wysiłku fizycznego ('oldpeak'). Z wykresu wynika, że najmniej istotną informację niesie za sobą odpowiedź czy poziom cukru we krwi badany na czczo jest wysoki ('fbs').
 
@@ -428,22 +404,22 @@ Wykres typu "'rój pszczół"' zamieszcozny na Rys. \ref{fig:shap_beeswarm_rf_he
     \begin{tabular}{|c|c|c|}
         \hline
          Cecha & Średnia & Odch. standardowe \\ \hline
-         dataset & 0.175 & +/- 0.012 \\ \hline
-         cp & 0.175 & +/- 0.012 \\ \hline
-         age & 0.128 & +/- 0.011 \\ \hline
-         oldpeak & 0.116 & +/- 0.010 \\ \hline
-         thalch & 0.090 & +/- 0.007 \\ \hline
-         chol & 0.071 & +/- 0.006 \\ \hline
-         exang & 0.069 & +/- 0.006 \\ \hline
-         trestbps & 0.049 & +/- 0.005 \\ \hline
-         sex & 0.026 & +/- 0.005 \\ \hline
-         fbs & 0.015 & +/- 0.002 \\ \hline
-         slope & 0.005 & +/- 0.002 \\ \hline
+         dataset & 0.175 &  0.012 \\ \hline
+         cp & 0.175 &  0.012 \\ \hline
+         age & 0.128 &  0.011 \\ \hline
+         oldpeak & 0.116 &  0.010 \\ \hline
+         thalch & 0.090 &  0.007 \\ \hline
+         chol & 0.071 &  0.006 \\ \hline
+         exang & 0.069 &  0.006 \\ \hline
+         trestbps & 0.049 &  0.005 \\ \hline
+         sex & 0.026 &  0.005 \\ \hline
+         fbs & 0.015 &  0.002 \\ \hline
+         slope & 0.005 &  0.002 \\ \hline
     \end{tabular}
     \label{tab:heart_disease_random_forest_pfi}
 \end{table}
 
-Według metody PFI, jak wynika z Tabela \ref{tab:heart_disease_random_forest_pfi} oraz Rys. \ref{fig:box_plot_rf_pfi} wszystkie kolumny okazały się być ważne w zadaniu klasyfikacji próbek. Najważniejszą cechą okazało się być miejsce badań ('dataset'), którego średnia istotność wyniosła 17,5\% z odchyleniem standarodwym wynoszącym +/- 0,012. Na drugim miejscu plasuje się typ bólu klatki piersiowej ('cp') również ze średnią 17,5\%, a trzecim wiek ('age') z wynikiem 12,8\%. Najmniej znaczącą informację niósł ze sobą spadek odcinka ST podczas wysiłku fizycznego ('slope'), bo zaledwie 0.5\% z rozbieżnościami na poziomie +/- 0.002. 
+Według metody PFI, jak wynika z Tabela \ref{tab:heart_disease_random_forest_pfi} oraz Rys. \ref{fig:box_plot_rf_pfi} wszystkie kolumny okazały się być ważne w zadaniu klasyfikacji próbek. Najważniejszą cechą okazało się być miejsce badań ('dataset'), którego średnia istotność wyniosła 17,5\% z odchyleniem standarodwym wynoszącym  0,012. Na drugim miejscu plasuje się typ bólu klatki piersiowej ('cp') również ze średnią 17,5\%, a trzecim wiek ('age') z wynikiem 12,8\%. Najmniej znaczącą informację niósł ze sobą spadek odcinka ST podczas wysiłku fizycznego ('slope'), bo zaledwie 0.5\% z rozbieżnościami na poziomie  0.002. 
 
 \begin{figure}[H]
     \centering
@@ -452,6 +428,7 @@ Według metody PFI, jak wynika z Tabela \ref{tab:heart_disease_random_forest_pfi
     \label{fig:box_plot_rf_pfi}
 \end{figure}
 
+\subsubsection{XGBoost}
 \begin{table}[H]
     \centering
     \caption{Wyniki uzyskane przy modelu XGBoost dla zbioru dotyczącego choroby serca}
@@ -466,13 +443,13 @@ Według metody PFI, jak wynika z Tabela \ref{tab:heart_disease_random_forest_pfi
 \multicolumn{1}{|c|}{4}                            & \multicolumn{1}{c|}{1.00}     & \multicolumn{1}{c|}{0.17}    & \multicolumn{1}{c|}{0.29}     & 6     \\ \hline
 \multicolumn{5}{|c|}{}                                                                                                                                    \\ \hline
 \multicolumn{1}{|c|}{Dokładność}                   & \multicolumn{3}{c|}{0.64}                                                                    & 184   \\ \hline
-\multicolumn{1}{|c|}{Śr. macro}                    & \multicolumn{1}{c|}{0.63}     & \multicolumn{1}{c|}{0.47}    & \multicolumn{1}{c|}{0.49}     & 184   \\ \hline
+\multicolumn{1}{|c|}{Śr. arytmetyczna}                    & \multicolumn{1}{c|}{0.63}     & \multicolumn{1}{c|}{0.47}    & \multicolumn{1}{c|}{0.49}     & 184   \\ \hline
 \multicolumn{1}{|c|}{Śr. ważona}                   & \multicolumn{1}{c|}{0.64}     & \multicolumn{1}{c|}{0.64}    & \multicolumn{1}{c|}{0.63}     & 184   \\ \hline
 \end{tabular}
     \label{tab:heart_disease_xgboost_metrics}
 \end{table}
 
-XGBoost uczony i sprawdzany na tych samymych danych (zbiorze treningowym i testowym), jak wskazuje Tabela \ref{tab:heart_disease_xgboost_metrics} osiągnął wynik dokładności wynoszący 64\%. Jego średnie makro uzyskały: dla precyzji 63\%, czułości 47\%, a F1-score 49\%. Ważone były wyższe i wskazały w tej samej kolejności 64\%, 64\% i 63\%. Miara ROC AUC tutaj wyniosła moc poprawnego oddzielania próbek na poziomie 0.84. XGBoost zakwalifikował tylko jeden z przypadków do klasy '4', który rzeczywiście do niej należał. Dobrze radził sobie z obiektami kategorii '0', '1' i potencjalnie '3'. Jak możemy, zauwżyć na Rys. \ref{fig:confusion_matrix_xgboost_heart_disease} w miarę często zdarza mu się pomylić przypdaki należące do stadium '0' i '1', a lepiej idzie mu odnajdywanie próbek zaklasyfikowanych jako '3' niż '2' pomimo zbliżonej wielkości grup. Z dużą pewnością, bo na poziomie praktycznie 100\% stwierdza, że wskazana przeze mnie instancja należy do klasy '0'.
+XGBoost uczony i sprawdzany na tych samych danych (zbiorze treningowym i testowym), jak wskazuje Tabela \ref{tab:heart_disease_xgboost_metrics} osiągnął wynik dokładności wynoszący 64\%. Jego średnie makro uzyskały: dla precyzji 63\%, czułości 47\%, a F1-score 49\%. Ważone były wyższe i wskazały w tej samej kolejności 64\%, 64\% i 63\%. Miara ROC AUC tutaj wyniosła jakość poprawnego oddzielania próbek na poziomie 0.84. XGBoost zakwalifikował tylko jeden z przypadków do klasy '4', który rzeczywiście do niej należał. Dobrze radził sobie z obiektami kategorii '0', '1' i potencjalnie '3'. Jak możemy, zauwżyć na Rys. \ref{fig:confusion_matrix_xgboost_heart_disease} w miarę często zdarza mu się pomylić przypadki należące do stadium '0' i '1', a lepiej idzie mu odnajdywanie próbek zaklasyfikowanych jako '3' niż '2' pomimo zbliżonej wielkości grup. Z dużą pewnością, bo na poziomie praktycznie 100\% stwierdza, że wskazana przeze mnie instancja należy do klasy '0'.
 
 \begin{figure}[H]
     \centering
@@ -481,13 +458,14 @@ XGBoost uczony i sprawdzany na tych samymych danych (zbiorze treningowym i testo
     \label{fig:confusion_matrix_xgboost_heart_disease}
 \end{figure}
 
+\iffalse
 \begin{table}[H]
 \centering
 \caption{Prawdopodobieństwa predykcji klas wskazanej próbki według modelu bazowego a metody LIME w modelu XGBoost zbioru dotyczącego choroby serca [źródło własne]}
 \label{tab:lime_predprob_xgb_heart}
 \begin{tabular}{|c|cc|}
 \hline
-\multirow{2}{*}{Klasa} & \multicolumn{2}{c|}{Prawdopodobieństwo predyckji (\%)} \\ \cline{2-3} 
+\multirow{2}{*}{Klasa} & \multicolumn{2}{c|}{Prawdopodobieństwo predykcji (\%)} \\ \cline{2-3} 
  & \multicolumn{1}{c|}{Model bazowy} & Metoda LIME \\ \hline
 0 & \multicolumn{1}{c|}{99.87} & 100.0 \\ \hline
 1 & \multicolumn{1}{c|}{0.12 } & 0.0   \\ \hline
@@ -505,9 +483,9 @@ LIME jak pokazuje Tabela \ref{tab:lime_predprob_xgb_heart} był w 100\% pewny, �
     \caption{Wykres słupkowy przedstawiający wpływ cech na predykcję wskazanej próbki według metody LIME w modelu XGBoost zbioru dotyczącego choroby serca [źródło własne]}
     \label{fig:lime_classpredplot_xgb_heart}
 \end{figure}
+\fi
 
 Na zaprezentowanym wykresie znajdującym się na Rys. \ref{fig:lime_barchar_xgb_heart} przedstawione zostały średnie wagi cech dla poszczegołnych klas, uzyskane z wartości bezwzględnych próbek zbioru testowego. Najbardziej odznaczającą się cechą jest dławica piersiowa wywołana wysiłkiem fizycznym ('exang'), która ma największą istotność dla klasy '0', gdzie waga jej wynosi ponad 0.21 i '1', dla której zbliża się ona do 0.2. W przypadku '2' najważniejszą wartość niesie za sobą miejsce badań ('dataset'), a '3' i '4' obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak'). Najmniej isotna okazała się być płeć pacjenta ('sex') z wagą 0.  
-
 
 \begin{figure}[H]
     \centering
@@ -525,7 +503,7 @@ Wykres prezentujący zebrane wcześniej średnie, bez podziału na klasy, zaprez
     \label{fig:lime_absolutemeanplot_xgb_heart}
 \end{figure}
 
-
+\iffalse
 Wartości na wykresie znajdującym się na Rys. \ref{fig:shap_xgb_heart} są przedstawione za pomocą \textit{log odds}. Największym wskaźnikiem przemawiającym za klasyfikacją jako '0' jest typ bólu klatki piersiowej ('cp') zwiększający logarytm szansy o 1.3. Zaraz po nim znajdują się: osiągnięte maksymalne tętno ('thalch') z wartością 0.96, wiek pacjenta ('age') oraz cholesterol całkowity w surowicy ('chol') oba z miarą 0.89. Przeciw danej diagnozie było spoczynkowe ciśnienie krwi ('trestbps') zmniejszające \textit{log odds} o 0.24 oraz płeć pacjenta ('sex') minimalizująca ową szansę o 0.16. Najmniej istotne dla danej próbki okazały się być spadek odcinka ST podczas szczytowego wysiłku fizycznego ('slope') i odpowiedź, czy poziom cukru we krwi na czczo jest wysoki ('fbs'). Na innych wykresach wodospadowych oprócz już omówionych najbardziej wpływowych wartości znalazły się: miejsce badań ('dataset'), obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak') i spoczynkowe ciśnienie krwi ('trestbps'). Wizualizacje dla klasy '2' i '3' miały wskaźniki praktycznie wyłącznie ujemne, w przyoadku wariantu '4' bardzo silnie odznaczyła się jedena z dwóch pozytywnie przemawiających cech a była to 'trestbps'.  
 
 \begin{figure}[H]
@@ -534,6 +512,7 @@ Wartości na wykresie znajdującym się na Rys. \ref{fig:shap_xgb_heart} są prz
     \caption{Wykres wodospadowy wartości SHAP prawidłowej klasyfikacji wskazanej próbki w modelu XGBoost zbioru dotyczącego choroby serca [źródło własne]}
     \label{fig:shap_xgb_heart}
 \end{figure}
+\fi
 
 Na wykresie przedstawionym na Rys. \ref{fig:shap_barchar_xgb_heart} najbardziej odznaczającym się słupkiem jest ten oznaczający obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak') klasy '4' osiągający wartość ok. 1.15. Drugą miarą pod względem wielkości otrzymanego wyniku jest ta wskazująca na miejsce badań ('dataset') wariantu '2' i wynosi ona 0.85. Zbliżoną liczbę uzyskał typ bólu klatki piersiowej ('cp') dla przypadku '0' , bo mniejszą zaledwie o 0.05. Następną pod względem wielkości kolumnę posiada osiągnięte maksymalne tętno ('thalch') klasy '3' z wartością ok 0.7. Na '1' największy wpływ ma cholesterol całkowity w surowicy ('chol'), którego istotność osiągnęła w przybliżeniu 0.45. Najmniej znaczącą cechą w większości diagnoz wydaje się być odpowiedź, czy poziom cukru we krwi na czczo jest wysoki ('fbs').    
 
@@ -568,24 +547,22 @@ Z wykresu "'rój pszczół"' znajdującym się na Rys. \ref{fig:shap_beeswarm_xg
     \begin{tabular}{|c|c|c|}
         \hline
         Cecha & Średnia & Odch. standardowe \\ \hline
-        age     & 0.150 & +/- 0.012 \\ \hline
-        oldpeak & 0.127 & +/- 0.010 \\ \hline
-        chol    & 0.126 & +/- 0.011 \\ \hline
-        thalch  & 0.121 & +/- 0.008 \\ \hline
-        dataset & 0.098 & +/- 0.009 \\ \hline
-        trestbps& 0.072 & +/- 0.006 \\ \hline
-        cp      & 0.063 & +/- 0.006 \\ \hline
-        exang   & 0.013 & +/- 0.003 \\ \hline
-        sex     & 0.013 & +/- 0.003 \\ \hline
-        fbs     & 0.006 & +/- 0.002 \\ \hline
-        slope   & 0.005 & +/- 0.001 \\ \hline
+        age     & 0.150 &  0.012 \\ \hline
+        oldpeak & 0.127 &  0.010 \\ \hline
+        chol    & 0.126 &  0.011 \\ \hline
+        thalch  & 0.121 &  0.008 \\ \hline
+        dataset & 0.098 &  0.009 \\ \hline
+        trestbps& 0.072 &  0.006 \\ \hline
+        cp      & 0.063 &  0.006 \\ \hline
+        exang   & 0.013 &  0.003 \\ \hline
+        sex     & 0.013 &  0.003 \\ \hline
+        fbs     & 0.006 &  0.002 \\ \hline
+        slope   & 0.005 &  0.001 \\ \hline
     \end{tabular}
     \label{tab:heart_disease_xgb_pfi}
 \end{table}
 
-
-PFI uznał wszystkie cechy za istotne w przewidywaniu. Jak wskazuje Tabela \ref{tab:heart_disease_xgb_pfi} najważniejszą informację niósł za sobą wiek pacjenta ('age'), przez którego permutację model stracił na dokładności całe 15\% z odchyleniem standardowym rzędu +/- 0.012. Kolejnymi najbardziej zanczącymi kolumnami okazały się być obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak') z istotnością 12.7\% oraz cholesterol całkowity w surowicy ('chol') z 12.6\%. Najniżej w tym rankingu możemy zauważyć spadek odcinka ST podczas szczytowego wysiłku fizycznego ('slope'), który osiągnął średnią istotność na poziomie jedynie 0.5\%. 
-
+PFI uznał wszystkie cechy za istotne w przewidywaniu. Jak wskazuje Tabela \ref{tab:heart_disease_xgb_pfi} najważniejszą informację niósł za sobą wiek pacjenta ('age'), przez którego permutację model stracił na dokładności całe 15\% z odchyleniem standardowym rzędu  0.012. Kolejnymi najbardziej zanczącymi kolumnami okazały się być obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak') z istotnością 12.7\% oraz cholesterol całkowity w surowicy ('chol') z 12.6\%. Najniżej w tym rankingu możemy zauważyć spadek odcinka ST podczas szczytowego wysiłku fizycznego ('slope'), który osiągnął średnią istotność na poziomie jedynie 0.5\%. 
 
 \begin{figure}[H]
     \centering
@@ -595,6 +572,7 @@ PFI uznał wszystkie cechy za istotne w przewidywaniu. Jak wskazuje Tabela \ref{
 \end{figure}
 
 
+\subsubsection{Sieć neuronowa}
 \begin{table}[H]
 \centering
     \caption{Wyniki uzyskane przy modelu sieci neuronowej dla zbioru dotyczącego choroby serca}
@@ -609,13 +587,13 @@ PFI uznał wszystkie cechy za istotne w przewidywaniu. Jak wskazuje Tabela \ref{
 \multicolumn{1}{|c|}{4}                            & \multicolumn{1}{c|}{0.00}     & \multicolumn{1}{c|}{0.00}    & \multicolumn{1}{c|}{0.00}     & 6     \\ \hline
 \multicolumn{5}{|c|}{}                                                                                                                                    \\ \hline
 \multicolumn{1}{|c|}{Dokładność}                   & \multicolumn{3}{c|}{0.60}                                                                    & 184   \\ \hline
-\multicolumn{1}{|c|}{Śr. macro}                    & \multicolumn{1}{c|}{0.36}     & \multicolumn{1}{c|}{0.37}    & \multicolumn{1}{c|}{0.37}     & 184   \\ \hline
+\multicolumn{1}{|c|}{Śr. arytmetyczna}                    & \multicolumn{1}{c|}{0.36}     & \multicolumn{1}{c|}{0.37}    & \multicolumn{1}{c|}{0.37}     & 184   \\ \hline
 \multicolumn{1}{|c|}{Śr. ważona}                   & \multicolumn{1}{c|}{0.57}     & \multicolumn{1}{c|}{0.60}    & \multicolumn{1}{c|}{0.58}     & 184   \\ \hline
 \end{tabular}
     \label{tab:heart_disease_dnn_metrics}
 \end{table}
 
-Za pomocą funkcji GridSearchCV przeszukałam przestrzeń rozwiązań, dzięki czemu spośród wskazanych hiperparametrów uzyskałam odpowiedź, które są najodpowiedniejsze do danego problemu. Z tak uzyskanych danych skonstruowałam sieć neuronową wykorzystującą funkcję aktywacji tanh, mechanizm \textit{Early Stopping}'u, optymalizator Adam oraz warstwy ukryte w postaci 64 - 128 - 128 - 64 neuronów. Jak przedstawia Tabela \ref{tab:heart_disease_dnn_metrics} uzyskała ona dokładność wynoszącą 60\%. Dla precyzji średnia makro osiągnęła 36\%, ważona 57\%. Przy czułości makro wykazała 37\%, ważona 60\%, a w przypadku F1-score odpowiednio 37\% i 58\%. ROC AUC wyliczone zostało na 0.80. Kierując się dodatkowo macierzą pomyłek przedstawioną na Rys. \ref{fig:confusion_matrix_dnn_heart_disease} można zauważyć, że tylko jeden z przypadków został zakwalifikowany jako klasa '4' i była to błędna predykcja. Jak wykazują miary model radzi sobie znakomicie z odnajdywaniem osobników należących do przypadku '0' oraz dobrze z '1'. Często jednak zdarza mu się mylić kategorię '2' i '3' z '1', o czym mówi drugi rząd w macierzy pomyłek. Prynależność badanej próbki do klasy '0' ocenił na 89.45\% o czym świadczą winiki zamieszczone w Tabeli \ref{tab:lime_predprob_dnn_heart}.
+Za pomocą funkcji GridSearchCV przeszukałam przestrzeń rozwiązań, dzięki czemu spośród wskazanych hiperparametrów uzyskałam odpowiedź, które są najodpowiedniejsze do danego problemu. Z tak uzyskanych danych skonstruowałam sieć neuronową wykorzystującą funkcję aktywacji tanh, mechanizm \textit{Early Stopping}'u, optymalizator Adam oraz warstwy ukryte w postaci 64 - 128 - 128 - 64 neuronów. Jak przedstawia Tabela \ref{tab:heart_disease_dnn_metrics} uzyskała ona dokładność wynoszącą 60\%. Dla precyzji średnia makro osiągnęła 36\%, ważona 57\%. Przy czułości makro wykazała 37\%, ważona 60\%, a w przypadku F1-score odpowiednio 37\% i 58\%. ROC AUC wyliczone zostało na 0.80. Kierując się dodatkowo macierzą pomyłek przedstawioną na Rys. \ref{fig:confusion_matrix_dnn_heart_disease} można zauważyć, że tylko jeden z przypadków został zakwalifikowany jako klasa '4' i była to błędna predykcja. Jak wykazują miary model radzi sobie znakomicie z odnajdywaniem osobników należących do przypadku '0' oraz dobrze z '1'. Często jednak zdarza mu się mylić kategorię '2' i '3' z '1', o czym mówi drugi rząd w macierzy pomyłek. Prynależność badanej próbki do klasy '0' ocenił na 89.45\%.
 
 \begin{figure}[H]
     \centering
@@ -624,13 +602,14 @@ Za pomocą funkcji GridSearchCV przeszukałam przestrzeń rozwiązań, dzięki c
     \label{fig:confusion_matrix_dnn_heart_disease}
 \end{figure}
 
+\iffalse
 \begin{table}[H]
 \centering
 \caption{Prawdopodobieństwa predykcji klas wskazanej próbki według modelu bazowego a metody LIME w modelu sieci neuronowej zbioru dotyczącego choroby serca [źródło własne]}
 \label{tab:lime_predprob_dnn_heart}
 \begin{tabular}{|c|cc|}
 \hline
-\multirow{2}{*}{Klasa} & \multicolumn{2}{c|}{Prawdopodobieństwo predyckji (\%)} \\ \cline{2-3} 
+\multirow{2}{*}{Klasa} & \multicolumn{2}{c|}{Prawdopodobieństwo predykcji (\%)} \\ \cline{2-3} 
  & \multicolumn{1}{c|}{Model bazowy} & Metoda LIME \\ \hline
 0 & \multicolumn{1}{c|}{89.45} & 89.0 \\ \hline
 1 & \multicolumn{1}{c|}{9.41 } & 9.0  \\ \hline
@@ -648,6 +627,7 @@ Metoda LIME jak pokazuje Tabela \ref{tab:lime_predprob_dnn_heart} z praktycznie 
     \caption{Wykres słupkowy przedstawiający wpływ cech na predykcję wskazanej próbki według metody LIME w modelu sieci neuronowej zbioru dotyczącego choroby serca [źródło własne]}
     \label{fig:lime_classpredplot_dnn_heart}
 \end{figure}
+\fi
 
 Na wykresie znajdującym się na Rys. \ref{fig:lime_barchar_dnn_heart}, przedstawiającym średnie zebranych wag cech z próbek zbioru testowego, widać parę odznaczających się słupków. Najwyższym z nich jest ten odpowiadający kolumnie mówiącej o obniżeniu odcinka ST wywołanym wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak') dla klasy '0' osiągający istotność według metody LIME na poziomie ok. 0.16. Najistotniejszym czynnikiem stadium '1' okazała się być dławica piersiowa wywołana wysiłkiem fizycznym ('exang') z wartością ponad 0.14. Wariant '3' miał bardzo wyraźne wskaźniki przewyższające te, wskazane dla osobników '2' klasy, a cechą najbardziej za nim przemawiającą była odpowiedź, czy poziom cukru we krwi na czczo jest wysoki ('fbs'). W tym drugim przypadku, jak i również ostatnim, obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak') okazało się najistotniejsze. Zmienna odpowiadająca za płeć pacjenta ('sex') nie niosła za sobą żadnej istotnej przesłanki.   
  
@@ -668,6 +648,7 @@ Wynik połączenia istotności ze wszystkich klas doprowadziło do stworzenia wi
     \label{fig:lime_absolutemeanplot_dnn_heart}
 \end{figure}
 
+\iffalse
 Jak możemy wyczytać z wykresu znajdującego się na Rys. \ref{fig:shap_dnn_heart} metoda SHAP prawidłowo przypisuje dla wybranego przeze mnie przypadku klasie '0' najwyższe prawdopodobieństwo. Bazowa szansa owej przynależności wynosi według niej 46.3\%. Za cechę posiadającą największe znaczenie uznano wiek pacjenta ('age'), który zwiększał predykcję o całe 10\%. Kolejnymi istotnymi zmiennymi okazały się być  typ bólu klatki piersiowej ('cp') oraz osiągnięte maksymalne tętno ('thalch'). Tylko dwie informacje były przeciwne owemu przewidywaniu - płeć pacjenta ('sex') i spoczynkowe ciśnienie krwi ('trestbps'). Najmniej wartościowe dane niosły za sobą spadek odcinka ST podczas szczytowego wysiłku fizycznego ('slope') z odpowiedzią, czy poziom cukru we krwi na czczo jest wysoki ('fbs') zajmujące najniższą część wykresu. Na innych wizualizacjach za 3 najważniejsze cechy metoda również uznała 'thalch', 'cp', 'age', a także dławicę piersiową wywołaną wysiłkiem fizycznym ('exang') oraz obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak'). Wraz ze wzrostem klasy predykcyjnej pewność SHAP co do ważności cech malała, osiągając dla ostatniej z nich tylko 2 wartości większe od 0 - wynoszące 1\%.
 
 \begin{figure}[H]
@@ -676,6 +657,7 @@ Jak możemy wyczytać z wykresu znajdującego się na Rys. \ref{fig:shap_dnn_hea
     \caption{Wykres wodospadowy wartości SHAP prawidłowej klasyfikacji wskazanej próbki w modelu sieci neuronowej zbioru dotyczącego choroby serca [źródło własne]}
     \label{fig:shap_dnn_heart}
 \end{figure}
+\fi
 
 Wykres słupkowy zamieszczony na Rys. \ref{fig:shap_barchar_dnn_heart} pokazuje średnie liczone z wartości bezwzględnych wpływu cech na klasy predykcyjne. Brane są tutaj wszystkie próbki, dlatego wskazana najistotniejsza cecha różni się od tej pokazanej na konkretnym przypadku omówionym chwilę wcześniej. Dla wariantu '0' najważniejszą przesłanką okazuje się być 'cp' z wartością 0.1, następnie 'oldpeak' z 0.08 i 'exang' z 0.07. W przypadku '1' najważniejszy jest 'exang', którego miara wynosi 0.06. Dla '2' doszło do ciekawej sytuacji, albowiem aż 3 cechy posiadają jednakowy wynik rzędu ok. 0.03 i są to 'age', 'dataset' i 'cp'. 'Oldpeak' to najistotniejsza informacja predykcyjna '3' oraz '4' klasy. Prawie w każdym przypadku (oprócz '4') najmniej ważną przesłankę niosło za sobą 'trestbps'.    
 
@@ -710,22 +692,22 @@ Wykres typu "'beeswarm"' zaprezentowanym na Rys. \ref{fig:shap_beeswarm_dnn_hear
     \begin{tabular}{|c|c|c|}
         \hline
         Cecha & Średnia & Odch. standardowe \\ \hline
-        oldpeak  & 0.053 & +/- 0.011 \\ \hline
-        dataset  & 0.045 & +/- 0.008 \\ \hline
-        exang    & 0.043 & +/- 0.008 \\ \hline
-        cp       & 0.041 & +/- 0.009 \\ \hline
-        age      & 0.036 & +/- 0.009 \\ \hline
-        thalch   & 0.029 & +/- 0.008 \\ \hline
-        fbs      & 0.027 & +/- 0.006 \\ \hline
-        chol     & 0.024 & +/- 0.008 \\ \hline
-        sex      & 0.022 & +/- 0.008 \\ \hline
-        slope    & 0.015 & +/- 0.005 \\ \hline
-        trestbps & 0.011 & +/- 0.004 \\ \hline
+        oldpeak  & 0.053 &  0.011 \\ \hline
+        dataset  & 0.045 &  0.008 \\ \hline
+        exang    & 0.043 &  0.008 \\ \hline
+        cp       & 0.041 &  0.009 \\ \hline
+        age      & 0.036 &  0.009 \\ \hline
+        thalch   & 0.029 &  0.008 \\ \hline
+        fbs      & 0.027 &  0.006 \\ \hline
+        chol     & 0.024 &  0.008 \\ \hline
+        sex      & 0.022 &  0.008 \\ \hline
+        slope    & 0.015 &  0.005 \\ \hline
+        trestbps & 0.011 &  0.004 \\ \hline
     \end{tabular}
     \label{tab:heart_disease_dnn_pfi}
 \end{table}
 
-Wszystkie cechy zostały uznane przez PFI jako istotne, jednakże uzyskane przez nie wyniki są szczególnie niskie. Jak wskazuje Tabela \ref{tab:heart_disease_dnn_pfi} najważniejszą cechą okazało się być obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak') ze spadkiem w dokładności na poziomie jedynie 5.3\% i odchyleniem standardowym +/- 0.011. Na dalszych pozycjach znajduje się miejsce badań ('dataset') z wartością 4.5\%, a zaraz po nim wystąpienie dławicy piersiowej wywołanej wysiłkiem fizycznym ('exang') z 4.3\%. Najmniej istotne okazało się być spoczynkowe ciśnienie krwi ('trestbps') z wynikiem wynoszącym 1.1\% i odchyleniem standardowym rzędu +/- 0.004.
+Wszystkie cechy zostały uznane przez PFI jako istotne, jednakże uzyskane przez nie wyniki są szczególnie niskie. Jak wskazuje Tabela \ref{tab:heart_disease_dnn_pfi} najważniejszą cechą okazało się być obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak') ze spadkiem w dokładności na poziomie jedynie 5.3\% i odchyleniem standardowym  0.011. Na dalszych pozycjach znajduje się miejsce badań ('dataset') z wartością 4.5\%, a zaraz po nim wystąpienie dławicy piersiowej wywołanej wysiłkiem fizycznym ('exang') z 4.3\%. Najmniej istotne okazało się być spoczynkowe ciśnienie krwi ('trestbps') z wynikiem wynoszącym 1.1\% i odchyleniem standardowym rzędu  0.004.
 
 \begin{figure}[H]
     \centering
@@ -734,30 +716,58 @@ Wszystkie cechy zostały uznane przez PFI jako istotne, jednakże uzyskane przez
     \label{fig:box_plot_dnn_pfi}
 \end{figure}
 
-\subsection{Brain MRI Images for Brain Tumor Detection}
+\subsubsection{Podsumowanie}
+Wszystkie modele uczone i testowane na tych samych zbiorach pod względem dokladności uzyskały wyniki na przeciętnym poziomie. Były one do siebie zbliżone i oscylowały w granicach 60\%-64\%. Najlepiej pod tym względem poradził sobie XGBoost, jednak miał o około 1 jednostkę mniejsze ROC AUC od lasu losowego, u którego miara ta wyniosła 0.85. We wszystkich przypadkach najtrafniej diagnozowano klasę '0', przy czym najwięcej poprawnie należących do niej próbek, bo aż 70 z 82 wskazała sieć neuronowa, osiągając przy tym precyzję i czułość na poziomie 85\%. Podobnie decydowano o przynależności próbek do poszczególnych wariantów, z równą tendendcją spadkową, pogłębiającą się wraz z numerem przewidywanej kategorii. Wyniki większości średnich arytmetycznych były niezadowalające. Ich wartości ewidentnie wynikały z niezbilansowania danych, co możemy dostrzec analizując ilości rekordów dla poszczególnych klas znajdujące się w kolumnie 'Liczba'. Zauważamy wtedy, że liczebność zbioru testowego klasy '0' wyniosła 82 przypadki, a wariantu '4' jedynie 6. Z powodu tej ogromnej dysproporcji oraz niskiej zbiorowości prawie nigdy nie zaliczano próbek do najwyższej grupy ryzyka. Dla dwoch pierwszych modeli udało się ją poprawnie sklasyfikować, sieć neuronowa postawiła na błędną diagnozę o numerze '3'.  
+
+Każdy z badanych modeli posiadał chociaż jeden atrybut, w którym był lepszy od innych. Jednak metryki, takie jak dokładność i średnia arytmetyczna, będące podatne na niezbilansowane dane, tracą na wiarygodności. Dlatego w przypadku tego zbioru lepiej jest kierować się innymi miarami. Uznałam, że ze względu na sposób wyliczania najodpowiedniejsze będzie ROC AUC, pokazujące umiejętność rozróżniania pomiędzy poszczególnymi klasami. Ta idea plasuje las losowy na pierwszym miejscu. 
+
 \begin{table}[H]
 \centering
-    \caption{Wyniki uzyskane przy modelu VGG-16 dla zbioru dotyczącego zmian nowotworowych w mózgu}
-\begin{tabular}{|ccccc|}
+\caption{3 najistotniejsze oraz najmniej istotne cechy wskazane przez metody dla każdego z modeli w zbiorze dotyczącym choroby serca}
+\label{tab:3_top_and_least_heart}
+\begin{tabular}{|c|c|c|c|}
 \hline
-\multicolumn{5}{|c|}{ROC AUC: 0.91}  \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
-\multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{0.80}   & \multicolumn{1}{c|}{0.80}  & \multicolumn{1}{c|}{0.80}     & 10    \\ \hline
-\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.88}  & \multicolumn{1}{c|}{0.88}  & \multicolumn{1}{c|}{0.88}   & 16    \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.85}   & 26  \\ \hline
+Model & Metoda & 3 najistotniejsze cechy & 3 najmniej istotne cechy \\ \hline
+\multirow{3}{*}{Random Forest}& LIME& exang, oldpeak, age& trestbps, chol, sex\\ \cline{2-4} 
+ & SHAP& cp, thalch, dataset& sex, fbs, slope\\ \cline{2-4} 
+ & PFI& dataset, cp, age& sex, fbs, slope\\ \hline
+\multirow{3}{*}{XGBoost}& LIME
+& exang, cp, age& trestbps, thalch, sex\\ \cline{2-4} 
+ & SHAP
+& cp, thalch, age& sex, fbs, slope\\ \cline{2-4} 
+ & PFI& age, oldpeak, chol& sex, fbs, slope\\ \hline
+\multirow{3}{*}{Sieć neuronowa}& LIME
+& oldpeak, exang, thalch& chol, trestbps, sex\\ \cline{2-4} 
+ & SHAP
+& age, cp, thalch& trestbps, slope, fbs\\ \cline{2-4} 
+ & PFI& oldpeak, dataset, exang& sex, slope, trestbps \\ \hline
 \end{tabular}
-    \label{tab:brain_vgg16_metrics}
 \end{table}
 
-Jak możemy wyczytać z Tabeli \ref{tab:brain_vgg16_metrics} model VGG-16 uzyskał ROC AUC na poziomie 0.91. Zbiór testowy składał się jedynie z 26 obrazów. Do klasy decyzyjnej '0' należało 10, a '1' - 16. Spowodowało to niewielkie różnice pomiędzy średnią macro a ważoną w postaci 1 punktu procentowego dla pierwszych miar. Precyzja, czułość i F1-score dla klasy '0' wyniosły 80\%, a dla '1' - 88\%. Dokładność modelu osiągnęła 85\%. Macierz pomyłek zaprezentowana na Rys. \ref{fig:confusion_matrix_vgg16_brain} pokazuje, że model poprawnie zaklasyfikował 8 z 10 obrazów bez zmian nowotworowych oraz 14 z 16 ze zmianami. Badany model z prawdopodobieństwem w przybliżeniu 100\% zaklasyfikował badaną próbkę jako wariant z guzem, co było poprawnym wyborem.
+ Jak możemy wyczytać z Tabeli \ref{tab:3_top_and_least_heart}  dla modelu Random Forest każda z metod wskazała inne 3 najistotniejsze cechy. LIME podała najbardziej odmienne zmienne, z których jedynie wiek ('age') i płeć ('sex') pojawiły się w innych wierszach należących do lasu losowego.  SHAP i PFI były jednogłośne w kwestii najmniej znaczących przesłanek, czyli płci ('sex'), informacji, czy poziom cukru we krwi na czczo jest wysoki ('fbs') oraz spadku odcinka ST podczas szczytowego wysiłku fizycznego ('slope'). 
+ 
+ W przypadku XGBoost we wszystkich wytłumaczeniach wśród 3 najistotniejszych cech znalazł się wiek ('age'), a najmniej istotnych płeć ('sex'). Dwukrotnie pojawia się typ bólu klatki piersiowej ('cp') w 3 kolumnie dla LIME i SHAP. Co zastanawiające pierwsza z tych metod uznała osiągnięte maksymalne tętno ('thalch') za mało wartościowe, kiedy to druga w przeciwieństwie do niej umieściła tę zmienną bardzo wysoko w rankingu istotności. PFI wraz z wartościami Shapley'a był zgodny co do najmniej interesujących cech, wskazując już wcześniej wspomnianą płeć ('sex'), czy poziom cukru we krwi na czczo jest wysoki ('fbs') oraz spadek odcinka ST podczas szczytowego wysiłku fizycznego ('slope').
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/brain/confusion_matrix_vgg16_brain.png}
-    \caption{Macierz pomyłek modelu VGG-16 dla zbioru dotyczącego zmian nowotworowych w mózgu [źródło własne]}
-    \label{fig:confusion_matrix_vgg16_brain}
-\end{figure}
+W sieci neuronowej wyjaśnienia były do siebie dosyć zbliżone. Wpośród 3 najmniej istotnych cech za każdym razem pojawiło się spoczynkowe ciśnienie krwi ('trestbps'), z przeplatającą się płcią ('sex') i spadkiem odcinka ST podczas szczytowego wysiłku fizycznego ('slope'). Natomiast wśród 3 najistotniejszych cech nie pojawiła się jedna dominująca, ale dwukrotnie znalazło się obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak'), dławica piersiowa wywołana wysiłkiem fizycznym ('exang') oraz osiągnięte maksymalne tętno (thalch).
+
+W 8 na 9 przypadków za jedną z najmniej istotnych cech wskazano płeć ('sex'), nie pojawiła się ona wyłącznie w wytłumaczeniu SHAP dla sieci neuronowej, gdzie uznano ją za dosyć wartościową informację. Przy lesie losowym oraz XGBoost SHAP z PFI podawały identyczne wartości w 4 kolumnie. LIME bez względu na model zawsze za jedną z naistotniejszych cech podawał 'exang', a najmniej ważnych 'trestbps' i 'sex', SHAP 'cp' z 'thalch' a także 'fbs' oraz 'slope', natomiast PFI nie miał faworyta w pierwszej kategorii, w drugiej 'sex' i 'slope'.
+
+
+\subsection{Brain MRI Images for Brain Tumor Detection}
+\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|c|c|c|c|}
+\caption{Wyniki metryk poszczególnych modeli dla zbioru dotyczącego diabetyków}
+\label{tab:metrics_brain}\\
+\hline
+Model \textbackslash Metryka & ROC AUC & Precyzja & Czułość & Specyficzność & F1-score & Dokładność \\ \hline
+\endfirsthead
+VGG-16 & 0.91 & 0.88 & 0.88 & 0.80 & 0.88 & 0.85 \\ \hline
+ResNet50 & 1.0 & 0.94 & 1.0 & 0.90 & 0.97 & 0.96 \\ \hline
+Xception & 0.99 & 0.89 & 1.0 & 0.80 & 0.94 & 0.92 \\ \hline
+\end{xltabular}
+
+
+\subsubsection{VGG-16}
+Jak możemy wyczytać z Tabeli \ref{tab:metrics_brain} model VGG-16 uzyskał ROC AUC na poziomie 0.91. Zbiór testowy składał się jedynie z 26 obrazów. Do klasy decyzyjnej '0' należało 10, a '1' - 16. Spowodowało to niewielkie różnice pomiędzy średnią arytmetyczną a ważoną w postaci 1 punktu procentowego dla pierwszych miar. Precyzja, czułość i F1-score wyniosły 88\%, a specyficzność - 80\%. Dokładność modelu osiągnęła 85\%. Model poprawnie zaklasyfikował 8 z 10 obrazów bez zmian nowotworowych oraz 14 z 16 ze zmianami. Badany model z prawdopodobieństwem w przybliżeniu 100\% zaklasyfikował badaną próbkę jako wariant z guzem, co było poprawnym wyborem.\\
 
 Metoda LIME poprawnie wskazała dla badanej próbki klasę decyzyjną '1'. Na Rys. \ref{fig:lime_vgg16_1_brain} znajdują się 3 obrazki przedstawiające jej wytłumaczenia. Widzimy z niego, że wśród 5 najbardziej wpływowych obszarów nie znalazła się zmiana nowotworowa. Zostały zaznaczone części lewej strony obrazu, na których znajduje się kontur i leżące przy nim szare obszary. Pojawia się ona dopiero, gdy metoda podaje 10 najbardziej wpływowych superpikseli, zaraz obok dwóch rogów zdjęcia nie przedstawiających mózgu oraz oznaczonego na czerwono fragmentu nie zawierającego podejrzanych zmian. 
 
@@ -781,34 +791,14 @@ Na mapie stworzonej przy pomocy Grad-CAM, która znajduje się na Rys. \ref{fig:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/brain/gradcam_vgg16_1_brain.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/brain/gradcam_vgg16_1_brain.png}
     \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-CAM dla modelu VGG-16   [źródło własne]}
     \label{fig:gradcam_vgg16_1_brain}
 \end{figure}
 
-\begin{table}[H]
-\centering
-    \caption{Wyniki uzyskane przy modelu ResNet50 dla zbioru dotyczącego zmian nowotworowych w mózgu}
-\begin{tabular}{|ccccc|}
-\hline
-\multicolumn{5}{|c|}{ROC AUC: 1.0}  \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
-\multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{1.0}   & \multicolumn{1}{c|}{0.90}  & \multicolumn{1}{c|}{0.95}     & 10    \\ \hline
-\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.94}  & \multicolumn{1}{c|}{1.0}  & \multicolumn{1}{c|}{0.97}  & 16 \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.96} & 26 \\ \hline
-\end{tabular}
-    \label{tab:brain_resNet50_metrics}
-\end{table}
 
-Analizując dane zamieszczone w Tabeli \ref{tab:brain_resNet50_metrics} zauważamy, że model ResNet50 osiągnął ROC AUC na poziomie 1.0. Precyzja dla klasy '0' wyniosła 100\%, a czułość - 90\%, co dało F1-score na poziomie 95\%. Dla klasy '1' owe metryki osiągnęły kolejno 94\%, 100\%, oraz 97\%. Średnie macro i ważone 3 omawianych miar oscylowały w przedziale od 95\% do 97\%. Model wykazał dokładność na poziomie 96\%. Owe wyniki potwierdza zamieszcona na Rys. \ref{fig:confusion_matrix_resNet50_brain} macierz pomyłek. Możemy z niej odczytać, że w klasyfikacji popełniony został tylko jeden błąd, a mianowicie jeden z przypadków klasy '0' został błednie oznaczony jako '1'. Badana próbka została poprawnie zdiagnozowana z praktycznie 100\% pewnością jako posiadająca zmiany nowotworowe.  
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/brain/confusion_matrix_resNet50_brain.png}
-    \caption{Macierz pomyłek modelu ResNet50 dla zbioru dotyczącego zmian nowotworowych w mózgu [źródło własne]}
-    \label{fig:confusion_matrix_resNet50_brain}
-\end{figure}
+\subsubsection{ResNet50}
+Analizując dane zamieszczone w Tabeli \ref{tab:metrics_brain} zauważamy, że model ResNet50 osiągnął ROC AUC na poziomie 1.0. Precyzja wyniosła 94\%, a czułość - 100\%, co dało F1-score na poziomie 97\%, natomiast specyficzność osiągnęła 90\%. Średnie arytmetyczne i ważone omawianych miar oscylowały w przedziale od 95\% do 97\%. Model wykazał dokładność na poziomie 96\%. W klasyfikacji popełniony został tylko jeden błąd, a mianowicie jeden z przypadków klasy '0' został błednie oznaczony jako '1'. Badana próbka została poprawnie zdiagnozowana z praktycznie 100\% pewnością jako posiadająca zmiany nowotworowe. \\
 
 LIME wyjaśniający działanie modelu ResNet50 poprawnie zdiagnozował badaną próbkę jako posiadającą zmiany nowotworowe. Z jego wytłumaczeń znajdujących się na Rys. \ref{fig:lime_resNet50_1_brain} możemy zauważyć, że pośród 5 najistotniejszych obszarów nie znalazł się ten z guzem. Metoda oznaczyła jedynie górną część zdjęcia oraz prawy środek zdjęcia, czyli fragment sąsiadujący z  patologiczną częścią. Wśród 10 najbardziej wpływowych superpikseli już pojawiła się zmiana nowotworowa i nie wskazano żadnych elementów przeczących danej diagnozie. Zaistniały jednak obszary wykraczające poza kontur głowy. 
 
@@ -832,35 +822,14 @@ Na mapie stworzonej przy pomocy Grad-CAM, która znajduje się na Rys. \ref{fig:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/brain/gradcam_resNet50_1_brain.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/brain/gradcam_resNet50_1_brain.png}
     \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-CAM dla modelu ResNet50   [źródło własne]}
     \label{fig:gradcam_resNet50_1_brain}
 \end{figure}
 
-\begin{table}[H]
-\centering
-    \caption{Wyniki uzyskane przy modelu Xception dla zbioru dotyczącego zmian nowotworowych w mózgu}
-\begin{tabular}{|ccccc|}
-\hline
-\multicolumn{5}{|c|}{ROC AUC: 0.99}  \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
-\multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{1.0}   & \multicolumn{1}{c|}{0.80}  & \multicolumn{1}{c|}{0.89}     & 10    \\ \hline
-\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.89}  & \multicolumn{1}{c|}{1.0}  & \multicolumn{1}{c|}{0.94}   & 16  \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.92}  & 26  \\ \hline
-\end{tabular}
-    \label{tab:brain_xception_metrics}
-\end{table}
 
-
-Jak pokazuje Tablea \ref{tab:brain_xception_metrics} Xception osiągnął ROC AUC na poziomie 0.99. Jego dokładność wyniosła 92\%. Precyzja klasy '0' była perfekcyjna i wskazała 100\%, jednak czułość od niej znacznie odbiegała, bo uzyskała 80\%, co skutkowało 89\% F1-score. Odwrotna sytuacja miała miejsce w przypadku drugiego wariantu, gdzie znakomita czułość nadrabiała nieco niższą precyzję osiągającą 89\%, dając w efekcie 94\% F1-score. Dokładność modelu oceniono na 92\%. Jego średnie macro i ważone opisanych wcześniej dla poszczególnych klas miar mieściły się w przedziale od 90\% do 94\%. Zamieszczona na Rys. \ref{fig:confusion_matrix_xception_brain} macierz pomyłek przedstawia rozkład klasyfikacji. Widać na niej, że tylko 2 przypadki zostały źle zdiagnozowane. Stwierdzono na nich zmiany nowotworowe, gdy w rzeczywistości ich tam nie było. Badana próbka została poprawnie zaklasyfikowana jako posiadająca zmiany nowotworowe z prawdopodobieństwem bliskim 100\%. 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/brain/confusion_matrix_xception_brain.png}
-    \caption{Macierz pomyłek modelu Xception dla zbioru dotyczącego zmian nowotworowych w mózgu [źródło własne]}
-    \label{fig:confusion_matrix_xception_brain}
-\end{figure}
+\subsubsection{Xception}
+Jak pokazuje Tabela \ref{tab:metrics_brain} Xception osiągnął ROC AUC na poziomie 0.99. Jego dokładność wyniosła 92\%. Precyzja wskazała 89\%, czułość była perfekcyjna i uzyskała 100\%, co skutkowało 94\% F1-score. Specyficzność była najmniejsza - z wynikiem 80\%. Dokładność modelu oceniono na 92\%. Jego średnie arytmetyczne i ważone opisanych wcześniej dla poszczególnych klas miar mieściły się w przedziale od 90\% do 94\%. Tylko 2 przypadki zostały źle zdiagnozowane. Stwierdzono na nich zmiany nowotworowe, gdy w rzeczywistości ich tam nie było. Badana próbka została poprawnie zaklasyfikowana jako posiadająca zmiany nowotworowe z prawdopodobieństwem bliskim 100\%. 
 
 Metoda LIME poprawnie zaklasyfikowała badaną próbkę jako klasę '1'. Jak możemy zauważyć na Rys. \ref{fig:lime_xception_1_brain}, wśród 5 najbardziej wpływowych obszarów znalazła się zmiana nowotworowa. Oprócz niej widnieją tam trzy fragmenty przedstawiające kontur głowy z czego jeden zawiera również szaro oznaczone wnętrze. Pośród 10 najistotniejszych przesłanek nie znalazła się żadna, która przeczyłaby danej diagnozie. Oprócz wcześniej wymienionych części pojawiły się tam trzy obszary znajdujące się poza głową, będące rogami zdjęcia.   
 
@@ -871,7 +840,7 @@ Metoda LIME poprawnie zaklasyfikowała badaną próbkę jako klasę '1'. Jak mo�
     \label{fig:lime_xception_1_brain}
 \end{figure}
 
-SHAP poprawnie zdiagnozował badaną próbkę jako posiadającą patologiczne zmiany. Z Rys. \ref{fig:shap_xception_1_brain} możemy odczytać, że metoda zaznaczyła większą część zdjęcia jako istotną dla danej klasy decyzyjnej. Znalazł się tam fragment zdjęcia z guzem, a jego część odznaczała się intensywnie nasyconą czerwienią. Na zmianie nowotworowej znajdują się wyszarzone pola mówiące, że dane miejsce nie ma wartości predykcyjnej. Znalazły się dwa niewielkie obszary przeczące danej predykcji, jeden mieszczący się w lewym dolnym rogu, a drugi po środku, bliżej prawej strony, przy samym krańcu zdjęcia. Są to części nie posiadające żadnych niepokojących elementów. 
+SHAP poprawnie zdiagnozował badaną próbkę jako posiadającą patologiczne zmiany. Z Rys. \ref{fig:shap_xception_1_brain} możemy odczytać, że metoda zaznaczyła większą część zdjęcia jako istotną dla danej klasy decyzyjnej. Znalazł się tam fragment zdjęcia z guzem, a jego część odznaczała się intensywnie nasyconą czerwienią. Na zmianie nowotworowej znajdują się wyszarzone pola mówiące, że dane miejsce nie ma wartości predykcyjnej. Znalazły się dwa niewielkie obszary przeczące danej predykcji, jeden mieszczący się w lewym dolnym rogu, a drugi pośrodku, bliżej prawej strony, przy samym krańcu zdjęcia. Są to części nie posiadające żadnych niepokojących elementów. 
 
 \begin{figure}[H]
     \centering
@@ -884,35 +853,49 @@ Jak widzimy na Rys. \ref{fig:gradcam_xception_1_brain} Grad-CAM wskazał jeden b
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/brain/gradcam_xception_1_brain.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/brain/gradcam_xception_1_brain.png}
     \caption{Wyniki uzyskane po zbadaniu próbki ze zmianami nowotworowymi za pomocą metody Grad-CAM dla modelu Xception   [źródło własne]}
     \label{fig:gradcam_xception_1_brain}
 \end{figure}
 
-\subsection{Cats and Dogs Classification Dataset}
-\begin{table}[H]
-\centering
-    \caption{Wyniki uzyskane przy modelu VGG-16 dla zbioru dotyczącego klasyfikacji psów i kotów}
-\begin{tabular}{|ccccc|}
+\subsubsection{Podsumowanie}
+Analizując wszystkie dostępne metryki, tj. ROC AUC, dokładność, precyzję, czułość i F1-score, najepiej ze wszystkich badanych modeli poradził sobie ResNet50. Popełnił on tylko jeden błąd na zbiorze testowym klasyfikując próbkę należącą w rzeczywistości do klasy decyzyjnej '1'. Najgorzej pod względem tych samych miar wypadł VGG-16 posiadający najprostszą architekturę. Odbiegał on od lidera o 11\% w poprawności swoich predykcji. Popełnił aż 4 błędy klasyfikując próbki zbioru testującego. Śmiem zatem twierdzić, że niestety nie najlepiej sprawdza się on w tak trudnym zadaniu jak wykrywanie zmian nowotworowych mózgu.
+
+\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+\caption{Podsumowanie wyników uzyskanych przy zbiorze dotyczącym zmian nowotworowych}
+\label{tab:summary_brain}\\
 \hline
-\multicolumn{5}{|c|}{ROC AUC: 0.99}  \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
-\multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{0.96}   & \multicolumn{1}{c|}{0.97}  & \multicolumn{1}{c|}{0.97}  & 2000 \\ \hline
-\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.97}  & \multicolumn{1}{c|}{0.96}  & \multicolumn{1}{c|}{0.97}  & 2000  \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.97}  & 4000  \\ \hline
-\end{tabular}
-    \label{tab:cats&dogs_vgg16_metrics}
-\end{table}
+Model & Prawdopodobień\-stwo nowotworu & Metoda & Czy w wyjaśnieniu występuje guz? & Czy w wyjaśnieniu znajduje się tło? \\ \hline
+\endfirsthead
+\multirow{3}{*}{VGG-16} & \multirow{3}{*}{100\%} & LIME & Tak* & Tak* \\ \cline{3-5} 
+ &  & SHAP & Tak** & Tak \\ \cline{3-5} 
+ &  & Grad-CAM & Tak** & Tak \\ \hline
+\multirow{3}{*}{ResNet50} & \multirow{3}{*}{100\%} & LIME & Tak* & Tak* \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak \\ \cline{3-5} 
+ &  & Grad-CAM & Tak & Nie \\ \hline
+\multirow{3}{*}{Xception} & \multirow{3}{*}{99.67\%} & LIME & Tak & Tak* \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-CAM & Tak & Nie \\ \hline
+\end{xltabular}
 
-Z Tabeli \ref{tab:cats&dogs_vgg16_metrics} możemy odczytać, że model VGG-16 osiągnął ROC AUC na poziomie 0.99. Precyzja, czułość i F1-score dla klasy '0' wyniosły odpowiednio 96\%, 97\% i 97\%. Dla klasy '1' te metryki osiągnęły kolejno 97\%, 96\% i 97\%. Dokładność modelu oceniono na 97\%. Średnie macro i ważone ze względu na taki sam rozkład próbek względem klas decyzyjnych były jednakowe. Tak dobre wyniki potwierdza zamieszczona na Rys. \ref{fig:confusion_matrix_vgg16_cats&dogs} macierz pomyłek. Możemy z niej wyczytać, że model poprawnie rozpoznał na 1940 z 2000 obrazach kota, a 1929 z 2000 psa. Tak niezwykle wysoka umiejętność klasyfikacji przełożyła się na fakt, że VGG-16 badanej próbce należącej do klasy '0' przypisał wartość 0.03, a do '1' - 1. Świadczy to o jego dużej pewności, co do wskazanych predykcji, które sa poprawne.      
+Dane zawarte w Tabeli \ref{tab:summary_brain} przedstawiają drobne podsumowanie wyników uzyskanych przez poszczególne metody dla modeli i badanej próbki. Odpowiedź ,,Tak*'' oznajmia - wystąpiło ale biorąc pod uwagę 10 najistotniejszych obszarów; a ,,Tak**'' - wystąpiło, ale nie było jedną z najważniejszych części fotografii. Z zaprezentowanych danych wynika, że biorąc pod uwagę częstotliwość występowania tła najlepszym wyborem byłby Grad-CAM, który tylko raz je oznaczył dla modelu VGG-16. Wracając jednak do jego szczegółowych wyników przypominamy sobie o wspomnianym problemie potencjalnie zbyt dużego i przez to mało precyzyjnego, obszaru wyjaśniającego. Kolejną w hierarchii wydaje się być metoda SHAP. Była ona jednak równie mało dokładna, często oznaczając dużą część zdjęcia, nierzadko mieszczącą się poza obrysem głowy. Pozostaje więc LIME, który w swoim tłumaczeniu zaznaczał bardzo szczegółowo fragmenty. Po rozszerzeniu przestrzeni rozwiązań do 10 obszarów pojawiał się wśród nich szukany guz i, niestety, rogi obrazu będące tłem. 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/confusion_matrix_vgg16_cats&dogs.png}
-    \caption{Macierz pomyłek modelu VGG-16 dla zbioru dotyczącego klasyfikacji psów i kotów [źródło własne]}
-    \label{fig:confusion_matrix_vgg16_cats&dogs}
-\end{figure}
+
+\subsection{Cats and Dogs Classification Dataset}
+
+\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|c|c|c|c|}
+\caption{Wyniki metryk poszczególnych modeli dla zbioru dotyczącego diabetyków}
+\label{tab:metrics_catsdogs}\\
+\hline
+Model \textbackslash Metryka & ROC AUC & Precyzja & Czułość & Specyficzność & F1-score & Dokładność \\ \hline
+\endfirsthead
+VGG-16 & 0.99 & 0.97 & 0.96 & 0.97 & 0.97 & 0.97 \\ \hline
+ResNet50 & 1.0 & 0.98 & 0.98 & 0.98 & 0.98 & 0.98 \\ \hline
+Xception & 1.0 & 0.98 & 0.99 & 0.98 & 0.99 & 0.99 \\ \hline
+\end{xltabular}
+
+\subsubsection{VGG-16}
+Z Tabeli \ref{tab:metrics_catsdogs} możemy odczytać, że model VGG-16 osiągnął ROC AUC na poziomie 0.99. Precyzja, czułość, specyficzność i F1-score wyniosły odpowiednio 97\%, 96\%, 97\% i 97\%. Dokładność modelu oceniono na 97\%. Średnie aarytmetyczne i ważone ze względu na taki sam rozkład próbek względem klas decyzyjnych były jednakowe. Model poprawnie rozpoznał na 1940 z 2000 obrazach kota, a 1929 z 2000 psa. Tak niezwykle wysoka umiejętność klasyfikacji przełożyła się na fakt, że VGG-16 badanej próbce należącej do klasy '0' przypisał wartość 0.03, a do '1' - 1. Świadczy to o jego dużej pewności, co do wskazanych predykcji, które sa poprawne.\\      
 
 Metoda LIME diagnozując badaną diagnozę poprawnie wskazała jej przynależność do klasy '0'. Jak widzimy na Rys. \ref{fig:lime_vgg16_0_cats&dogs} wśród 5 najistotniejszych obszarów znalazł się kawałek główki kota, jego szyja oraz tło. Rozszerzenie przestrzeni do 10 najbardziej znaczących fragmentów poszerzyło wskazane wcześniej części o ich sąsiedztwo, czyli całą głowę, przestrzeń od szyji do połowy łapek, kark oraz kolejne części tła. Wśród nich nie znalazł się żaden, obszar przeczący danej klasyfikacji.
 
@@ -952,42 +935,21 @@ Analizując wyjaśnenia Grad-CAM widniejące na Rys. \ref{fig:gradcam_vgg16_0_ca
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_vgg16_0_cats&dogs.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/cats&dogs/gradcam_vgg16_0_cats&dogs.png}
     \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-CAM dla modelu VGG-16 [źródło własne]}
     \label{fig:gradcam_vgg16_0_cats&dogs}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_vgg16_1_cats&dogs.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/cats&dogs/gradcam_vgg16_1_cats&dogs.png}
     \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-CAM dla modelu VGG-16   [źródło własne]}
     \label{fig:gradcam_vgg16_1_cats&dogs}
 \end{figure}
 
 
-\begin{table}[H]
-\centering
-    \caption{Wyniki uzyskane przy modelu ResNet50 dla zbioru dotyczącego klasyfikacji psów i kotów}
-\begin{tabular}{|ccccc|}
-\hline
-\multicolumn{5}{|c|}{ROC AUC: 1.0}  \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
-\multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{0.98}   & \multicolumn{1}{c|}{0.98}  & \multicolumn{1}{c|}{0.98}  & 2000  \\ \hline
-\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.98}  & \multicolumn{1}{c|}{0.98}  & \multicolumn{1}{c|}{0.98} & 2000  \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.98} & 4000 \\ \hline
-\end{tabular}
-    \label{tab:cats&dogs_resNet50_metrics}
-\end{table}
-
-ROC AUC modelu ResNet50 było perfekcyjnie i osiągnęło 1.0. Precyzja, czułość i F1-score dla obu klas były identyczne i wyniosły 98\%. Taki sam wynik uzyskała także dokładność. Dane zawarte w Tabeli \ref{tab:cats&dogs_resNet50_metrics} uzasadnia zamieszczona na Rys. \ref{fig:confusion_matrix_resNet50_cats&dogs} macierz pomyłek. Analizując ją zauważamy, że model poprawnie rozpoznał 1953 przypadki z 2000 przedstawiające kota poprawnie, a 1969 z 2000 obrazów psa, co przekłada się na prawie przeciwne kolory kafelków. Próbka przynależąca do klasy '0' została zaklasyfikowana z 5\% prawdopodobieństwem do klasy przeciwnej, czyli model był niemal zupełnie pewny jej odmiennej diagnozy. Drugą ResNet50 ocenił na 99\% jako przeddstawiającą reprezentanta klasy '1'.   
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/confusion_matrix_resNet50_cats&dogs.png}
-    \caption{Macierz pomyłek modelu ResNet50 dla zbioru dotyczącego klasyfikacji psów i kotów [źródło własne]}
-    \label{fig:confusion_matrix_resNet50_cats&dogs}
-\end{figure}
+\subsubsection{ResNet50}
+Z danych zawartych w Tabeli \ref{tab:metrics_catsdogs} wyczytujemy, że ROC AUC modelu ResNet50 było perfekcyjne i osiągnęło 1.0. Precyzja, czułość, specyficzność i F1-score wyniosły 98\%. Taki sam wynik uzyskała także dokładność. Model poprawnie rozpoznał 1953 przypadki z 2000 przedstawiające kota poprawnie, a 1969 z 2000 obrazów psa. Próbka przynależąca do klasy '0' została zaklasyfikowana z 5\% prawdopodobieństwem do klasy przeciwnej, czyli model był niemal zupełnie pewny jej odmiennej diagnozy. Drugą ResNet50 ocenił na 99\% jako przeddstawiającą reprezentanta klasy '1'.\\
 
 LIME diagnozując próbkę z kotem poprawnie ją zaklasyfikował. Rozpatrując jego wyjaśnienia zamieszczone na Rys. \ref{fig:lime_resNet50_0_cats&dogs} spostrzegamy, że oznaczył on część głowy kota wycinając prawy fragment od nosa do policzka, a także bluzkę osoby trzymającej zwierzę z kawałkiem stroju w jaki zostało ono ubrane. Prawdopodobnie metoda mogła pomylić biały materiał z ogonem stworzenia, które ma podobne umaszczenie. Wśród 10 najbardziej wpływowych obszarów znalazło się wiele czerwonych plam, które zostały umiejscowione na łapach, szyi i części tła. Z pozytywnych elementów została usunięta lewa strona pyszczka i pozostała tylko ta górna. W przypadku próbki z psem, również dobrze sklasyfikowanej, przedstawionej na Rys. \ref{fig:lime_resNet50_1_cats&dogs}, LIME wskazał łapy zwierzęcia, górną część głowy i znajdujące się nad nią tło przedstawiające prawdopodobnie samochód. Rozszerzenie przestrzeni rozwiązań do 10 obszarów dodało do tłumaczenia więcej fragmentów scenerii, a także końcówkę ogona.
 
@@ -1025,42 +987,21 @@ Obserwując zamieszcozne na Rys. \ref{fig:gradcam_resNet50_0_cats&dogs} i \ref{f
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_resNet50_0_cats&dogs.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/cats&dogs/gradcam_resNet50_0_cats&dogs.png}
     \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-CAM dla modelu ResNet50 [źródło własne]}
     \label{fig:gradcam_resNet50_0_cats&dogs}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_resNet50_1_cats&dogs.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/cats&dogs/gradcam_resNet50_1_cats&dogs.png}
     \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-CAM dla modelu ResNet50 [źródło własne]}
     \label{fig:gradcam_resNet50_1_cats&dogs}
 \end{figure}
 
 
-\begin{table}[H]
-\centering
-    \caption{Wyniki uzyskane przy modelu Xception dla zbioru dotyczącego klasyfikacji psów i kotów}
-\begin{tabular}{|ccccc|}
-\hline
-\multicolumn{5}{|c|}{ROC AUC: 1.0}  \\ \hline
-\multicolumn{1}{|c|}{Klasa \textbackslash Metryka} & \multicolumn{1}{c|}{Precyzja} & \multicolumn{1}{c|}{Czułość} & \multicolumn{1}{c|}{F1-score} & Liczba \\ \hline
-\multicolumn{1}{|c|}{0}  & \multicolumn{1}{c|}{0.99}  & \multicolumn{1}{c|}{0.98}  & \multicolumn{1}{c|}{0.99}  & 2000  \\ \hline
-\multicolumn{1}{|c|}{1}  & \multicolumn{1}{c|}{0.98}  & \multicolumn{1}{c|}{0.99}  & \multicolumn{1}{c|}{0.99}  & 2000  \\ \hline
-\multicolumn{5}{|c|}{}  \\ \hline
-\multicolumn{1}{|c|}{Dokładność}  & \multicolumn{3}{c|}{0.99}  & 4000   \\ \hline
-\end{tabular}
-    \label{tab:cats&dogs_xception_metrics}
-\end{table}
-
-Analizując wyniki modelu Xception zawarte w Tabeli \ref{tab:cats&dogs_xception_metrics} dostrzegamy, że osiągnął imponujące wyniki. Jego ROC AUC było na poziomie 1.0, a dokładność 99\%. Precyzja, czułość i F1-score osiągnęły dla klasy '0' odpowiednio 99\%, 98\% i 99\%, a '1' - 98\%, 99\% oraz 99\%. Średnie macro i ważone były identyczne. Tak wysokie rezultaty odwzorowuje zamieszczona na Rys. \ref{fig:confusion_matrix_xception_cats&dogs} macierz pomyłek. Zauważamy na niej, iż model poprawnie sklasyfikował 1967 zdjęć kotów i 1976 psów z 2000 dostępnych dla obu klas. Pierwsza z badanych próbek zawierająca fotografię kota została oceniona na zaledwie 1\% jako przedstawiająca przeciwne w tym porówaniu stworzenie. Druga z nich, czyli ta z psem, została oceniona na 98\% jako reprezentantka klasy '1'. Przekłada się to na dużą pewność modelu co do jego predykcji. 
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/confusion_matrix_xception_cats&dogs.png}
-    \caption{Macierz pomyłek modelu Xception dla zbioru dotyczącego klasyfikacji psów i kotów [źródło własne]}
-    \label{fig:confusion_matrix_xception_cats&dogs}
-\end{figure}
+\subsubsection{Xception}
+Analizując wyniki modelu Xception zawarte w Tabeli \ref{tab:metrics_catsdogs} dostrzegamy, że są prawie idealne. Jego ROC AUC było na poziomie 1.0, a dokładność 99\%. Precyzja, czułość, specyficzność i F1-score osiągnęły odpowiednio 99\%, 99\%, 98\% i 99\%. Średnie arytmetyczne i ważone były identyczne. Model poprawnie sklasyfikował 1967 zdjęć kotów i 1976 psów z 2000 dostępnych dla obu klas. Pierwsza z badanych próbek zawierająca fotografię kota została oceniona na zaledwie 1\% jako przedstawiająca przeciwne w tym porówaniu stworzenie. Druga z nich została oceniona na 98\% jako reprezentantka klasy '1'. Przekłada się to na dużą pewność modelu co do jego predykcji.\\ 
 
 Metoda LIME w swoich poprawnie sklasyfikowanym wytłumaczeniu, mieszczącym się na Rys. \ref{fig:lime_xception_0_cats&dogs}, doskonale wyodrębniła głowę kota i wskazała ją jako jeden z najwazniejszych obszarów predykcyjnych. Obok niej znalazło się także udo zwierzęcia. Wśród 10 najbardziej wpływowych fragmentów, oprócz tych wcześniej wskazanych znalazła się bluzka osoby trzymajacej stworzenie, jego przednie łapy oraz tło, z czego te dwa ostatnie obszary były zaznaczone na czerwono. Oznacza to ich negatywny wpływ na predykcję. W przypadku również dobrze sklasyfikowanego psa LIME zwróciło najpierw uwagę na jego prawy dolny skrawek pyszczka, oraz części przedniej i tylnej łapy. Rozszerzając przestrzeń rozwiązań do tłumaczenia dołączone zostało tło pomiędzy wspomnianymi już kończynami oraz kolejny fragment głowy zwierzęcia.  
 
@@ -1094,18 +1035,57 @@ Patrząc na Rys. \ref{fig:shap_xception_0_cats&dogs} i \ref{fig:shap_xception_1_
     \label{fig:shap_xception_1_cats&dogs}
 \end{figure}
 
-Grad-CAM, jak zwracamy uwagę na Rys. \ref{fig:gradcam_xception_0_cats&dogs} i \ref{fig:gradcam_xception_1_cats&dogs}, kierował się wyjątkowo dużymi punktami w celu wytłumaczenia odpowiadających im diagnoz, co prowadzi do sceptycznego spojrzenia na jego dokładność. W przypadku kota najintensywniejszym miejscem okazała się być tylna część grzbietu, od której w postaci swego rodzaju gradientu odchodziły mniej istotne fragmenty. Natomiast na obrazku przedstawiającym psa oznaczona została lewa oraz górna część fotografii, gdzie jej epicentrum znalazło się po środku. Znajdowało się pod tym tło oraz głowa z przodem torsu i znajdującymi się pod nim łapami. 
+Grad-CAM, jak zwracamy uwagę na Rys. \ref{fig:gradcam_xception_0_cats&dogs} i \ref{fig:gradcam_xception_1_cats&dogs}, kierował się wyjątkowo dużymi punktami w celu wytłumaczenia odpowiadających im diagnoz, co prowadzi do sceptycznego spojrzenia na jego dokładność. W przypadku kota najintensywniejszym miejscem okazała się być tylna część grzbietu, od której w postaci swego rodzaju gradientu odchodziły mniej istotne fragmenty. Natomiast na obrazku przedstawiającym psa oznaczona została lewa oraz górna część fotografii, gdzie jej epicentrum znalazło się pośrodku. Znajdowało się pod tym tło oraz głowa z przodem torsu i znajdującymi się pod nim łapami. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_xception_0_cats&dogs.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/cats&dogs/gradcam_xception_0_cats&dogs.png}
     \caption{Wyniki uzyskane po zbadaniu próbki  przedstawiającej kota za pomocą metody Grad-CAM dla modelu Xception [źródło własne]}
     \label{fig:gradcam_xception_0_cats&dogs}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{rysunki/cats&dogs/gradcam_xception_1_cats&dogs.png}
+    \includegraphics[width=0.65\linewidth]{rysunki/cats&dogs/gradcam_xception_1_cats&dogs.png}
     \caption{Wyniki uzyskane po zbadaniu próbki przedstawiającej psa za pomocą metody Grad-CAM dla modelu Xception [źródło własne]}
     \label{fig:gradcam_xception_1_cats&dogs}
 \end{figure}
+
+\subsubsection{Podsumowanie}
+Sieci konwolucyjnie poradziły sobie znakomicie w rozpoznawaniu kotów i psów, a każda z nich osiągnęła dokładność większą, bądź równą, 97\%. Najlepiej w tym zadaniu klasyfikacyjnym popradził sobie pod względem wszystkich metryk Xception, chociaż inne modele były od niego minimalnie gorsze. Łącznie zrobił on tylko 57 błędów przydzielając poszczególne klasy próbkom. Najgorszy okazał się być VGG-16, ale pamiętając, że jest najprostszym architektonicznie rozwiązaniem, to trzeba uznać, iż wypadł on świetnie.  
+
+\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+\caption{Podsumowanie wyników uzyskanych przy próbce przedstawiającej kota ze zbioru dotyczącego klasyfikacji kotów i psów}
+\label{tab:summary_0_catsdogs}\\
+\hline
+Model & Prawdopodobień\-stwo, że na zdjęciu jest pies & Metoda & Czy w wyjaśnieniu występuje pysk? & Czy w wyjaśnieniu znajduje się tło? \\ \hline
+\endfirsthead
+\multirow{3}{*}{VGG-16} & \multirow{3}{*}{3.56\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak** & Tak** \\ \cline{3-5} 
+ &  & Grad-CAM & Tak** & Tak** \\ \hline
+\multirow{3}{*}{ResNet50} & \multirow{3}{*}{5.8\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-CAM & Tak** & Tak** \\ \hline
+\multirow{3}{*}{Xception} & \multirow{3}{*}{1.42\%} & LIME & Tak & Tak* \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-CAM & Tak** & Tak** \\ \hline
+\end{xltabular}
+
+\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+\caption{Podsumowanie wyników uzyskanych przy próbce przedstawiającej psa ze zbioru dotyczącego klasyfikacji kotów i psów}
+\label{tab:summary_1_catsdogs}\\
+\hline
+Model & Prawdopodobień\-stwo, że na zdjęciu jest pies & Metoda & Czy w wyjaśnieniu występuje pysk? & Czy w wyjaśnieniu znajduje się tło? \\ \hline
+\endfirsthead
+\multirow{3}{*}{VGG-16} & \multirow{3}{*}{100\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-CAM & Tak & Tak** \\ \hline
+\multirow{3}{*}{ResNet50} & \multirow{3}{*}{99.41\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-CAM & Tak** & Tak** \\ \hline
+\multirow{3}{*}{Xception} & \multirow{3}{*}{98.06\%} & LIME & Tak & Tak \\ \cline{3-5} 
+ &  & SHAP & Tak & Tak** \\ \cline{3-5} 
+ &  & Grad-CAM & Tak & Tak \\ \hline
+\end{xltabular}
+
+Analizując dane zawarte w Tabelach \ref{tab:summary_0_catsdogs} i \ref{tab:summary_1_catsdogs} dostrzegamy brak jakiejkolwiek odpowiedzi ,,Nie''. Napisy ,,Tak*'' oznacza, że obiekt pojawił się dopiero wśród 10 najistotniejszych obszarów, a ,,Tak**'' - nie był on najistotniejszy w zaprezentowanym tłumaczeniu. Wynika z tego, iż najgorzej poradził sobie Grad-CAM, w którego odpowiadających komórkach często widniały gwiazdki. Zaskakująco dobrze w owym zestawieniu wypada LIME dający najklarowniejsze wytłumaczenia i jeśli spojrzeć na poszczególne przypadki, najdokładniejsze. SHAP zaznaczał właściwe obszary jednak jego zakres odpowiedzi był zbyt obszerny i mało precyzyjny.
