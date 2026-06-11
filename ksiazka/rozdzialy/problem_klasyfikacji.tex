@@ -35,6 +35,14 @@ Techniki XAI powstały, aby kosztem dokładności zwiększyć przejrzystość mo
 \end{itemize}
 
 \subsection{Metody oceny}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{confusion_matrix.png}
+    \caption{Macierz pomyłek [źródło własne]}
+    \label{fig:confusion_matrix}
+\end{figure}
+
 Mamy do dyspozycji wiele miar określających jakość uzyskanego w trakcie nauki modelu. Najpopularniejsze z nich użwywane w problemach klasyfikacji zostały zamieszczone w Tabeli \ref{tab:metrics_description}. Dodatkowo precyzję, \textit{recall} (czułość, specyficzność) oraz F1-score można w przypadku klasyfikacji wieloklasowej zagregować za pomocą średniej arytmetycznej bądź ważonej. Wagą średniej ważonej jest liczebność próbek danej klasy.  
 \begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
 \caption{Metryki, ich opisy i sposób obliczania \cite{zheng2015evaluating, f1_score_wikipedia}}

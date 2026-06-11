@@ -58,7 +58,7 @@ Zbiór nie zawierał braków a wszystkie zawarte w nim dane były nominalne. Zgo
 
 \textbf{,,UCI Heart Disease Data''}, to drugi analizowany zbiór danych. Dotyczy on występowania choroby serca oraz jej stadium, co czyni go problemem klasyfikacji wieloklasowej. Zawiera 16 kolumn oraz 920 rekordów. Id jest identyfikatorem pacjenta i nie jest brane pod uwagę podczas badań. Zmienne wejściowe zostały przedstawioen w Tabeli \ref{tab:explanatory_var_heart}. Natomiast zmienną docelową jest „num”, która oznacza stadium choroby serca. Może ona przyjmować jedną z 5 wartości, gdzie 0 symbolizuje brak problemów z narządem, a 4 poważne trudności \cite{heart_disease_dataset}.
 
-\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|}
+\begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
 \caption{Zmienne objaśniające zbioru dotyczącego występowania choroby serca}
 \label{tab:explanatory_var_heart}\\
 
@@ -66,20 +66,20 @@ Zbiór nie zawierał braków a wszystkie zawarte w nim dane były nominalne. Zgo
 Cecha & Opis & Wartości \\ \hline
 \endfirsthead
 
-age & wiek &  \\ \hline
-sex & płeć &  \\ \hline
-dataset & miejsce badania &  \\ \hline
-cp & typ bólu klatki piersiowej &  \\ \hline
-trestbps & spoczynkowe ciśnienie krwi &  \\ \hline
-chol & cholesterol całkowity w surowicy &  \\ \hline
-fbs & czy poziom cukru we krwi na czczo jest wysoki &  \\ \hline
-restecg & wynik elektrokardiograficzny w spoczynku &  \\ \hline
-thalch & osiągnięte maksymalne tętno &  \\ \hline
-exang & dławica piersiowa wywołana wysiłkiem fizycznym &  \\ \hline
-oldpeak & obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku &  \\ \hline
-slope & spadek odcinka ST podczas szczytowego wysiłku fizycznego &  \\ \hline
-ca & liczba głównych naczyń zabarwionych fluoroskopią &  \\ \hline
-thal & niedokrwistość tarczowatokrwinkowa &  \\ \hline
+age & wiek & 28 - 77 \\ \hline
+sex & płeć & 'Male'/'Female' \\ \hline
+dataset & miejsce badania & 'Cleveland'/'Hungary'/'VA Long Beach'/'Switzerland' \\ \hline
+cp & typ bólu klatki piersiowej & 'asymptomatic'/'non anginal'/'atypical angina'/'typical angina' \\ \hline
+trestbps & spoczynkowe ciśnienie krwi & 0 - 200 \\ \hline
+chol & cholesterol całkowity w surowicy & 0 - 603 \\ \hline
+fbs & czy poziom cukru we krwi na czczo jest wysoki & 'FALSE'/'TRUE' \\ \hline
+restecg & wynik elektrokardiograficzny w spoczynku & 'normal'/'st-t abnormality'/'lv hypertrophy' \\ \hline
+thalch & osiągnięte maksymalne tętno & 60 - 202 \\ \hline
+exang & dławica piersiowa wywołana wysiłkiem fizycznym & 'FALSE'/'TRUE' \\ \hline
+oldpeak & obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku & -2.6 - 6.2 \\ \hline
+slope & spadek odcinka ST podczas szczytowego wysiłku fizycznego & 'up'/'downsloping'/'upsloping' \\ \hline
+ca & liczba głównych naczyń zabarwionych fluoroskopią & 0 - 3 \\ \hline
+thal & niedokrwistość tarczowatokrwinkowa & 'normal'/'fixed defect'/'reversable defect' \\ \hline
 
 \end{xltabular}
 

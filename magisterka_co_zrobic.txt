@@ -1,3 +1,16 @@
+Pytania:
+    	- Co w opisie implementacji jest chaotycznego? już jest ok
+    	- Metoda LIME i SHAP polega głównie na diagnozie jednej konkretnej próbki, spoko i tak jej nie dawać w przypadku danych tabelarycznych
+    	- Czy tabele są w porządku? Tak
+    	- Tabela 4.2 - dać wartości po przerobieniu, czy przed? przed
+        
+    - ja polecam -> wydaje się, że X byłoby lepsze ...
+    - dodać wypunktowany opis przeprowadzania eksperymentów, w eksperymentach przed konkretnymi zbiorami, 
+    	- przenieść opisy powstałe na temat tabelek przed tabelki
+    - zdjęcie macierzy pomyłek? zrobić własne zdjęcie macierzy
+    - skróty z macierzy pomyłek? dać wzory
+    	- czy kolumny są w porządku? tak, ale dopisać że to wyniki dla jednej próbki
+    
 Magisterka - co zostało do zrobienia?:
 	Ogólne
 		- poprawić błędy przy pomocy GenAI
