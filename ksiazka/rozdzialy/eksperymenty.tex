@@ -16,11 +16,11 @@ Celem przetestowania wybranych metod XAI powstał plan eksperymentów dla każde
 W przypadku danych zdjęciowych dodatkowo pomiędzy podzieleniem zbioru a nauką pierwszego modelu dochodzi do wybrania badanej próbki, którą ów model przed zostaniem poddanym analizie klasyfikuje.
 
 \subsection{Diabetes Prediction}
-Jak wskazuje Tabela \ref{tab:metrics_diabetes} \textbf{las losowy} osiągnął dokładność na poziomie 72\%. Ze względu na równy rozkład próbek przynależących do poszczególnych klas decyzyjnych średnie arytmetyczne oraz ważone tej miary były jednakowe. Z 500 przypadków niebędących diabetykami model dobrze rozpoznał 352, co skutkuje w specyficzności równej 70\%. Mając do dyspozycji same próbki osób chorujących na cukrzycę model poprawnie zaklasyfikował 367 przypadków. Precyzja osiągnęła poziom 71\%, czułość 73\% a F1-score 72\%. Pole powierzchni pod krzywą ROC wyliczone zostało w przybliżeniu na 0.79. 
+Jak wskazuje Tabela \ref{tab:metrics_diabetes} \textbf{las losowy} osiągnął dokładność na poziomie 72\%. Ze względu na równy rozkład próbek przynależących do poszczególnych klas decyzyjnych średnie arytmetyczne oraz ważone tej miary były jednakowe. Z 500 przypadków niebędących diabetykami model dobrze rozpoznał 352, co skutkuje specyficznością równą 70\%. Mając do dyspozycji same próbki osób chorujących na cukrzycę model poprawnie zaklasyfikował 367 przypadków. Precyzja osiągnęła poziom 71\%, czułość 73\% a F1-score 72\%. Pole powierzchni pod krzywą ROC wyliczone zostało w przybliżeniu na 0.79. 
 
 W przypadku \textbf{XGBoost'a} prawie wszystkie przedstawione miary wyniosły 70\%. Jedynie ROC AUC i czułość różniły się, gdzie w pierwszym przypadku model osiągnął 0.77, a drugim 0.69. Rozkład prawidłowych i błędnych predykcji są bardzo zbliżone. Jako klasa '0' zostało zdiagnozowanych 5 próbek więcej niż do jej alternatywy. 
 
-Wybrana za pomocą przeszukiwania określonej przestrzeni hiperparametrów \textbf{sieć neuronowa} składa się z warstw ukrytych w postaci 64-64 neuronów, używa funkcji aktywacji tanh, mechanizm \textit{Early Stopping}'u oraz optymalizator Adam. Osiągnięta przez nią dokładność wyniosła 72\%, a ROC AUC 0.8. Model częściej zaliczał próbkę jako diabetyka. Znacznie lepiej szło mu też diagnozowanie tej klasy - o 21 poprawnych przypadków więcej w porównaniu do wyboru alternatywnego. 
+Wybrana za pomocą przeszukiwania określonej przestrzeni hiperparametrów \textbf{sieć neuronowa} składa się z warstw ukrytych w postaci 64-64 neuronów, używa funkcji aktywacji tanh, mechanizm \textit{Early Stopping}'u oraz optymalizator Adam. Osiągnięta przez nią dokładność wyniosła 72\%, a ROC AUC 0.8. Model częściej zaliczał próbkę jako diabetyka. Znacznie skutecnziej identyfikował tę klasę - o 21 poprawnych przypadków więcej w porównaniu do wyboru alternatywnego. 
 
 \begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|c|c|c|c|}
 \caption{Wyniki metryk poszczególnych modeli dla zbioru dotyczącego diabetyków}
@@ -39,11 +39,11 @@ Z wykresu znajdującego się na Rys. \ref{fig:lime_absolutemeanplot_rf_diabetes}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{rysunki/diabetes/lime_absolutemeanplot_rf_diabetes.png}
-    \caption{Wykres średnich obliczonych z bezwzględnych wartości wag LIME modelu Radnom Forest zbioru dotyczącego diabetyków [źródło własne]}
+    \caption{Wykres średnich obliczonych z bezwzględnych wartości wag LIME modelu Random Forest zbioru dotyczącego diabetyków [źródło własne]}
     \label{fig:lime_absolutemeanplot_rf_diabetes}
 \end{figure}
 
-Z Rys. \ref{fig:shap_absolutemeanplot_rf_diabetes} można wyczytać, że za najważniejszą cechę predykcyjną metoda \textbf{SHAP} uznała ,,GenHlth'' zmieniającą średnio przewidywanie o ok. 9\%. Zaraz po w rankingu istotności znajduje się ,,HighBP'' z miarą bardzo zbliżoną do pierwszej zmiennej. Na trzecim miejscu nalazło się ,,BMI'' wpływające na prawdopodobieństwo diagnozy w przybliżeniu o 7\%. Tutaj również zauważamy, iż aż 12 cech miało znikome znaczenie. Ich suma przedstawiona na dole wykresu wyniosła raptem 11\%, co średnio każdej z poszczególnych zmiennych daje mniej niż 1\% istotności. Ponownie do owych cech zaliczamy kolumny: ,,Fruits'', ,,Veggies'', ,,Smoker'' czy ,,Stroke''.
+Z Rys. \ref{fig:shap_absolutemeanplot_rf_diabetes} można wyczytać, że za najważniejszą cechę predykcyjną metoda \textbf{SHAP} uznała ,,GenHlth'' zmieniającą średnio przewidywanie o ok. 9\%. Zaraz po w rankingu istotności znajduje się ,,HighBP'' z miarą bardzo zbliżoną do pierwszej zmiennej. Na trzecim miejscu znalazło się ,,BMI'' wpływające na prawdopodobieństwo diagnozy w przybliżeniu o 7\%. Tutaj również zauważamy, iż aż 12 cech miało znikome znaczenie. Ich suma przedstawiona na dole wykresu wyniosła raptem 11\%, co średnio każdej z poszczególnych zmiennych daje mniej niż 1\% istotności. Ponownie do owych cech zaliczamy kolumny: ,,Fruits'', ,,Veggies'', ,,Smoker'' czy ,,Stroke''.
 
 \begin{figure}[H]
     \centering
@@ -52,7 +52,7 @@ Z Rys. \ref{fig:shap_absolutemeanplot_rf_diabetes} można wyczytać, że za najw
     \label{fig:shap_absolutemeanplot_rf_diabetes}
 \end{figure}
 
-,,GenHlth'', ,,HighBP'' oraz ,,Age'' charakteryzowały się tym, że ich wysokie wartości miały mniejsze znaczenie, na wizualizacji przedstawionej na Rys. \ref{fig:shap_beeswarm_rf_diabetes} występują pośrodku, mniej więcej od -1\% do +2\%. Natomiast niskie osiągi miały znacznie wyraźniejsze przesłanie, za czym przemawia ich rozłożenie na krańcach odpowiadających wierszy. Oznacza to, że niska ocena stanu zdrowia, nieposiadanie wysokiego ciśnienia krwi oraz bycie młodym zmniejszają lub zwiększają w zauważalnym stopniu prawdopodobieństwo chorowania oraz nieprzejawiania cukrzycy. Są to zupełnie przeciwne wyniki. Podobna sytuacja ma miejsce w przypadku ,,DiffWalk'' i ,,MentHlth'', gdzie na brzegach widnieją czerwone kropki, a pomiędzy nimi niebieskie. Wartości trzeciej najistotniejszej cechy - ,,BMI'' są przemieszane nie wskazując na jakąś ogólną zależność.
+,,GenHlth'', ,,HighBP'' oraz ,,Age'' charakteryzowały się tym, że ich wysokie wartości miały mniejsze znaczenie, na wizualizacji przedstawionej na Rys. \ref{fig:shap_beeswarm_rf_diabetes} występują pośrodku, mniej więcej od -1\% do +2\%. Natomiast niskie osiągi miały znacznie wyraźniejsze przesłanie, za czym przemawia ich rozłożenie na krańcach odpowiadających wierszy. Oznacza to, że niska ocena stanu zdrowia, nieposiadanie wysokiego ciśnienia krwi oraz bycie młodym zmniejszają lub zwiększają w zauważalnym stopniu prawdopodobieństwo chorowania oraz nieprzejawiania cukrzycy. Są to zupełnie przeciwne wyniki. Podobna sytuacja ma miejsce w przypadku ,,DiffWalk'' i ,,MentHlth'', gdzie na brzegach widnieją czerwone kropki, a pomiędzy nimi niebieskie. Wartości trzeciej najistotniejszej cechy - ,,BMI'' są przemieszane, niewskazując na jakąś ogólną zależność.
 
 \begin{figure}[H]
     \centering
@@ -91,7 +91,7 @@ Z Rys. \ref{fig:shap_absolutemeanplot_rf_diabetes} można wyczytać, że za najw
     AnyHealthcare        & 0.003 &  0.000 \\ \hline
 \end{xltabular}
 
-Jak pokazuje wykres znajdujący się na Rys. \ref{fig:pfi_rf_diabetes} metoda \textbf{PFI} wskazała wszystkie cechy za istotne w przewidywaniu. Z Tabeli \ref{tab:pfi_rf_diabetes} możemy wyczytać, że najważniejszą z nich okazała się być ,,GenHlth'' średnio zmieniająca dokładność o 14.6\% z odchyleniem standardowym  0.005. Cechą o bardzo zbliżonym wyniku jest ,,BMI'', którego permutacja zmniejsza miarę o 14.3\% z marginesem 0.004. Na trzecim miejscu plasuje się ,,HighBP'' z wynikiem od 11.2\% do 11.8\%. Najmniej informacji niosły za sobą ,,NoDocbcCost'', ,,CholCheck'' oraz ,,AnyHealthcare''. Wartości owych zmiennych oscylowały w granicach ok. 0.4\% - 0.3\%.
+Jak pokazuje wykres znajdujący się na Rys. \ref{fig:pfi_rf_diabetes} metoda \textbf{PFI} wskazała wszystkie cechy za istotne w przewidywaniu. Z Tabeli \ref{tab:pfi_rf_diabetes} możemy wyczytać, że najważniejszą z nich okazała się być ,,GenHlth'' średnio zmieniająca dokładność o 14.6\% z odchyleniem standardowym  0.005. Cechą o bardzo zbliżonym wyniku jest ,,BMI'', którego permutacja zmniejsza miarę o 14.3\%, przy odchyleniu standardowym 0.004. Na trzecim miejscu plasuje się ,,HighBP'' z wynikiem od 11.2\% do 11.8\%. Najmniej informacji niosły za sobą ,,NoDocbcCost'', ,,CholCheck'' oraz ,,AnyHealthcare''. Wartości owych zmiennych oscylowały w granicach ok. 0.4\% - 0.3\%.
 
 \begin{figure}[H]
     \centering
@@ -101,7 +101,7 @@ Jak pokazuje wykres znajdujący się na Rys. \ref{fig:pfi_rf_diabetes} metoda \t
 \end{figure}
 
 \subsubsection{XGBoost}
-Z Rys. \ref{fig:lime_absolutemeanplot_xgb_diabetes} możemy wyczytać, że za najistotniejszą cechę \textbf{LIME} uznało ,,HighBP'' z miarą ponad 0.16. Trochę mniej wartościową informację niesie za sobą ,,Income'' z wynikiem ok. 0.13, a zaraz po nim znajduje się ,,BMI'' osiągające w przybliżeniu wartość 0.11. W ogóle nieprzydatne okazały się być zmienne: ,,Veggies'', ,,CholCheck'' oraz ,,AnyHealthcare''.
+Z Rys. \ref{fig:lime_absolutemeanplot_xgb_diabetes} możemy wyczytać, że za najistotniejszą cechę \textbf{LIME} uznało ,,HighBP'' z miarą ponad 0.16. Trochę mniej wartościową informację wnosi ,,Income'' z wynikiem ok. 0.13, a zaraz po nim znajduje się ,,BMI'' osiągające w przybliżeniu wartość 0.11. W ogóle nieprzydatne okazały się być zmienne: ,,Veggies'', ,,CholCheck'' oraz ,,AnyHealthcare''.
 
 \begin{figure}[H]
     \centering
@@ -119,7 +119,7 @@ Wykres zaprezentowany na Rys. \ref{fig:shap_absolutemeanplot_xgb_diabetes} pokaz
     \label{fig:shap_absolutemeanplot_xgb_diabetes}
 \end{figure}
 
-Wykres typu ,,rój pszczół'' zamieszczony na Rys. \ref{fig:shap_beeswarm_xgb_diabetes} pokazuje bardzo wyraźne zależności pomiędzy wartościami cech a wartościami uzyskanymi poprzez metodę SHAP. Kropki odpowiadające niskim liczbom pięciu najważniejszych cech, czyli ,,GenHlth'', ,,BMI'', ,,Age'', ,,HighBP'' oraz ,,HighChol'', zostały narysowane po lewej stronie, co oznacza, że zmniejszają one \textit{log odds}. Ich fioletowe punkty mieszczą się wokół 0, natomiast czerwone - przeważnie znajdują się po prawej, przemawiajac za ich dodatnim wpływem. Wynika z tego, że zła ocena własnego zdrowia, małe BMI, bycie młodym, posiadanie niskiego cholesterolu oraz ciśneinia krwi przyczyniają się do zaklasyfikowania jako osoba zdrowa. Logiczniej byłoby przypuszczać, iż wyniki uzyskane dla 'GenHlth' powinny być odwrotne - to wysoka ocena swojego stanu zdrowia powinna świadczyć o nie byciu diabetykiem. Dla reszty cech punkty są przemieszane, nie oferując zbyt wartościowego wglądu w badaną korelację.     
+Wykres typu ,,rój pszczół'' zamieszczony na Rys. \ref{fig:shap_beeswarm_xgb_diabetes} pokazuje bardzo wyraźne zależności pomiędzy wartościami cech a wartościami uzyskanymi poprzez metodę SHAP. Kropki odpowiadające niskim liczbom pięciu najważniejszych cech, czyli ,,GenHlth'', ,,BMI'', ,,Age'', ,,HighBP'' oraz ,,HighChol'', zostały narysowane po lewej stronie, co oznacza, że zmniejszają one \textit{log odds}. Ich fioletowe punkty mieszczą się wokół 0, natomiast czerwone - przeważnie znajdują się po prawej, przemawiając za ich dodatnim wpływem. Wynika z tego, że zła ocena własnego zdrowia, małe BMI, bycie młodym, posiadanie niskiego cholesterolu oraz ciśnienia krwi przyczyniają się do zaklasyfikowania jako osoba zdrowa. Logiczniej byłoby przypuszczać, iż wyniki uzyskane dla 'GenHlth' powinny być odwrotne - to wysoka ocena swojego stanu zdrowia powinna świadczyć o nie byciu diabetykiem. Dla reszty cech punkty są przemieszane, nie oferując zbyt wartościowego wglądu w badaną korelację.     
 
 \begin{figure}[H]
     \centering
@@ -166,7 +166,7 @@ Jak podaje wykres na Rys. \ref{fig:pfi_xgb_diabetes} według metody \textbf{PFI}
 \end{figure}
 
 \subsubsection{Sieć neuronowa}
-Na Rys. \ref{fig:lime_absolutemeanplot_dnn_diabetes} zauważamy w rozumowaniu \textbf{LIME} dużą przewagę wartości predykcyjnej cechy ,,HvyAlcoholConsump''. Jej waga znacznie przekracza 0.2, wskazując jak silną niesie za sobą informację. Kolejną informacją w rankingu istotności jest ,,GenHlth'' z wartością trochę mniejszą niż 0.175. Tuż za nią plasuje się ,,BMI'' z wynikiem ok. 0.14. Ostatnią cechą będącą nie 2-krotnie mniej wartościową od tej najważniejszej jest ,,Age''. Brak jakiegokolwiek znaczenia miały: ,,Veggies'', ,,CholCheck'' oraz ,,AnyHealthcare''.   
+Na Rys. \ref{fig:lime_absolutemeanplot_dnn_diabetes} zauważamy w rozumowaniu \textbf{LIME} dużą przewagę wartości predykcyjnej cechy ,,HvyAlcoholConsump''. Jej waga znacznie przekracza 0.2, wskazując jak silną wnosi informację. Kolejną informacją w rankingu istotności jest ,,GenHlth'' z wartością trochę mniejszą niż 0.175. Tuż za nią plasuje się ,,BMI'' z wynikiem ok. 0.14. Ostatnią cechą będącą nie 2-krotnie mniej wartościową od tej najważniejszej jest ,,Age''. Brak jakiegokolwiek znaczenia miały: ,,Veggies'', ,,CholCheck'' oraz ,,AnyHealthcare''.   
 
 \begin{figure}[H]
     \centering
@@ -184,7 +184,7 @@ Na Rys. \ref{fig:shap_absolutemeanplot_dnn_diabetes} zauważamy, że \textbf{SHA
     \label{fig:shap_absolutemeanplot_dnn_diabetes}
 \end{figure}
 
-Analizując wykres zamieszczony na Rys. \ref{fig:shap_beeswarm_dnn_diabetes} zauważamy, że wskazuje on na parę istotnych zależności. Średnie wartości: ,,GenHlth'', ,,BMI'' oraz ,,Age'' mają nie za duży wpływ na przewidywanie modelu. Wysokie liczby w kolumnach odpowiadających: ,,HvyAlcoholConsump'', ,,MentHlth'' i ,,BMI''; mieszczą się na skrajach wierszy pokazując ich znaczny wpływ na klasyfikację. Odwrotna sytuacja ma miejsce w przypadku: ,,HighBP'', ,,HighChol'', a także ,,Income''; gdzie to niebieskie punkty są na brzegach. Oznacza to, że we wskazanych cechach ich niskie bądź wysokie wartości przemawiają za byciem lub nie diabetykiem, co sobie przeczy.  
+Analizując wykres zamieszczony na Rys. \ref{fig:shap_beeswarm_dnn_diabetes} zauważamy, że wskazuje on na parę istotnych zależności. Średnie wartości: ,,GenHlth'', ,,BMI'' oraz ,,Age'' mają nie za duży wpływ na przewidywanie modelu. Wysokie liczby w kolumnach odpowiadających ,,HvyAlcoholConsump'', ,,MentHlth'' i ,,BMI'' mieszczą się na skrajach wierszy pokazując ich znaczny wpływ na klasyfikację. Odwrotna sytuacja ma miejsce w przypadku: ,,HighBP'', ,,HighChol'', a także ,,Income''; gdzie to niebieskie punkty są na brzegach. Oznacza to, że we wskazanych cechach ich niskie bądź wysokie wartości przemawiają za byciem lub nie diabetykiem, co sobie przeczy.  
 
 \begin{figure}[H]
     \centering
@@ -207,7 +207,7 @@ Analizując wykres zamieszczony na Rys. \ref{fig:shap_beeswarm_dnn_diabetes} zau
     CholCheck         & 0.006 &  0.002 \\ \hline
 \end{xltabular}
 
-Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech \textbf{PFI} wskazało tylko 6, których permutacja zawsze miała negatywny wpływ na dokładność. Największe znaczenie wykazało ,,GenHlth'' zmniejszające wspomnianą miarę o 5.5\% z odchyleniem standardowym 0.006. Następnie w owym rankingu znajduje się ,,BMI'' z wynikiem 4.1\% i odchyleniem standardowym rzędu 0.004. Na ostatnim miejscu podium mieści się wiek ,,Age'', a zaraz po nim ,,HighBP'' osiągające odpowiednio 2.3\% i 2.1\% z marginesem błędu 0.003. Wpływ dwóch ostatnich cech był niezwykle mały i nie przekraczał 1\%. Na Rys. \ref{fig:pfi_dnn_diabetes} widzimy, że wśród kolumn pominiętych znajdują się, m.in.: ,,Smoker'', ,,Sex'', ,,Fruits'' oraz ,,Veggies''.
+Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech \textbf{PFI} wskazało tylko 6, których permutacja zawsze miała negatywny wpływ na dokładność. Największe znaczenie wykazało ,,GenHlth'' zmniejszające wspomnianą miarę o 5.5\% z odchyleniem standardowym 0.006. Następnie w owym rankingu znajduje się ,,BMI'' z wynikiem 4.1\% i odchyleniem standardowym rzędu 0.004. Na ostatnim miejscu podium mieści się wiek ,,Age'', a zaraz po nim ,,HighBP'' osiągające odpowiednio 2.3\% i 2.1\%, przy odchyleniu standardowym 0.003. Wpływ dwóch ostatnich cech był niezwykle mały i nie przekraczał 1\%. Na Rys. \ref{fig:pfi_dnn_diabetes} widzimy, że wśród kolumn pominiętych znajdują się, m.in.: ,,Smoker'', ,,Sex'', ,,Fruits'' oraz ,,Veggies''.
 
 \begin{figure}[H]
     \centering
@@ -217,7 +217,7 @@ Jak podaje Tabela \ref{tab:pfi_dnn_diabetes} z 21 cech \textbf{PFI} wskazało ty
 \end{figure}
 
 \subsubsection{Podsumowanie}
-Co zaskakujące, największe ROC AUC osiągnęła niezbyt złożona sieć neuronowa o zaledwie dwóch warstwach ukrytych składających się z 64 neuronów każda. Najpewniejszy predykcji bandanej próbki jako klasa '0' był XGBoost z pewnością 98\%, przy czym był na 2. miejscu w rozpoznawaniu reprezentantów tej grupy. Radził sobie, natomiast najlepiej ze wszystkich z wariantem '1'. Najgorszą predykcję przedstawiła już wspomniana DNN z wynikiem 80\%, przy czym równie słabo odnajdywała osóby chore na cukrzycę (choć odstępstwo to było niewielkie). Las losowy miał wyniki pośrednie pomiędzy jego konkurentami, nie wyróżnił się w przeciwieństwie do nich niczym szczególnym. 
+Co zaskakujące, największe ROC AUC osiągnęła niezbyt złożona sieć neuronowa o zaledwie dwóch warstwach ukrytych składających się z 64 neuronów każda. XGBoost Radził sobie najlepiej ze wszystkich z klasyfikacją wariantu '1'. Najgorszą predykcję przedstawiła już wspomniana DNN z wynikiem 80\%, przy czym równie słabo odnajdywała osoby chore na cukrzycę (choć odstępstwo to było niewielkie). Las losowy miał wyniki pośrednie pomiędzy jego konkurentami, nie wyróżnił się w przeciwieństwie do nich niczym szczególnym. 
 
 \begin{table}[H]
 \centering
@@ -227,7 +227,7 @@ Co zaskakujące, największe ROC AUC osiągnęła niezbyt złożona sieć neuron
 \hline
 Model & Metoda & 3 najistotniejsze cechy \\ \hline
 \multirow{3}{*}{Random Forest}& LIME& HvyAlcoholConsump, GenHlth, Age\\ \cline{2-3} 
- & SHAP& GenHlth, GenHlth, BMI\\ \cline{2-3} 
+ & SHAP& GenHlth, HighBP, BMI\\ \cline{2-3} 
  & PFI& GenHlth, BMI, HighBP\\ \hline
 \multirow{3}{*}{XGBoost}& LIME& HighBP, Income, BMI\\ \cline{2-3} & SHAP& GenHlth, BMI, Age\\ \cline{2-3} 
  & PFI& BMI, Age, GenHlth\\ \hline
@@ -235,16 +235,15 @@ Model & Metoda & 3 najistotniejsze cechy \\ \hline
 \end{tabular}
 \end{table}
 
-Spoglądając na Tabelę \ref{tab:3_top_diabetes} zauważamy, że pojawiły się dwie cechy wśród 3 najistotniejszych występujące w 8 na 9 przypadków. Pierwszą z nich była ocena własnego stanu zdrowia ('GenHlth'), która nie wystąpiła tylko w tłumaczeniu LIME modelu XGBoost, gdzie znalazła się na 4 miejscu. Na równi z nią widnieje wskaźnik BMI ('BMI'), którego zabrakło w wyjaśnieniu LIME dla lasu losowego. Najbardziej nieoczekiwaną zmienną w tym zestawieniu bez dwóch zdań są zarobki ('Income') wskazane przez ponownie LIME modelu XGBoost. Zdawałoby się, że w zestawieniu jest parę innych, bardziej logicznych do uznania cech, takich jak wiek ('Age') czy spore spożycie alkoholu ('HvyAlcoholConsump') pojawiające się w innych wytłumaczeniach. 
-Niezwykle wiele danych zostało odrzuconych przez metodę PFI sieci neuronowej, w jej tłumaczeniu znalazło się tylko 6 zmiennych z 21. Analizując cechy najmniej wpływowe dostrzegamy, że często powtarzają się wśród nich: posiadanie ubezpieczenia zdrowotnego ('AnyHealthcare'), spożywanie warzyw ('Veggies') czy owoców ('Fruits') oraz sprawdzenie poziomu cholesterolu ('CholCheck'). Chociaż w niektórych zestawieniach pojawiają się wysoko na liście.
+Spoglądając na Tabelę \ref{tab:3_top_diabetes} zauważamy, że pojawiły się dwie cechy wśród 3 najistotniejszych występujące w 8 na 9 przypadków. Pierwszą z nich było ,,GenHlth'', które nie wystąpiło tylko w tłumaczeniu LIME modelu XGBoost, gdzie znalazło się na 4 miejscu. Na równi z nią widnieje ,,BMI'', którego zabrakło w wyjaśnieniu LIME dla lasu losowego. Najbardziej nieoczekiwaną zmienną w tym zestawieniu jest ,,Income'' wskazane przez LIME modelu XGBoost. Zdawałoby się, że w zestawieniu jest parę innych, bardziej logicznych do uznania cech, takich jak ,,Age'' czy ,,HvyAlcoholConsump'' pojawiające się w innych wytłumaczeniach. 
+Niezwykle wiele danych zostało odrzuconych przez metodę PFI sieci neuronowej, w jej tłumaczeniu znalazło się tylko 6 zmiennych z 21. Analizując cechy najmniej wpływowe dostrzegamy, że często powtarzają się wśród nich: ,,AnyHealthcare'', ,,Veggies'', ,,Fruits'' oraz ,,CholCheck''. Chociaż w niektórych zestawieniach pojawiają się wysoko na liście.
 
 
 \subsection{UCI Heart Disease Data}
-
 \subsubsection{Random Forest}
 \begin{table}[H]
  \centering
-    \caption{Wyniki uzyskane przy modelu Random Forest dla zboru dotyczącego choroby serca}
+    \caption{Wyniki uzyskane przy modelu Random Forest dla zbioru dotyczącego choroby serca}
 \begin{tabular}{|ccccc|}
 \hline
 \multicolumn{5}{|c|}{ROC AUC: 0.85}                                                                                                                       \\ \hline
@@ -271,7 +270,7 @@ Poprzez analizę wyników uzyskanych przez las losowy zamieszczonych w Tabela \r
     \label{fig:confusion_matrix_random_forest_heart_disease}
 \end{figure}
 
-Wykres zaprezentowany na Rys. \ref{fig:lime_barchar_rf_heart} pokazuje, że według metody \textbf{LIME} najważniejszą informację predykcyjną w wariantcie '0' i '1' zawiera ,,exang'', z czego w pierwszym przypadku jej waga wynosi ok. 0.175, a drugim - 0.125. ,,dataset'' było czynnikiem przeważającym nad klasyfikacją do '2' i '3' kategorii, a ,,oldpeak'' - '4'. Cechą wnoszącą najmniej okazało się być ,,sex'', której średnia wag wyniosła 0 dla każdej z klas.
+Wykres zaprezentowany na Rys. \ref{fig:lime_barchar_rf_heart} pokazuje, że według metody \textbf{LIME} najważniejszą informację predykcyjną w wariancie '0' i '1' zawiera ,,exang'', z czego w pierwszym przypadku jej waga wynosi ok. 0.175, a drugim - 0.125. ,,dataset'' było czynnikiem przeważającym nad klasyfikacją do '2' i '3' kategorii, a ,,oldpeak'' - '4'. Cechą wnoszącą najmniej okazało się być ,,sex'', której średnia wag wyniosła 0 dla każdej z klas.
 
 \begin{figure}[H]
     \centering
@@ -280,7 +279,7 @@ Wykres zaprezentowany na Rys. \ref{fig:lime_barchar_rf_heart} pokazuje, że wed�
     \label{fig:lime_barchar_rf_heart}
 \end{figure}
 
-Z Rys. \ref{fig:lime_absolutemeanplot_rf_heart} można wyczytać, że najważniejszą cechą jest ,,exang'' osiągająca wagę 0.07. Jak zostało to wskazane na poprzedniej wizualizacji, dawała ona najwięcej wartości predykcyjnej dla klas '0' i '1'. Spadek,,oldpeak'' jest na drugim miejscu pod względem danego porównania z wartością prawie 0.05. Zaraz po nim znajduje się ,,dataset'' z lekko mniejszą miarą na poziomie ok. 0.045. Wagę 0 osiągnęła cecha ,,sex''. Trochę więcej do predykcji wnosiło ,,cp'' z wartością 0.01 oraz ,,trestbps'' z 0.0125.
+Z Rys. \ref{fig:lime_absolutemeanplot_rf_heart} można wyczytać, że najważniejszą cechą jest ,,exang'' osiągająca wagę 0.07. Jak zostało to wskazane na poprzedniej wizualizacji, dawała ona najwięcej wartości predykcyjnej dla klas '0' i '1'. Spadek,,oldpeak'' zajął drugie miejsce pod względem danego porównania z wartością prawie 0.05. Zaraz po nim znajduje się ,,dataset'' z lekko mniejszą miarą na poziomie ok. 0.045. Wagę 0 osiągnęła cecha ,,sex''. Trochę więcej do predykcji wnosiło ,,cp'' z wartością 0.01 oraz ,,trestbps'' z 0.0125.
 
 \begin{figure}[H]
     \centering
@@ -289,7 +288,7 @@ Z Rys. \ref{fig:lime_absolutemeanplot_rf_heart} można wyczytać, że najważnie
     \label{fig:lime_absolutemeanplot_rf_heart}
 \end{figure}
 
-Z wykresu opisującego wyniki metody \textbf{SHAP}, znajdującego się na Rys. \ref{fig:shap_barchar_rf_heart}, możemy zauważyć, że najbardziej odznaczającym się słupkiem jest ten, opdpowiadający ,,cp'', które osiąga dla wariantu '0' wartość równą w przybliżeniu 0.13. Podobnie jest w przypadku '1' stopnia, gdzie cecha ta wynosi ok. 0.065. Dla kategorii '2' i '3' najważniejszym wyznacznikiem jest ,,dataset'', a '4' - ,,oldpeak''. Z wykresu wynika, że najmniej istotną informację niesie za sobą ,,fbs''.
+Z wykresu opisującego wyniki metody \textbf{SHAP}, znajdującego się na Rys. \ref{fig:shap_barchar_rf_heart}, możemy zauważyć, że najbardziej odznaczającym się słupkiem jest ten, odpowiadający ,,cp'', które osiąga dla wariantu '0' wartość równą w przybliżeniu 0.13. Podobnie jest w przypadku '1' stopnia, gdzie cecha ta wynosi ok. 0.065. Dla kategorii '2' i '3' najważniejszym wyznacznikiem jest ,,dataset'', a '4' - ,,oldpeak''. Z wykresu wynika, że najmniej istotną informację wnosi ,,fbs''.
 
 \begin{figure}[H]
     \centering
@@ -336,7 +335,7 @@ Z zamieszczonego na Rys. \ref{fig:shap_beeswarm_rf_heart} wykresu można zauważ
         slope & 0.005 &  0.002 \\ \hline
 \end{xltabular}
 
-Według metody \textbf{PFI}, jak wynika z Tabela \ref{tab:heart_disease_random_forest_pfi} oraz Rys. \ref{fig:box_plot_rf_pfi} wszystkie kolumny okazały się być ważne w zadaniu klasyfikacji próbek. Najważniejszą cechą okazało się być ,,dataset'', której średnia istotność wyniosła 17,5\% z odchyleniem standarodwym wynoszącym 0,012. Na drugim miejscu plasuje się ,,cp'' również ze średnią 17,5\%, a trzecim - ,,age'' z wynikiem 12,8\%. Najmniej znaczącą informację niósł za sobą ,,slope'', bo zaledwie 0.5\% z rozbieżnościami na poziomie 0.002. 
+Według metody \textbf{PFI}, jak wynika z Tabela \ref{tab:heart_disease_random_forest_pfi} oraz Rys. \ref{fig:box_plot_rf_pfi} wszystkie kolumny okazały się być ważne w zadaniu klasyfikacji próbek. Najważniejszą cechą okazało się być ,,dataset'', której średnia istotność wyniosła 17,5\% z odchyleniem standardowym wynoszącym 0,012. Na drugim miejscu plasuje się ,,cp'' również ze średnią 17,5\%, a trzecim - ,,age'' z wynikiem 12,8\%. Najmniej znaczącą informację niósł za sobą ,,slope'', bo zaledwie 0.5\% z rozbieżnościami na poziomie 0.002. 
 
 \begin{figure}[H]
     \centering
@@ -366,7 +365,7 @@ Według metody \textbf{PFI}, jak wynika z Tabela \ref{tab:heart_disease_random_f
     \label{tab:heart_disease_xgboost_metrics}
 \end{table}
 
-XGBoost uczony i sprawdzany na tych samych danych (zbiorze treningowym i testowym), jak wskazuje Tabela \ref{tab:heart_disease_xgboost_metrics} osiągnął wynik dokładności wynoszący 64\%. Jego średnie arytmetyczne uzyskały: dla precyzji 63\%, czułości 47\%, a F1-score 49\%. Ważone były wyższe i wskazały w tej samej kolejności: 64\%, 64\% i 63\%. Miara ROC AUC tutaj wyniosła 0.84. XGBoost zakwalifikował tylko jeden z przypadków do klasy '4', który rzeczywiście do niej należał. Dobrze radził sobie z obiektami kategorii '0', '1' i potencjalnie '3'. Jak możemy, zauwżyć na Rys. \ref{fig:confusion_matrix_xgboost_heart_disease} w miarę często zdarza mu się pomylić przypadki należące do stadium '0' i '1', a lepiej idzie mu odnajdywanie próbek zaklasyfikowanych jako '3' niż '2' pomimo zbliżonej wielkości grup.
+XGBoost uczony i sprawdzany na tych samych danych (zbiorze treningowym i testowym), jak wskazuje Tabela \ref{tab:heart_disease_xgboost_metrics} osiągnął wynik dokładności wynoszący 64\%. Jego średnie arytmetyczne uzyskały: dla precyzji 63\%, czułości 47\%, a F1-score 49\%. Ważone były wyższe i wskazały w tej samej kolejności: 64\%, 64\% i 63\%. Miara ROC AUC tutaj wyniosła 0.84. XGBoost zakwalifikował tylko jeden z przypadków do klasy '4', który rzeczywiście do niej należał. Dobrze radził sobie z obiektami kategorii '0', '1' i potencjalnie '3'. Analiza Rys. \ref{fig:confusion_matrix_xgboost_heart_disease} sugeruje, że w miarę często zdarza mu się pomylić przypadki należące do stadium '0' i '1', a lepiej idzie mu odnajdywanie próbek zaklasyfikowanych jako '3' niż '2' pomimo zbliżonej wielkości grup.
 
 \begin{figure}[H]
     \centering
@@ -375,7 +374,7 @@ XGBoost uczony i sprawdzany na tych samych danych (zbiorze treningowym i testowy
     \label{fig:confusion_matrix_xgboost_heart_disease}
 \end{figure}
 
-Na wykresie znajdującym się na Rys. \ref{fig:lime_barchar_xgb_heart} zaprezentowane zostały wyniki metody \textbf{LIME}. Najbardziej odznaczającą się cechą ,,exang'', która ma największą istotność dla klasy '0', gdzie waga jej wynosi ponad 0.21 i '1', dla której zbliża się ona do 0.2. W przypadku '2' najważniejszą wartość niesie za sobą ,,dataset'', a '3' i '4' ,,oldpeak''. Najmniej istotna okazała się być kolumna ,,sex'' z wagą 0.  
+Na wykresie znajdującym się na Rys. \ref{fig:lime_barchar_xgb_heart} zaprezentowane zostały wyniki metody \textbf{LIME}. Najbardziej odznaczającą się cechą ,,exang'', która ma największą istotność dla klasy '0', gdzie waga jej wynosi ponad 0.21 i '1', dla której zbliża się ona do 0.2. W przypadku '2' najważniejszą wartość wnosi ,,dataset'', a '3' i '4' ,,oldpeak''. Najmniej istotna okazała się być kolumna ,,sex'' z wagą 0.  
 
 \begin{figure}[H]
     \centering
@@ -506,7 +505,7 @@ Według wykresu metody \textbf{SHAP} zamieszczonego na Rys. \ref{fig:shap_barcha
     \label{fig:shap_barchar_dnn_heart}
 \end{figure}
 
-Z wizualizacji przedstawionej na Rys. \ref{fig:shap_absolutemeanplot_dnn_heart} można wyczytać, że na przestrzeni wszytskich klas za najważniejszą cechę uznano ,,cp'' z wartością na poziomie 0.08. Następne w kolejności były cechy ,,exang'' oraz ,,oldpeak'', które uzyskały wartość 0.06. Najmniej istotne okazały się być ,,slope'' i ,,trestbps'' przedstawione za pomocą sumy na samym dole. Ze względu na obcinanie liczb stojących na 3 miejscu po przecinku wykres początkowo może wydawać się błędny ze względu na napisane czerwoną czcionką miary znajdujące się po prawej stronie od słupków. Znajduje się tam parę wartości jednakowych, których słupki nie kończą się w tym samym miejscu. Wydaje się to być mylące.
+Z wizualizacji przedstawionej na Rys. \ref{fig:shap_absolutemeanplot_dnn_heart} można wyczytać, że na przestrzeni wszystkich klas za najważniejszą cechę uznano ,,cp'' z wartością na poziomie 0.08. Następne w kolejności były predyktory ,,exang'' oraz ,,oldpeak'', które uzyskały wartość 0.06. Najmniej istotne okazały się być ,,slope'' i ,,trestbps'' przedstawione za pomocą sumy na samym dole. Ze względu na obcinanie liczb stojących na 3 miejscu po przecinku wykres początkowo może wydawać się błędny ze względu na napisane czerwoną czcionką miary znajdujące się po prawej stronie od słupków. Znajduje się tam parę wartości jednakowych, których słupki nie kończą się w tym samym miejscu. Wydaje się to być mylące.
 
 \begin{figure}[H]
     \centering
@@ -544,7 +543,7 @@ Jak widzimy z wykresu zaprezentowanego na Rys. \ref{fig:shap_beeswarm_dnn_heart}
         trestbps & 0.011 &  0.004 \\ \hline
 \end{xltabular}
 
-Wszystkie cechy zostały uznane przez \textbf{PFI} jako istotne, jednakże uzyskane przez nie wyniki są szczególnie niskie. Jak wskazuje Tabela \ref{tab:heart_disease_dnn_pfi} najważniejszą cechą okazało się być ,,oldpeak'' ze spadkiem w dokładności na poziomie jedynie 5.3\% i odchyleniem standardowym 0.011. Na dalszych pozycjach znajduje się ,,dataset'' z wartością 4.5\%, a zaraz po nim ,,exang'' z 4.3\%. Za najmniej istotną przesłankę wskazano ,,trestbps'' z wynikiem wynoszącym 1.1\% i odchyleniem standardowym rzędu 0.004.
+Wszystkie cechy zostały uznane przez \textbf{PFI} jako istotne, jednakże uzyskane przez nie wyniki są szczególnie niskie. Jak wskazuje Tabela \ref{tab:heart_disease_dnn_pfi} najważniejszym parametrem okazało się być ,,oldpeak'' ze spadkiem w dokładności na poziomie jedynie 5.3\% i odchyleniem standardowym 0.011. Na dalszych pozycjach znajduje się ,,dataset'' z wartością 4.5\%, a zaraz po nim ,,exang'' z 4.3\%. Za najmniej istotną przesłankę wskazano ,,trestbps'' z wynikiem wynoszącym 1.1\% i odchyleniem standardowym rzędu 0.004.
 
 \begin{figure}[H]
     \centering
@@ -554,9 +553,9 @@ Wszystkie cechy zostały uznane przez \textbf{PFI} jako istotne, jednakże uzysk
 \end{figure}
 
 \subsubsection{Podsumowanie}
-Wszystkie modele uczone i testowane na tych samych zbiorach pod względem dokladności uzyskały wyniki na przeciętnym poziomie. Były one do siebie zbliżone i oscylowały w granicach 60\%-64\%. Najlepiej pod tym względem poradził sobie XGBoost, jednak miał o około 1 jednostkę mniejsze ROC AUC od lasu losowego, u którego miara ta wyniosła 0.85. We wszystkich przypadkach najtrafniej diagnozowano klasę '0', przy czym najwięcej poprawnie należących do niej próbek, bo aż 70 z 82 wskazała sieć neuronowa, osiągając przy tym precyzję i czułość na poziomie 85\%. Podobnie decydowano o przynależności próbek do poszczególnych wariantów, z równą tendendcją spadkową, pogłębiającą się wraz z numerem przewidywanej kategorii. Wyniki większości średnich arytmetycznych były niezadowalające. Ich wartości ewidentnie wynikały z niezbilansowania danych, co możemy dostrzec analizując ilości rekordów dla poszczególnych klas znajdujące się w kolumnie 'Liczba'. Zauważamy wtedy, że liczebność zbioru testowego klasy '0' wyniosła 82 przypadki, a wariantu '4' jedynie 6. Z powodu tej ogromnej dysproporcji oraz niskiej zbiorowości prawie nigdy nie zaliczano próbek do najwyższej grupy ryzyka. Dla dwoch pierwszych modeli udało się ją poprawnie sklasyfikować, sieć neuronowa postawiła na błędną diagnozę o numerze '3'.  
+Wszystkie modele uczone i testowane na tych samych zbiorach pod względem dokladności uzyskały wyniki na przeciętnym poziomie. Były one do siebie zbliżone i oscylowały w granicach 60\%-64\%. Najlepiej pod tym względem poradził sobie XGBoost, jednak miał o około 1 jednostkę mniejsze ROC AUC od lasu losowego, u którego miara ta wyniosła 0.85. We wszystkich przypadkach najtrafniej diagnozowano klasę '0', przy czym najwięcej poprawnie należących do niej próbek, bo aż 70 z 82 wskazała sieć neuronowa, osiągając przy tym precyzję i czułość na poziomie 85\%. Podobnie decydowano o przynależności próbek do poszczególnych wariantów, z równą tendendcją spadkową, pogłębiającą się wraz z numerem przewidywanej kategorii. Wyniki większości średnich arytmetycznych były niezadowalające. Ich wartości ewidentnie wynikały z niezbilansowania danych, co możemy dostrzec analizując ilości rekordów dla poszczególnych klas znajdujące się w kolumnie 'Liczba'. Zauważamy wtedy, że liczebność zbioru testowego klasy '0' wyniosła 82 przypadki, a wariantu '4' jedynie 6. Z powodu tej ogromnej dysproporcji oraz niskiej zbiorowości prawie nigdy nie zaliczano próbek do najwyższej grupy ryzyka. Jeden raz, dla dwoch pierwszych modeli udało się jedną z nich poprawnie sklasyfikować, sieć neuronowa postawiła na błędną diagnozę o numerze '3'.  
 
-Każdy z badanych modeli posiadał chociaż jeden atrybut, w którym był lepszy od innych. Jednak metryki, takie jak dokładność i średnia arytmetyczna, będące podatne na niezbilansowane dane, tracą na wiarygodności. Dlatego w przypadku tego zbioru lepiej jest kierować się innymi miarami. Uznałam, że ze względu na sposób wyliczania najodpowiedniejsze będzie ROC AUC, pokazujące umiejętność rozróżniania pomiędzy poszczególnymi klasami. Ta idea plasuje las losowy na pierwszym miejscu. 
+Każdy z badanych modeli posiadał chociaż jeden atrybut, w którym był lepszy od innych. Jednak metryki, takie jak dokładność i średnia arytmetyczna, będące podatne na niezbilansowane dane, tracą na wiarygodności. Dlatego w przypadku tego zbioru lepiej jest kierować się innymi miarami. Uznano, że ze względu na sposób wyliczania najodpowiedniejsze będzie ROC AUC, pokazujące umiejętność rozróżniania pomiędzy poszczególnymi klasami. Ta idea plasuje las losowy na pierwszym miejscu. 
 
 \begin{table}[H]
 \centering
@@ -581,13 +580,13 @@ Model & Metoda & 3 najistotniejsze cechy & 3 najmniej istotne cechy \\ \hline
 \end{tabular}
 \end{table}
 
- Jak możemy wyczytać z Tabeli \ref{tab:3_top_and_least_heart}  dla modelu Random Forest każda z metod wskazała inne 3 najistotniejsze cechy. LIME podała najbardziej odmienne zmienne, z których jedynie wiek ('age') i płeć ('sex') pojawiły się w innych wierszach należących do lasu losowego.  SHAP i PFI były jednogłośne w kwestii najmniej znaczących przesłanek, czyli płci ('sex'), informacji, czy poziom cukru we krwi na czczo jest wysoki ('fbs') oraz spadku odcinka ST podczas szczytowego wysiłku fizycznego ('slope'). 
- 
- W przypadku XGBoost we wszystkich wytłumaczeniach wśród 3 najistotniejszych cech znalazł się wiek ('age'), a najmniej istotnych płeć ('sex'). Dwukrotnie pojawia się typ bólu klatki piersiowej ('cp') w 3 kolumnie dla LIME i SHAP. Co zastanawiające pierwsza z tych metod uznała osiągnięte maksymalne tętno ('thalch') za mało wartościowe, kiedy to druga w przeciwieństwie do niej umieściła tę zmienną bardzo wysoko w rankingu istotności. PFI wraz z wartościami Shapley'a był zgodny co do najmniej interesujących cech, wskazując już wcześniej wspomnianą płeć ('sex'), czy poziom cukru we krwi na czczo jest wysoki ('fbs') oraz spadek odcinka ST podczas szczytowego wysiłku fizycznego ('slope').
+Jak możemy wyczytać z Tabeli \ref{tab:3_top_and_least_heart}  dla modelu Random Forest każda z metod wskazała inne 3 najistotniejsze cechy. LIME podała najbardziej odmienne zmienne, z których jedynie ,,age'' i ,,sex'' pojawiły się w innych wierszach należących do lasu losowego. SHAP i PFI były jednogłośne w kwestii najmniej znaczących przesłanek, czyli ,,,sex'', ,,fbs'' oraz ,,slope''. 
 
-W sieci neuronowej wyjaśnienia były do siebie dosyć zbliżone. Wpośród 3 najmniej istotnych cech za każdym razem pojawiło się spoczynkowe ciśnienie krwi ('trestbps'), z przeplatającą się płcią ('sex') i spadkiem odcinka ST podczas szczytowego wysiłku fizycznego ('slope'). Natomiast wśród 3 najistotniejszych cech nie pojawiła się jedna dominująca, ale dwukrotnie znalazło się obniżenie odcinka ST wywołane wysiłkiem fizycznym w porównaniu do spoczynku ('oldpeak'), dławica piersiowa wywołana wysiłkiem fizycznym ('exang') oraz osiągnięte maksymalne tętno (thalch).
+W przypadku XGBoost we wszystkich wytłumaczeniach wśród 3 najistotniejszych cech znalazło się ,,age'', a najmniej istotnych ,,sex''. Dwukrotnie pojawia się ,,cp'' - w 3 kolumnie dla LIME i SHAP. Co zastanawiające pierwsza z tych metod uznała ,,thalch'' za mało wartościowe, kiedy to druga w przeciwieństwie do niej umieściła tę zmienną bardzo wysoko w rankingu istotności. PFI wraz z wartościami Shapley'a był zgodny co do najmniej interesujących cech, wskazując już wcześniej wspomniane ,,sex'', ,,fbs'' oraz ,,slope''.
 
-W 8 na 9 przypadków za jedną z najmniej istotnych cech wskazano płeć ('sex'), nie pojawiła się ona wyłącznie w wytłumaczeniu SHAP dla sieci neuronowej, gdzie uznano ją za dosyć wartościową informację. Przy lesie losowym oraz XGBoost SHAP z PFI podawały identyczne wartości w 4 kolumnie. LIME bez względu na model zawsze za jedną z naistotniejszych cech podawał 'exang', a najmniej ważnych 'trestbps' i 'sex', SHAP 'cp' z 'thalch' a także 'fbs' oraz 'slope', natomiast PFI nie miał faworyta w pierwszej kategorii, w drugiej 'sex' i 'slope'.
+W sieci neuronowej wyjaśnienia były do siebie dosyć zbliżone. Wpośród 3 najmniej istotnych cech za każdym razem pojawiło się ,,trestbps'', z przeplatającym się ,,sex'' i ,,slope''. Natomiast wśród 3 najistotniejszych zmiennych nie pojawiła się jedna dominująca informacja, ale dwukrotnie znalazło się ,,oldpeak'', ,,exang'' oraz ,,thalch''.
+
+W 8 na 9 przypadków za jednego z najmniej istotnych parametrów wskazano ,,sex'', nie pojawiła się ona wyłącznie w wytłumaczeniu SHAP dla sieci neuronowej, gdzie uznano ją za dosyć wartościową informację. Przy lesie losowym oraz XGBoost SHAP z PFI podawały identyczne wartości w 4 kolumnie. LIME bez względu na model zawsze za jedną z naistotniejszych cech podawał ,,exang'', a najmniej ważnych - ,,trestbps'' i ,,sex'', SHAP ,,cp'' z ,,thalch'', a także ,,fbs'' oraz ,,slope'', natomiast PFI nie miał faworyta w pierwszej kategorii, w drugiej - ,,sex'' i ,,slope''.
 
 
 \subsection{Brain MRI Images for Brain Tumor Detection}
