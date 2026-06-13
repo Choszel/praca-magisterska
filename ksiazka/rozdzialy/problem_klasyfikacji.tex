@@ -3,18 +3,11 @@ Informacje zebrane w postaci zbiorów danych można poddać analizie, aby odnale
 
 Do zadań klasyfikacji moglibyśmy użyć prostego, łatwo interpretowalnego modelu, takiego jak drzewo decyzyjne albo regresja liniowa. Przy mało skomplikowanych danych owe rozwiązanie byłoby wystarczające, jednak w rzeczywistości często mamy do czynienia ze złożonymi problemami wymagającymi trudniejszych w użyciu, zrozumieniu czy stworzeniu rozwiązań. Random forest, XGBoost oraz sieci neuronowe są w stanie przeprowadzić precyzyjniejsze analizy i osiągać większą dokładność. Wiąże się to niestety z utratą ich przejrzystości i czytelności. Dzieje się tak, ponieważ starając się jak najlepiej przybliżyć korelacje zaistniałe pomiędzy cechami danych wejściowych, budują one olbrzymie struktury, które przez swoje gigantyczne rozmiary stają się nieczytelne dla człowieka prowadząc do braku jakiejkolwiek możliwości ich interpretacji bądź analizy \cite{ALI2023101805}. 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{Deep-Neural-Network-architecture.jpg}
-    \caption{Przykładowa struktura sieci neuronowej \cite{dnn_conference_image}}
-    \label{fig:example_of_dnn}
-\end{figure}
-
 Badacze, w celu określenia przejrzystości modeli, wprowadzili pojęcia różnokolorowych skrzynek. Należą do nich:
 \begin{itemize}
     \item biała skrzynka (bądź też nazywana przezroczystą) – zaliczają się do niej prostsze modele uczenia maszynowego, które możemy zazwyczaj bez jakiejkolwiek pomocy bezproblemowo analizować spoglądając na ich strukturę, wyniki oraz parametry. Nie potrafią odwzorowywać skomplikowanych zależności, z tego powodu ich dokładność jest niska bądź średnia. Nie są one dostosowane do trudniejszych dziedzin, takich jak medycyna czy finanse.
     \item szara skrzynka – systemy będące pośrednim rozwiązaniem pomiędzy innymi pudełkami. Istnieje możliwość ich częsciowej interpretacji przy założeniu, że zostały starannie zaprojektowane. Do tej kategorii mogą się zaliczać, np. sieci bayesowskie. Mają lepszą jakość klasyfikacji niż poprzedni przypadek. Dzieje się tak ponieważ są bardziej rozbudowane, co zarazem przekłada się na większe problemy z ich zrozumiem.
-    \item czarna skrzynka – należą do niej głównie sztuczne sieci neuronowe, które ze względu na swoją znaczną złożoność są kompletnie nieczytelne. Tę sytuację obrazuje Rys. \ref{fig:example_of_dnn}. Mają wysoką dokładność, jednak nie jesteśmy w stanie, patrząc na ich strukturę, ocenić skąd ona wynika.
+    \item czarna skrzynka – należą do niej głównie sztuczne sieci neuronowe, które ze względu na swoją znaczną złożoność są kompletnie nieczytelne. Mają wysoką dokładność, jednak nie jesteśmy w stanie, patrząc na ich strukturę, ocenić skąd ona wynika.
 \end{itemize}	
 
  \begin{figure}[H]
@@ -35,27 +28,43 @@ Techniki XAI powstały, aby kosztem dokładności zwiększyć przejrzystość mo
 \end{itemize}
 
 \subsection{Metody oceny}
+Miary używane do oceny jakości uzyskanego w trakcie nauki modelu są obliczane na podstawie macierzy pomyłek, którą zaprezentowano na Rys. \ref{fig:confusion_matrix}. Przewidziane wartości pochodzą od modelu, a rzeczywiste są poprzypisywane próbkom. Najlepsza sytuacja występuje, gdy najwięcej próbek znajduje się na przekątnej, w komórkach oznaczonych kolorem zielonym. Oznaczają one poprawne klasyfikacje - zarówno jako przypadki klasy negatywnej i pozytywnej. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{confusion_matrix.png}
+    \includegraphics[width=0.45\linewidth]{confusion_matrix.png}
     \caption{Macierz pomyłek [źródło własne]}
     \label{fig:confusion_matrix}
 \end{figure}
 
-Mamy do dyspozycji wiele miar określających jakość uzyskanego w trakcie nauki modelu. Najpopularniejsze z nich użwywane w problemach klasyfikacji zostały zamieszczone w Tabeli \ref{tab:metrics_description}. Dodatkowo precyzję, \textit{recall} (czułość, specyficzność) oraz F1-score można w przypadku klasyfikacji wieloklasowej zagregować za pomocą średniej arytmetycznej bądź ważonej. Wagą średniej ważonej jest liczebność próbek danej klasy.  
+Najpopularniejsze miary użwywane w problemach klasyfikacji zostały zamieszczone w Tabeli \ref{tab:metrics_description}. Zmienne użyte w kolumnie ,,Sposób obliczania'' są bezpośrednio związane z opisami zamieszczonymi na Rys. \ref{fig:confusion_matrix}. Precyzję, \textit{recall} (czułość, specyficzność) oraz F1-score można w przypadku klasyfikacji wieloklasowej zagregować za pomocą średniej arytmetycznej bądź ważonej. Wagą średniej ważonej jest liczebność próbek danej klasy.  
 \begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
 \caption{Metryki, ich opisy i sposób obliczania \cite{zheng2015evaluating, f1_score_wikipedia}}
 \label{tab:metrics_description}\\
 \hline
 Metryka & Opis & Sposób obliczania \\ \hline
 \endfirsthead
-ROC AUC & AUC (ang. \textit{area under the curve}), to powierzchnia pod krzywą ROC będącą wyznacznikiem jak zwiększyłaby się liczba poprawnych klasyfikacji pozwalając na więcej negatywnych klasyfikacji. AUC jest sposobem na reprezentację tej funkcji za pomocą jednej wartości.  & Krzywą ROC rysujemy poprzez punkty, których zmienną X jest wskaźnik wyników fałszywie dodatnich, a Y wskaźnik wyników prawdziwie dodatnich (czułość)  \\ \hline
-Dokładność & Częstość prawidłowej klasyfikacji & Stosunek poprawnych predykcji do wszystkich predykcji\\ \hline
-Precyzja & Mówi ile jednostek z przewidzianych jako dodatnie rzeczywiście zostało prawidłowo przydzielonych do tej grupy  & Stosunek próbek przewidzianych poprawnie jako dodatnie do wszystkich próbek sklasyfikowanych jako dodatnie \\ \hline
-Czułość & Miara mówiąca o tym, jak często model poprawnie klasyfikowałby próbki jako dodatnie posiadając do dyspozycji wyłącznie próbki dodatnie & Stosunek próbek poprawnie zaklasyfikowanych jako dodatnie do wszystkich dodatnich próbek \\ \hline
-Specyficzność & Miara mówiąca o tym, jak często model poprawnie klasyfikowałby próbki jako ujemne posiadając do dyspozycji wyłącznie próbki ujemne & Stosunek próbek poprawnie zaklasyfikowanych jako ujemne do wszystkich próbek ujemnych \\ \hline
-F1-score & Łączy precyzję i czułość w jedną zbalansowaną wartość. & Średnia harmoniczna pomiędzy precyzją a czułością - dwukrotność precyzji pomnożonej przez czułość dzielona na sumę precyzji i czułości \\ \hline
+ROC AUC & AUC (ang. \textit{area under the curve}), to powierzchnia pod krzywą ROC (ang. \textit{Receiver Operating Characteristic}) będącą wyznacznikiem jak zwiększyłaby się liczba poprawnych klasyfikacji pozwalając na więcej negatywnych klasyfikacji. AUC jest sposobem na reprezentację tej funkcji za pomocą jednej wartości.  & Krzywą ROC rysujemy poprzez punkty, których zmienną X jest wskaźnik wyników fałszywie pozytywnych, a Y wskaźnik wyników prawdziwie pozytywnych (czułość)  \\ \hline
+Dokładność & Częstość prawidłowej klasyfikacji & 
+\begin{equation} \label{accuracy_eqn}
+    \frac{TP\ + \ TN}{P\ +\ N} 
+\end{equation}\\ \hline
+Precyzja & Mówi ile jednostek z przewidzianych jako pozytywne rzeczywiście zostało prawidłowo przydzielonych do tej grupy  & 
+\begin{equation} \label{precision_eqn}
+    \frac{TP}{TP\ +\ FP} 
+\end{equation} \\ \hline
+Czułość & Miara mówiąca o tym, jak często model poprawnie klasyfikowałby próbki jako pozytywne posiadając do dyspozycji wyłącznie próbki rzeczywiście pozytywne & 
+\begin{equation} \label{sensitivity_eqn}
+    \frac{TP}{P} 
+\end{equation} \\ \hline
+Specyficzność & Miara mówiąca o tym, jak często model poprawnie klasyfikowałby próbki jako negatywne posiadając do dyspozycji wyłącznie próbki rzeczywiście negatywne & 
+\begin{equation} \label{specificity_eqn}
+    \frac{TN}{N} 
+\end{equation}\\ \hline
+F1-score & Łączy precyzję i czułość w jedną zbalansowaną wartość. & 
+\begin{equation} \label{f1-score_eqn}
+    \frac{2\ *\ TP}{2\ *\ TP\ +\ FP +\ FN} 
+\end{equation}\\ \hline
 \end{xltabular}
 
 
@@ -116,6 +125,13 @@ Stworzenie wydajnego modelu sieci neuronowej jest trudnym zadaniem. Do możliwyc
 
 Ich znalezienie odbywa się praktycznie na zasadzie ,,metody prób i błędów''. W doborze może nam pomóc mechnizm walidacji krzyżowej. Dodatkowo oceniając wyniki struktury z daną konfiguracją powinniśmy ustalić czy nie doszło do przeuczenia bądź niedouczenia. To pierwsze pojęcie oznacza sytuację, w której sieć wykryła zbyt drobne korelacje pomiędzy cechami, co było skutkiem zbytniego wglądu w dane treningowe. Taki przypadek zauważamy po niskim błędzie na danych treningowych, ale wysokim na danych walidacyjnych. Z pomocą przychodzą nam tutaj metody regularyzacji, takie jak L1, L2 czy Drop-out. Druga możliwość odnosi się do utrzymujących się wysokich błędów w przypadku obu podzbiorów. Polega na tym, że model nie zdążył wykryć zależności pomiędzy cechami, co przekłada się dodatkowo na jego niską dokładność. Dochodzi do tego, kiedy ustawiliśmy za małą ilość iteracji, za duży krok uczenia, bądź niewystarczająca ilość warstw ukrytych lub ich neuronów \cite{dnn_osowski, haykin2009neural, mlpc_documentation}. 
 
-Kolejnym typem sieci wielowarstwowej użwanej w mojej pracy jest konwolucyjna sieć neuronowa (ang. \textit{Convolutional Neural Network}). Ta odmiana pozwala na analizowanie danych w postaci zdjęć. Na wejście takiej architektury podaje się obraz w postaci tensora - jednostki, którą w tym przypadku można sobie wyobrazić jako wektor składający się z 3 macierzy, w którym każda z macierzy reprezentuje jeden z 3 kanałów RGB obrazu a jej wartości to piksele mówiące o natężeniu danego koloru. Obraz trafia do warstwy splotowej składającej się z dowolnej ilości filtrów. Filtry mogą posiadać maksymalnie tyle kanałów ile mają trafiające do nich dane, czyli dla obrazów o trzech kanałach filtry będa posiadały maksymalnie 3 kanały. Sieć przesuwa tutaj po tensorze predefiniowaną maską z czego każdym wynikiem z nałożenia na obraz maski jest 2-wymiarowa tablica, w której elementy to przemnożone przez odpowiednie pozycje maski piksle zsumowane ze sobą. W taki sposób z 3 kanałów uzyskiwany jest 1, a ilość użytych filtrów staje się nową głębokością obrazu (kanałami). Tę operację nazywamy konwolucją od czego też wywodzi się nazwa owego podgatunku sieci. Na każdym z takich wyników należy zastosowac funkcję aktywacji ReLU niwelującą wartości ujemne poprzez zamianę ich na 0. Tablice reprezentują częściowo pokrywające się obszary. Aby rozwikłać problem nadmiarowości wprowadza się po każdej warstwie splotowej warstwę próbkującą, mającą na celu zmniejszenie wymiarowości poprzez zagregowanie wyników dla powtarzających się cech. Następnie wynik tych warstw trafia do kolejnej warstwy splotowej gdzie cykl się powtarza. Wraz z przechodzeniem przez kolejne warstwy sieci maleje szerokość i wysokość analizowanych macierzy, jednak ilość filtrów rośnie. Prowadzi to do zmniejszenia wymiaru a zarazem bogatszej reprezentacji wykrytych cech. Macierze ostatniej warstwy konwolucyjnej są przekształcane w wektor i trafiają do standardowych już warstw składających się z omówionych wcześniej neuronów, które są w pełni połączone z wynikami warstwy poprzedniej. Ostatnia warstwa sieci posiada tyle neuronów ile jest klas decyzyjnych, a ich wyjściami jest prawdopodobieństwo przynależności \cite{dnn_architecture, cnn_osowski,haykin2009neural}.
+Kolejnym typem sieci wielowarstwowej użwanej w mojej pracy jest konwolucyjna sieć neuronowa (ang. \textit{Convolutional Neural Network}), której przykładową architekturę zaprezenotowano na Rys. \ref{fig:cnn_image}. Ta odmiana pozwala na analizowanie danych w postaci zdjęć. Na wejście takiej architektury podaje się obraz w postaci tensora - jednostki, którą w tym przypadku można sobie wyobrazić jako wektor składający się z 3 macierzy, w którym każda z macierzy reprezentuje jeden z 3 kanałów RGB obrazu a jej wartości to piksele mówiące o natężeniu danego koloru. Obraz trafia do warstwy splotowej składającej się z dowolnej ilości filtrów. Filtry mogą posiadać maksymalnie tyle kanałów ile mają trafiające do nich dane, czyli dla obrazów o trzech kanałach filtry będa posiadały maksymalnie 3 kanały. Sieć przesuwa tutaj po tensorze predefiniowaną maską z czego każdym wynikiem z nałożenia na obraz maski jest 2-wymiarowa tablica, w której elementy to przemnożone przez odpowiednie pozycje maski piksle zsumowane ze sobą. W taki sposób z 3 kanałów uzyskiwany jest 1, a ilość użytych filtrów staje się nową głębokością obrazu (kanałami). Tę operację nazywamy konwolucją od czego też wywodzi się nazwa owego podgatunku sieci. Na każdym z takich wyników należy zastosowac funkcję aktywacji ReLU niwelującą wartości ujemne poprzez zamianę ich na 0. Tablice reprezentują częściowo pokrywające się obszary. Aby rozwikłać problem nadmiarowości wprowadza się po każdej warstwie splotowej warstwę próbkującą, mającą na celu zmniejszenie wymiarowości poprzez zagregowanie wyników dla powtarzających się cech. Następnie wynik tych warstw trafia do kolejnej warstwy splotowej gdzie cykl się powtarza. Wraz z przechodzeniem przez kolejne warstwy sieci maleje szerokość i wysokość analizowanych macierzy, jednak ilość filtrów rośnie. Prowadzi to do zmniejszenia wymiaru a zarazem bogatszej reprezentacji wykrytych cech. Macierze ostatniej warstwy konwolucyjnej są przekształcane w wektor i trafiają do standardowych już warstw składających się z omówionych wcześniej neuronów, które są w pełni połączone z wynikami warstwy poprzedniej. Ostatnia warstwa sieci posiada tyle neuronów ile jest klas decyzyjnych, a ich wyjściami jest prawdopodobieństwo przynależności \cite{dnn_architecture, cnn_osowski, haykin2009neural}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{rysunki/cnn.png}
+    \caption{Architektura przykładowej konwolucyjnej sieci neuronowej \cite{cnn_image}}
+    \label{fig:cnn_image}
+\end{figure}
 
 Ja użyłam już gotowych sieci konwolucyjnych o wagach nauczonych na bazie danych ImageNet. Dostosowałam ich parametry za pomocą \textit{transfer learning}'u. Proces ten polega na zamrożeniu warstw już wytrenowanej sieci, której rolą będzie wybieranie cech na obrazie oraz zbudowaniu naokoło nich warstw dostosowujących nowopowstały model nadrzędny do danego zadania, w tym przypadku klasyfikacji \cite{tensorflow_transfer_learning}. 

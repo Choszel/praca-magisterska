@@ -1,44 +1,37 @@
-Pytania:
-    	- Co w opisie implementacji jest chaotycznego? już jest ok
-    	- Metoda LIME i SHAP polega głównie na diagnozie jednej konkretnej próbki, spoko i tak jej nie dawać w przypadku danych tabelarycznych
-    	- Czy tabele są w porządku? Tak
-    	- Tabela 4.2 - dać wartości po przerobieniu, czy przed? przed
-        
-    - ja polecam -> wydaje się, że X byłoby lepsze ...
-    - dodać wypunktowany opis przeprowadzania eksperymentów, w eksperymentach przed konkretnymi zbiorami, 
-    	- przenieść opisy powstałe na temat tabelek przed tabelki
-    - zdjęcie macierzy pomyłek? zrobić własne zdjęcie macierzy
-    - skróty z macierzy pomyłek? dać wzory
-    	- czy kolumny są w porządku? tak, ale dopisać że to wyniki dla jednej próbki
-    
 Magisterka - co zostało do zrobienia?:
 	Ogólne
 		- poprawić błędy przy pomocy GenAI
 		- stronę 3: wydrukować, podpisać, zeskanować, wstawić
 		- poprawić błędy językowe i literówki
-		- odwołania na początku a nie na końcu
 		- zmniejszyć rysunki, dbac o wizualny aspekty pracy, tak aby nie zostawała połowa pustej strony
-		- nie zamieniać pojęć statystycznych na jakieś wymyślone zamienniki w celu minimalizacji powtórzeń
-		- nie dodawać swoich przemyśleń, nie pisać tak mocnych słów jak 'bezkompromisowo'
 
 	Problem klasyfikacji:
 		- rozszerzyć opis modeli klasyfikacyjnych
 		- wyjaśnić czym są log odds i dlaczego występują w przypadku XGBoosta
+		- dodać i opisać hiperparametry modeli XGBoost i Random Forest
 
-	Metody XAI
-		- rozszerzyć opis metod, dodać opis jak inni wykorzystali te metody
-		- w opisach metod dodać każdy rodzaj używanego wykresu i opisać co przedstawia
-		- opisy metod są zbyt skomplikowane
-
-	Eksperymenty
-		- dogłębiej przeanalizować wykresy beeswarm
-	
 	Podsumowanie
 		- podsumowanie to: co zostało zrobione -> wnioski -> co można jeszcze zrobić
 		
-		
+
 		
 	Zakończone
+		Ogólne:
+			- nie zamieniać pojęć statystycznych na jakieś wymyślone zamienniki w celu minimalizacji powtórzeń
+			- odwołania na początku a nie na końcu
+			- nie dodawać swoich przemyśleń, nie pisać tak mocnych słów jak 'bezkompromisowo'
+
+		Pytania:
+			- Co w opisie implementacji jest chaotycznego? już jest ok
+			- Metoda LIME i SHAP polega głównie na diagnozie jednej konkretnej próbki, spoko i tak jej nie dawać w przypadku danych tabelarycznych
+			- Czy tabele są w porządku? Tak
+			- Tabela 4.2 - dać wartości po przerobieniu, czy przed? przed
+    		- ja polecam -> wydaje się, że X byłoby lepsze ...
+			- przenieść opisy powstałe na temat tabelek przed tabelki
+			- zdjęcie macierzy pomyłek? zrobić własne zdjęcie macierzy
+			- skróty z macierzy pomyłek? dać wzory
+			- czy kolumny są w porządku? tak, ale dopisać że to wyniki dla jednej próbki
+
 		Wstęp:
 			- we wstępnie napisać z ilu rozdziałów składa się praca i co robią poszczególne z nich
 
@@ -46,6 +39,11 @@ Magisterka - co zostało do zrobienia?:
 			- połączyć 2 pierwsze rozdziały
 			- rozszerzyć początek klasyfikacji, zrobić wstęp do tego, czym jesst klasyfikacja
 			- zrobić podrozdział "Metody oceny" w problemie klasyfikacji i opisać w nim miary 
+
+		Metody XAI:
+			- w opisach metod dodać każdy rodzaj używanego wykresu i opisać co przedstawia
+			- opisy metod są zbyt skomplikowane, dodać obrazki przedstawiające ich działanie
+			- rozszerzyć opis metod, dodać opis jak inni wykorzystali te metody
 
 		Opis implementacji
 			- opis implementacji jest zbyt chaotyczny, zmienic go, przenieść do niego opisy zbiorów
@@ -63,6 +61,9 @@ Magisterka - co zostało do zrobienia?:
 			- w podsumowaniach zdjęć zmienić nazwy kolumn na bardziej opisowe
 			- średnia macro zamienić na średnia arytmetyczna
 			- w klasyfikacji binarnej danych tabelarycznych usunąć wytłumaczenia LIME dla pojedynczej próbki
+			- dodać wypunktowany opis przeprowadzania eksperymentów, w eksperymentach przed konkretnymi zbiorami, 
+			- usunąć albo polski opis kolumny, albo agielską nazwę
+			- dogłębiej przeanalizować wykresy beeswarm
 
 		Podsumowanie:
 			- podsumowanie powinno składac się z 2-3 stron, 
