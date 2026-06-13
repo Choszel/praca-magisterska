@@ -1,5 +1,5 @@
 \section{Problem klasyfikacji}
-Informacje zebrane w postaci zbiorów danych można poddać analizie, aby odnaleźć w nich pewne reguły pochodzące ze świata rzeczywistego. Celem automatyzacji tego procesu powstał odłam sztucznej inteligencji nazywany uczeniem maszynowym. Polega on na tym, że komputer uczy się zbiorów danych i wykrywa w nich zależności, które wykorzystuje do przewidywania wyników. Dane mogą być w różnej postaci. W owej pracy wykorzystywane jest uczenie nadzorowane, czyli każda z próbek (jedna instancja danych) ma przypisane rozwiązanie. Nauka to proces polegający na dostrajaniu wybranego algorytu, któremu przekazywane są dane treningowe będące wydzieloną częścią zbioru poddawanego analizie. Po przeanalizowaniu przekazanych na wejście informacji algorytm porównuje wydedukowany przez siebie wynik z tym dołączonym do badanej próbki. W przypadku gdy odpowie błędnie poprawia on swoje parametry w celu minimalizacji straty, czyli ilości błędnych predykcji. Po nauce modelowi przekazywany jest zbiór testowy również będący wydzieloną częścią oryginalnego zbioru danych. Chcemy osiągnąć jak najwyższą generalizację, czyli sytuację, gdy model popełnia mało błędów po podaniu mu próbek odbiegających od tych, na których został on nauczony. Klasyfikacja jest jednym z możliwych do uzyskania rodzaji odpowiedzi. Mamy z nią do czynienia, kiedy wejściu przyporządkowywana jest jedna ze skończonej liczby niepokrywających się grup. Dzieli się ona na dwie wersje - binarną, gdy istnieją tylko dwie klasy decyzyjne, np. pies lub kot; oraz wieloklasową, gdzie wyników może być wiele, np. 5 stopniowe stadium choroby \cite{bishop2006pattern, classification_gov, classification_google}. 
+Informacje zebrane w postaci zbiorów danych można poddać analizie, aby odnaleźć w nich pewne reguły pochodzące ze świata rzeczywistego. Celem automatyzacji tego procesu powstał odłam sztucznej inteligencji nazywany uczeniem maszynowym. Polega on na tym, że komputer uczy się zbiorów danych i wykrywa w nich zależności, które wykorzystuje do przewidywania wyników. Dane mogą być w różnej postaci. W owej pracy wykorzystywane jest uczenie nadzorowane, czyli każda z próbek (jedna instancja danych) ma przypisane rozwiązanie. Nauka to proces polegający na dostrajaniu wybranego algorytu, któremu przekazywane są dane treningowe będące wydzieloną częścią zbioru poddawanego analizie. Algorytm może mieć stałe ustawione przed i niezmieniające się w trakcie nauki, nazywane hiperparametrami. Po przeanalizowaniu przekazanych na wejście informacji algorytm porównuje wydedukowany przez siebie wynik z tym dołączonym do badanej próbki. W przypadku gdy odpowie błędnie poprawia on swoje parametry w celu minimalizacji straty, czyli ilości błędnych predykcji. Po nauce modelowi przekazywany jest zbiór testowy również będący wydzieloną częścią oryginalnego zbioru danych. Chcemy osiągnąć jak najwyższą generalizację, czyli sytuację, gdy model popełnia mało błędów po podaniu mu próbek odbiegających od tych, na których został on nauczony. Klasyfikacja jest jednym z możliwych do uzyskania rodzaji odpowiedzi. Mamy z nią do czynienia, kiedy wejściu przyporządkowywana jest jedna ze skończonej liczby niepokrywających się grup. Dzieli się ona na dwie wersje - binarną, gdy istnieją tylko dwie klasy decyzyjne, np. pies lub kot; oraz wieloklasową, gdzie wyników może być wiele, np. 5 stopniowe stadium choroby \cite{bishop2006pattern, classification_gov, classification_google}. 
 
 Do zadań klasyfikacji moglibyśmy użyć prostego, łatwo interpretowalnego modelu, takiego jak drzewo decyzyjne albo regresja liniowa. Przy mało skomplikowanych danych owe rozwiązanie byłoby wystarczające, jednak w rzeczywistości często mamy do czynienia ze złożonymi problemami wymagającymi trudniejszych w użyciu, zrozumieniu czy stworzeniu rozwiązań. Random forest, XGBoost oraz sieci neuronowe są w stanie przeprowadzić precyzyjniejsze analizy i osiągać większą dokładność. Wiąże się to niestety z utratą ich przejrzystości i czytelności. Dzieje się tak, ponieważ starając się jak najlepiej przybliżyć korelacje zaistniałe pomiędzy cechami danych wejściowych, budują one olbrzymie struktury, które przez swoje gigantyczne rozmiary stają się nieczytelne dla człowieka prowadząc do braku jakiejkolwiek możliwości ich interpretacji bądź analizy \cite{ALI2023101805}. 
 
@@ -69,7 +69,6 @@ F1-score & Łączy precyzję i czułość w jedną zbalansowaną wartość. &
 
 
 \subsection{Random Forest}
-
 Random Forest, czyli las losowy, to metoda polegająca na zbieraniu wyników z wielu niezależnych modeli, aby na ich podstawie udzielić odpowiedzi końcowej. Wykorzystuje w tym celu drzewa decyzyjne, których przykładową strukturę przedstawiono na Rys. \ref{fig:decision_tree} Składają się one z:
 \begin{itemize}
     \item korzenia (ang. root node) – początkowy węzeł reprezentujący cały zbiór danych wejściowych,
@@ -84,14 +83,34 @@ Random Forest, czyli las losowy, to metoda polegająca na zbieraniu wyników z w
     \label{fig:decision_tree}
 \end{figure}
 
-Budowę takiego lasu można określić jako rozszerzenie agregacji bootstrapowej – baggingu. Proces ten wykonuje się w celu redukcji wariancji i przeuczenia, co ma zwiększać dokładność i stabilność. Polega on na wygenerowaniu określonej liczby zestawów treningowych poprzez metodę bootstrap, czyli losowanie ze zwracaniem, niezależnym treningu podmodeli na tych nowych zbiorach, a następnie oszacowaniu wyników na podstawie ,,głosowania większościowego'' (problem klasyfikacji) lub średniej (w przypadku regresji). Rozszerzeniem będzie tutaj losowy dobór cech, który dokonuje się przy każdym podziale w drzewie. Powoduje to stworzenie modelu składającego się z nieskorelowanych drzew decyzyjnych.
+Schemat modelu Random Forest przedstawia Rys. \ref{random_forest_structure}. Budowę takiego lasu można określić jako rozszerzenie agregacji bootstrapowej – baggingu. Proces ten wykonuje się w celu redukcji wariancji i przeuczenia, co ma zwiększać dokładność i stabilność. Polega on na wygenerowaniu określonej liczby zestawów treningowych poprzez metodę bootstrap, czyli losowanie ze zwracaniem, niezależnym treningu podmodeli na tych nowych zbiorach, a następnie oszacowaniu wyników na podstawie ,,głosowania większościowego'' (problem klasyfikacji) lub średniej (w przypadku regresji). Rozszerzeniem będzie tutaj losowy dobór cech, który dokonuje się przy każdym podziale w drzewie. Powoduje to stworzenie modelu składającego się z nieskorelowanych drzew decyzyjnych. Model może być kontrolowany za pomocą hiperparametrów, do których należą: 
+\begin{itemize}
+    \item funkcja mierząca jakość podziału (do wyboru: ,,gini'', ,,entropy'', ,,log\_loss''),
+    \item głębokość drzewa,
+    \item minimalna ilość próbek wymagana do przeprowadzenia podziału,
+    \item maksymalna ilość cech przeglądanych w celu przeprowadzenia podziału,
+    \item wartość spadku w predykcji, przy której ma dojść do podziału \cite{rfc_documentation}. 
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{rysunki/random-forest.jpg}
+    \caption{Struktura modelu Random Forest \cite{rf_image_example}}
+    \label{fig:random_forest_structure}
+\end{figure}
 
 Las losowy jest metodą charakteryzującą się wysoką dokładnością wyników, która potrafi poradzić sobie z obszernymi zbiorami danych a także występującymi w nich wartościami brakującymi. Niestety, z tego co zauważyłam, aktualnie nie jest w stanie przetworzyć zmiennych kategorycznych a duża ilość podmodeli sprawia, że jest ona trudna w interpretacji oraz może być czasochłonna i wymagać więcej zasobów sprzętowych, takich jak pamięć komputerowa \cite{molnar2025, random_forest_article, random_forest_cognity, bagging_definition}. 
 
 
 \subsection{XGBoost}
-
 XGBoost (ang. \textit{Extreme Gradient Boosting}) to metoda, która podobnie jak las losowy wykorzystuje wiele mniejszych modeli, w tym drzew decyzyjnych, aby określić wyniki. Jednak, w przeciwieństwie do poprzednio omawianego sposobu, działa na zasadzie boostingu, a nie baggingu. Proces ten polega na budowie sekwencyjnej. Każde drzewo (oprócz pierwszego) budowane jest na podstawie poprzednika dążąc do zmniejszenia ilości błędnych założeń. Początkowe podmodele są słabo przystosowane do problemu z mocą predykcyjną zbliżoną, ale lekko lepszą, niż losowe przydzielanie wartości, posiadają wysoki wskaźnik błędu. Mimo to są one niezwykle istotne ze względu na zawieranie kluczowych informacji dotyczących dzielenia zbiorów. Wraz z postępem algorytmu uczenia, czyli poprawą tych instancji oraz ich efektywnym połączeniem, wspomniane wcześniej miary zaczynają się polepszać. Kierunek, w którym ma poruszać się boosting, czyli tworzyć nowe drzewa, jest wyznaczany przez gradient. W tym przypadku oznacza ono pojęcie matematyczne odnoszące się do wektora składającego się z pochodnych cząstkowych funkcji. Wskazuje on kierunek, w którym najszybciej wzrasta wielkość funkcji w poszczególnych punktach \cite{gradient_definition}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{rysunki/Representation-diagram-of-the-XGboost-model.jpg}
+    \caption{Struktura modelu XGBoost \cite{xgboost_structure_article}}
+    \label{fig:xgboost_structure}
+\end{figure}
+
 
 Kolejną różnicą względem lasów losowych jest wielkość wspomnianych drzew. W przypadku tych pierwszych powstałe podmodele mogą osiągać duże rozmiary z wieloma odgałęzieniami. XGBoost charakteryzuje się niewielkimi instancjami, które są bardziej interpretowalne. Dodatkowo zawiera parametry wejściowe, które możemy dostosowywać, takie jak: liczba drzew, ilość iteracji, tempo uczenia, głębokość drzewa; a także mechanizmy regularyzacji w postaci L1 (ang. \textit{lasso regression}) oraz L2 (ang. \textit{ridge regression}) z możliwością zmiany ich współczynników. Należy zachować ostrożność w ich doborze, ponieważ to od nich zależeć będzie dokładność modelu, na którą żłoży się niedouczenie sieci, bądź jej nadmierne dopasowanie do danych treningowych. Może nam w tym pomóc walidacja krzyżowa, która jest zazwyczaj dostępna wraz z implementacją XGBoost’a.
 

@@ -3,16 +3,7 @@ Magisterka - co zostało do zrobienia?:
 		- poprawić błędy przy pomocy GenAI
 		- stronę 3: wydrukować, podpisać, zeskanować, wstawić
 		- poprawić błędy językowe i literówki
-		- zmniejszyć rysunki, dbac o wizualny aspekty pracy, tak aby nie zostawała połowa pustej strony
-
-	Problem klasyfikacji:
-		- rozszerzyć opis modeli klasyfikacyjnych
-		- wyjaśnić czym są log odds i dlaczego występują w przypadku XGBoosta
-		- dodać i opisać hiperparametry modeli XGBoost i Random Forest
-
-	Podsumowanie
-		- podsumowanie to: co zostało zrobione -> wnioski -> co można jeszcze zrobić
-		
+		- zmniejszyć rysunki, dbac o wizualny aspekty pracy, tak aby nie zostawała połowa pustej strony		
 
 		
 	Zakończone
@@ -39,6 +30,9 @@ Magisterka - co zostało do zrobienia?:
 			- połączyć 2 pierwsze rozdziały
 			- rozszerzyć początek klasyfikacji, zrobić wstęp do tego, czym jesst klasyfikacja
 			- zrobić podrozdział "Metody oceny" w problemie klasyfikacji i opisać w nim miary 
+			- rozszerzyć opis modeli klasyfikacyjnych
+			- wyjaśnić czym są log odds i dlaczego występują w przypadku XGBoosta
+			- dodać i opisać hiperparametry modeli XGBoost i Random Forest
 
 		Metody XAI:
 			- w opisach metod dodać każdy rodzaj używanego wykresu i opisać co przedstawia
@@ -67,3 +61,4 @@ Magisterka - co zostało do zrobienia?:
 
 		Podsumowanie:
 			- podsumowanie powinno składac się z 2-3 stron, 
+			- co zostało zrobione -> wnioski -> co można jeszcze zrobić
