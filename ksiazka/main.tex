@@ -38,6 +38,64 @@
 \urlstyle{same}
 \addbibresource{bibliografia.bib}
 
+\DeclareNameAlias{default}{family-given}
+\DeclareNameAlias{sortname}{family-given}
+\DeclareFieldFormat{pages}{#1}
+\DeclareFieldFormat[article]{title}{\mkbibemph{#1}}
+\DeclareFieldFormat[book]{title}{\mkbibemph{#1}}
+\DeclareFieldFormat{journaltitle}{\mkbibemph{„#1”}}
+
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \printnames{author}%
+  \addcomma\space
+  \printfield{title}%
+  \addcomma\space
+  \printfield[journaltitle]{journaltitle}%
+  \space
+  \printfield{year}%
+  \iffieldundef{number}
+    {}
+    {\addcomma\space nr~\printfield{number}}%
+  \iffieldundef{volume}
+    {}
+    {\addcomma\space t.~\printfield{volume}}%
+  \iffieldundef{pages}
+    {}
+    {\addcomma\space s.~\printfield{pages}}%
+  \adddot
+  \usebibmacro{finentry}
+}
+
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \printnames{author}%
+  \addcomma\space
+  \printfield{title}%
+  \addcomma\space
+  \printlist{publisher}%
+  \addcomma\space
+  \printlist{location}%
+  \addcomma\space
+  \printfield{year}%
+  \finentry
+}
+
+\DeclareBibliographyDriver{online}{%
+  \printnames{author}%
+  \iffieldundef{author}
+    {\printfield{organization}}
+    {}%
+  \adddot\space
+  \printfield{title}%
+  \adddot\space
+  \printfield{url}%
+  \addcomma\space stan z \printfield{urlyear}%
+  \finentry
+}
+
 \onehalfspacing
  \geometry{
  a4paper,
@@ -53,23 +111,21 @@
 \titlespacing*{\section}
 {0pt}{24pt}{24pt}
 
-\titleformat{\subsection}{\normalfont\Large\fontsize{14}{14}\bfseries}{\thesubsection.}{1.02cm}{}
+\titleformat{\subsection}{\normalfont\Large\fontsize{14}{14}\bfseries}{\thesubsection}{1.02cm}{}
 \titlespacing*{\subsection}
 {0pt}{12pt}{12pt}
 
 \numberwithin{figure}{section}
-\DeclareCaptionLabelSeparator{custom}{. }
 \captionsetup[figure]{
     name=Rys.,
-    labelsep=custom,
+    labelsep=space,
     font={footnotesize},
     justification=centering
 }
 
 \numberwithin{table}{section}
-\DeclareCaptionLabelSeparator{custom}{. }
 \captionsetup[table]{
-    labelsep=custom,
+    labelsep=space,
     font={footnotesize},
     justification=centering
 }

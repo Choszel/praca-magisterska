@@ -1,4 +1,17 @@
 Magisterka - co zostało do zrobienia?:
+	PYTANIA:
+		- Czy pod rysunkami jak jet to popodrozdział to powinno się znaleźć, np. ''Rys. 4.1.'' czy ''Rys.4.1.1''? w zasadach dyplomowania jest x.y gdzie x numer rozdziału, w którym umieszczono rysunek lub tabelę, zaś y numer kolejny wewnątrz rozdziału.
+		- Ile autorów może się maksymalnie znaleźć w jednym wpisie w bibliografii?
+		- Czy dodawań napis 'Witryna internetowa' w bibliografii przy stronach internetowych?
+		- Czy tytuły witryn internetowych są w porządku? Czy może być "Dokumentacja funkcji roc_auc_score", czy powinno "roc_auc_score - Documentation"?
+		- Usunąć kartę dyplomową i oświadczenei o GenAI
+		- bibliografia [80] - Citation Request z :https://www.kaggle.com/datasets/redwankarimsony/heart-disease-data 
+		- zapis 30. z bibliografii to konferencja
+		- pozycja 55 w bibliografii chyba też jest konferencją 
+		- w dziekanacie zapytać o pytania na obronę
+
+
+
 	Ogólne
 		- poprawić błędy przy pomocy GenAI
 		- stronę 3: wydrukować, podpisać, zeskanować, wstawić

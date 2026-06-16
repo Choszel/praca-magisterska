@@ -1,9 +1,9 @@
 \section{Eksperymenty}
-Celem przetestowania wybranych metod XAI powstał plan eksperymentów dla każdego ze zbiorów. Jest on następujący:
+Przetestowane zostaną metody LIME, SHAP, PFI i Grad-CAM, a ich użycie będzie polegało na wytłumaczeniu wyników uzyskanych przez modele Random Forest, XGBoost, sieć neuronową (dane tabelaryczne), VGG-16, ResNet50 oraz Xception (zdjęcia). W tym celu powstał plan eksperymentów dla każdego ze zbiorów. Jest on następujący:
 \begin{enumerate}
-    \item przeanalizować zbiór danych, w tym ocenić ilość wartości brakujących, znaleźć kolumny jakościowe;
+    \item przeanalizować zbiór danych, w tym ocenić liczbę wartości brakujących, znaleźć kolumny jakościowe;
     \item przetworzyć dane, na co składa się m.in. uzupełnienie braków czy kodowanie zmiennych jakościowych;
-    \item zapisać przerobione zestawy w celu ułatwienia ich wykorzystania w przyszłości;
+    \item zapisać przetworzone zestawy w celu ułatwienia ich wykorzystania w przyszłości;
     \item znormalizować zbiór i podzielić go na podzbiory - treningowy i testowy;
     \item stworzyć model, nauczyć go na zbiorze treningowym i ocenić zbiorem testowym;
     \item dla każdej metody XAI:
@@ -11,12 +11,14 @@ Celem przetestowania wybranych metod XAI powstał plan eksperymentów dla każde
         \item poddać model analizie poprzez metodę XAI;
         \item przeanalizować otrzymane wyniki;
     \end{enumerate}
-    \item powtórzyć punkty 5. i 6. dla reszty modeli.
+    \item powtórzyć punkty 5. i 6. dla pozostałych modeli.
 \end{enumerate}
 W przypadku danych zdjęciowych dodatkowo pomiędzy podzieleniem zbioru a nauką pierwszego modelu dochodzi do wybrania badanej próbki, którą ów algorytm przed zostaniem poddanym analizie klasyfikuje.
 
 \subsection{Diabetes Prediction}
-Jak wskazuje Tabela \ref{tab:metrics_diabetes} \textbf{Random Forest} osiągnął dokładność na poziomie 72\%. Ze~względu na równy rozkład próbek przynależących do poszczególnych klas decyzyjnych, średnie arytmetyczne oraz ważone tej miary były jednakowe. Z 500 przypadków niebędących diabetykami model dobrze rozpoznał 352, co skutkuje specyficznością równą 70\%. Mając do dyspozycji same próbki osób chorujących na cukrzycę model poprawnie zaklasyfikował 367 przypadków. Precyzja osiągnęła poziom 71\%, czułość 73\% a F1-score 72\%. Pole powierzchni pod krzywą ROC wyliczone zostało w przybliżeniu na 0,79. 
+Zbiór ,,Diabetes Prediction'' jest problemem klasyfikacji binarnej polegającej na stwierdzeniu, czy dana osoba choruje na cukrzycę. Składa się z 21 zmiennych objaśniających, a~kolumna ,,Diabetes\_binary'', oznaczająca diagnozę, może przyjmować wartości: ,,0'' - brak przypadłości i ,,1'' - diabetyzm.
+
+Jak wskazuje Tabela \ref{tab:metrics_diabetes} \textbf{Random Forest} osiągnął dokładność na poziomie 72\%. Ze~względu na równy rozkład próbek przynależących do poszczególnych klas decyzyjnych, średnie arytmetyczne oraz ważone tej miary były jednakowe. Z~500 przypadków niebędących diabetykami model dobrze rozpoznał 352, co skutkuje specyficznością równą 70\%. Mając do dyspozycji same próbki osób chorujących na cukrzycę model poprawnie zaklasyfikował 367 przypadków. Precyzja osiągnęła poziom 71\%, czułość 73\% a F1-score 72\%. Pole powierzchni pod krzywą ROC wyliczone zostało w przybliżeniu na 0,79. 
 
 W przypadku \textbf{XGBoost'a}, prawie wszystkie przedstawione miary wyniosły 70\%. Jedynie ROC AUC i czułość różniły się, gdzie w pierwszym przypadku model osiągnął 0,77, a drugim 0,69. Rozkłady prawidłowych i błędnych predykcji są bardzo zbliżone. Jako klasa ,,0'' zostało zdiagnozowanych 5 próbek więcej niż do jej alternatywy. 
 
@@ -236,6 +238,7 @@ Niezwykle wiele danych zostało odrzuconych przez metodę PFI sieci neuronowej, 
 
 
 \subsection{UCI Heart Disease Data}
+,,UCI Heart Disease Data'' to zestaw danych zawierający informacje pozwalające na klasyfikację wieloklasową - zdiagnozowanie stadium choroby serca. Po przetworzeniu pozostało 11 kolumn objaśniających. Zmienną docelową jest w nim ,,num'' przyjmująca wartości: ,,0'', ,,1'', ,,2'', ,,3'' i ,,4''.  
 \subsubsection{Random Forest}
 \begin{table}[H]
  \centering
@@ -586,7 +589,9 @@ W 8 na 9 przypadków za jednego z najmniej istotnych parametrów wskazano ,,sex'
 
 
 \subsection{Brain MRI Images for Brain Tumor Detection}
-Jak możemy wyczytać z Tabeli \ref{tab:metrics_brain} model \textbf{VGG-16} uzyskał ROC AUC na poziomie 0,91. Zbiór testowy składał się jedynie z 26 obrazów. Do klasy decyzyjnej ,,0'' należało 10, a ,,1'' - 16. Spowodowało to niewielkie różnice pomiędzy średnią arytmetyczną a ważoną w~postaci 1 punktu procentowego dla pierwszych miar. Precyzja, czułość i F1-score wyniosły 88\%, a specyficzność - 80\%. Dokładność modelu osiągnęła 85\%. Model poprawnie zaklasyfikował 8 z 10 obrazów bez zmian nowotworowych oraz 14 z 16 ze zmianami. Badany model z prawdopodobieństwem w przybliżeniu 100\% zaklasyfikował badaną próbkę jako wariant z guzem, co było poprawnym wyborem.
+Obrazy pochodzące ze zbioru ,,Brain MRI Images for Brain Tumor Detection'' przedstawiają rezonanse magnetyczne mózgów mogące posłużyć do przewidywania, czy dany pacjent posiada zmiany nowotworowe. Zdjęcia w każdym z podzbiorów zostały podzielone na 2 kategorie - ,,no'' oznaczające brak guza oraz ,,yes'' będące jego występowaniem.
+
+Jak możemy wyczytać z Tabeli \ref{tab:metrics_brain} model \textbf{VGG-16} uzyskał ROC AUC na poziomie 0,91. Zbiór testowy składał się jedynie z 26 obrazów. Do klasy decyzyjnej ,,0'' należało 10, a ,,1'' - 16. Spowodowało to niewielkie różnice pomiędzy średnią arytmetyczną a ważoną w~postaci 1 punktu procentowego dla pierwszych miar. Precyzja, czułość i F1-score wyniosły 88\%, a~specyficzność - 80\%. Dokładność modelu osiągnęła 85\%. Model poprawnie zaklasyfikował 8 z~10 obrazów bez zmian nowotworowych oraz 14 z 16 ze zmianami. Badany model z prawdopodobieństwem w przybliżeniu 100\% zaklasyfikował badaną próbkę jako wariant z guzem, co było poprawnym wyborem.
 
 Model \textbf{ResNet50} osiągnął ROC AUC na poziomie 1,0. Precyzja wyniosła 94\%, a czułość - 100\%, co dało F1-score na poziomie 97\%, natomiast specyficzność osiągnęła 90\%. Średnie arytmetyczne i ważone omawianych miar oscylowały w przedziale od 95\% do 97\%. Model wykazał dokładność na poziomie 96\%. W klasyfikacji popełniony został tylko jeden błąd, a mianowicie jeden z przypadków klasy ,,0'' został błednie oznaczony jako ,,1''. Badana próbka została poprawnie zdiagnozowana z praktycznie 100\% pewnością jako posiadająca zmiany nowotworowe.
 
@@ -689,7 +694,7 @@ Jak widzimy na Rys. \ref{fig:gradcam_xception_1_brain} \textbf{Grad-CAM} wskaza�
 \end{figure}
 
 \subsubsection{Podsumowanie}
-Analizując wszystkie dostępne metryki, tj. ROC AUC, dokładność, precyzję, czułość i F1-score, najepiej ze wszystkich badanych modeli poradził sobie ResNet50. Popełnił on tylko jeden błąd na zbiorze testowym klasyfikując próbkę należącą w rzeczywistości do klasy decyzyjnej ,,1''. Najgorzej pod względem tych samych miar wypadł VGG-16 posiadający najprostszą architekturę. Odbiegał on od lidera o 11\% w poprawności swoich predykcji. Popełnił aż 4 błędy klasyfikując próbki zbioru testującego. Śmiem zatem twierdzić, że niestety nie najlepiej sprawdza się on w tak trudnym zadaniu jak wykrywanie zmian nowotworowych mózgu.
+Analizując wszystkie dostępne metryki, tj. ROC AUC, dokładność, precyzję, czułość i F1-score, najlepiej ze wszystkich badanych modeli poradził sobie ResNet50. Popełnił on tylko jeden błąd na zbiorze testowym klasyfikując próbkę należącą w rzeczywistości do klasy decyzyjnej ,,1''. Najgorzej pod względem tych samych miar wypadł VGG-16 posiadający najprostszą architekturę. Odbiegał on od lidera o 11\% w poprawności swoich predykcji. Popełnił aż 4 błędy klasyfikując próbki zbioru testującego. Śmiem zatem twierdzić, że niestety nie najlepiej sprawdza się on w tak trudnym zadaniu jak wykrywanie zmian nowotworowych mózgu.
 
 \begin{xltabular}{\textwidth}{|c|>{\centering\arraybackslash}X|c|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
 \caption{Podsumowanie wyników uzyskanych przy badanej próbce posiadającej zmiany nowotworowe ze zbioru składającego się z rezonansów magnetycznych mózgów}
@@ -712,6 +717,8 @@ Dane zawarte w Tabeli \ref{tab:summary_brain} przedstawiają drobne podsumowanie
 
 
 \subsection{Cats and Dogs Classification Dataset}
+,,Cats and Dogs Classification Dataset'' to zbiór zawierający zdjęci psów i kotów. Zadanie polegało na sklasyfikowaniu, jakie zwierzę znajduje się na obrazku. Fotografie w każdym z podzbiorów zostały przeniesione do odpowiednich plików, gdzie do ,,Cat'' trafiły mruczki, a ,,Dog'' - pieski. 
+
 Z Tabeli \ref{tab:metrics_catsdogs} możemy odczytać, że model \textbf{VGG-16} osiągnął ROC AUC na poziomie 0,99. Precyzja, czułość, specyficzność i F1-score wyniosły odpowiednio 97\%, 96\%, 97\% i~97\%. Dokładność modelu oceniono na 97\%. Średnie arytmetyczne i ważone ze względu na taki sam rozkład próbek względem klas decyzyjnych były jednakowe. Model poprawnie rozpoznał na 1940 z 2000 obrazach kota, a na 1929 z 2000 psa. Tak niezwykle wysoka umiejętność klasyfikacji przełożyła się na fakt, że VGG-16 badanej próbce należącej do klasy ,,0'' przypisał wartość 0,03, a do ,,1'' - 1. Świadczy to o jego dużej pewności, co do wskazanych predykcji, które sa poprawne.
 
 ROC AUC modelu \textbf{ResNet50} było perfekcyjne i osiągnęło 1,0. Precyzja, czułość, specyficzność i F1-score wyniosły 98\%. Taki sam wynik uzyskała także dokładność. Model poprawnie rozpoznał 1953 przypadki z 2000 przedstawiające kota, a 1969 z 2000 obrazów psa. Próbka przynależąca do klasy ,,0'' została zaklasyfikowana z 5\% prawdopodobieństwem do klasy przeciwnej, czyli model był niemal zupełnie pewny jej odmiennej diagnozy. Drugą ResNet50 ocenił na 99\% jako przedstawiającą reprezentanta klasy ,,1''.
