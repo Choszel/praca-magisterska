@@ -589,7 +589,7 @@ W 8 na 9 przypadków za jednego z najmniej istotnych parametrów wskazano ,,sex'
 
 
 \subsection{Brain MRI Images for Brain Tumor Detection}
-Obrazy pochodzące ze zbioru ,,Brain MRI Images for Brain Tumor Detection'' przedstawiają rezonanse magnetyczne mózgów mogące posłużyć do przewidywania, czy dany pacjent posiada zmiany nowotworowe. Zdjęcia w każdym z podzbiorów zostały podzielone na 2 kategorie - ,,no'' oznaczające brak guza oraz ,,yes'' będące jego występowaniem.
+Obrazy pochodzące ze zbioru ,,Brain MRI Images for Brain Tumor Detection'' przedstawiają rezonanse magnetyczne mózgu mogące posłużyć do przewidywania, czy dany pacjent posiada zmiany nowotworowe. Zdjęcia w każdym z podzbiorów zostały podzielone na 2 kategorie - ,,no'' oznaczające brak guza oraz ,,yes'' będące jego występowaniem.
 
 Jak możemy wyczytać z Tabeli \ref{tab:metrics_brain} model \textbf{VGG-16} uzyskał ROC AUC na poziomie 0,91. Zbiór testowy składał się jedynie z 26 obrazów. Do klasy decyzyjnej ,,0'' należało 10, a ,,1'' - 16. Spowodowało to niewielkie różnice pomiędzy średnią arytmetyczną a ważoną w~postaci 1 punktu procentowego dla pierwszych miar. Precyzja, czułość i F1-score wyniosły 88\%, a~specyficzność - 80\%. Dokładność modelu osiągnęła 85\%. Model poprawnie zaklasyfikował 8 z~10 obrazów bez zmian nowotworowych oraz 14 z 16 ze zmianami. Badany model z prawdopodobieństwem w przybliżeniu 100\% zaklasyfikował badaną próbkę jako wariant z guzem, co było poprawnym wyborem.
 
